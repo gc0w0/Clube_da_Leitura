@@ -1,4 +1,5 @@
 ﻿using Clube_da_Leitura.Compartilhado;
+using Gestao_de_Equipamentos.Compartilhado;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Clube_da_Leitura.ModuloRevista
 {
-    internal class RepositorioRevista : RepositorioBase
+    internal class RepositorioRevista : RepositorioBase<Revista>
     {
     }
 }

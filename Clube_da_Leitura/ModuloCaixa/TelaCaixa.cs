@@ -7,7 +7,21 @@ using System.Threading.Tasks;
 
 namespace Clube_da_Leitura.ModuloCaixa
 {
-    internal class TelaCaixa : TelaBase
+    internal class TelaCaixa : TelaBase<Caixa>
     {
+        public override void ExibirCabecalhoTabela()
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void ExibirLinhaTabela(Caixa registro)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override Caixa ObterDados()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

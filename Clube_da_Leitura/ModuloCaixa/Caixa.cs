@@ -7,7 +7,21 @@ using System.Threading.Tasks;
 
 namespace Clube_da_Leitura.ModuloCaixa
 {
-    internal class Caixa : EntidadeBase
+    internal class Caixa : EntidadeBase<Caixa>
     {
+        public override void AtualizarInformacoes(Caixa registroAtualizado)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void MostrarInformacoes()
+        {
+            throw new NotImplementedException();
+        }
+
+        public override string Validar()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
