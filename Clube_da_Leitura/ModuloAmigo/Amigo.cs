@@ -28,7 +28,7 @@ namespace Clube_da_Leitura.ModuloAmigo
 
         public override void MostrarInformacoes()
         {
-            throw new NotImplementedException();
+            Console.WriteLine($"ID de Registro: {id} | Nome: {nome} | Nome Responsavel {nomeReponsavel} | Telefone: {telefone} ");
         }
 
         public override string Validar()

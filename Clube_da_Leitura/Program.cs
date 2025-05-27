@@ -1,5 +1,6 @@
 ﻿using Clube_da_Leitura.Compartilhado;
 using Clube_da_Leitura.ModuloAmigo;
+using Clube_da_Leitura.ModuloCaixa;
 
 namespace Clube_da_Leitura
 {
@@ -10,6 +11,9 @@ namespace Clube_da_Leitura
             var repositorioAmigo = new RepositorioAmigo();
             var telaAmigo = new TelaAmigo(repositorioAmigo);
 
+            var repositorioCaixa = new RepositorioCaixa();
+            var telaCaixa = new TelaCaixa(repositorioCaixa);
+
             var telaPrincipal = new TelaPrincipal();
 
             while (true)
@@ -19,12 +23,29 @@ namespace Clube_da_Leitura
                 if (telaPrincipal.opcaoEscolhida == "1")
                     GerenciarAmigos(telaAmigo, telaPrincipal);
 
+                else if (telaPrincipal.opcaoEscolhida == "2")
+                    GerenciarCaixas(telaCaixa, telaPrincipal);
+
                 else if (telaPrincipal.opcaoEscolhida == "S")
                 {
                     Console.WriteLine("Saindo do sistema...");
                     break;
                 }
             }
+        }
+
+        private static void GerenciarCaixas(TelaCaixa telaCaixa, TelaPrincipal telaPrincipal)
+        {
+            telaCaixa.ExibirOpcoesMenu();
+
+            if (telaCaixa.opcaoEscolhida == "1")
+                telaCaixa.CadastrarRegistro();
+            else if (telaCaixa.opcaoEscolhida == "2")
+                telaCaixa.VisualizarRegistros(mostrarCabecalho: true);
+            else if (telaCaixa.opcaoEscolhida == "3")
+                telaCaixa.EditarRegistro();
+            else if (telaCaixa.opcaoEscolhida == "4")
+                telaCaixa.ExcluirRegistro();
         }
 
         private static void GerenciarAmigos(TelaAmigo telaAmigo, TelaPrincipal telaPrincipal)
