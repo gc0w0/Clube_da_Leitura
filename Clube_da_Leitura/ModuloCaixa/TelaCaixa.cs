@@ -2,7 +2,7 @@
 using System.Runtime.InteropServices;
 namespace Clube_da_Leitura.ModuloCaixa;
 
-internal class TelaCaixa : TelaBase<Caixa>
+public class TelaCaixa : TelaBase<Caixa>
 {
     private const string formatoColunasTabela = "{0, -10} | {1, -20} | {2, -15} | {3, -15}";
     private RepositorioCaixa repositorioCaixa;

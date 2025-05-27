@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Clube_da_Leitura.ModuloRevista
 {
-    internal class RepositorioRevista : RepositorioBase<Revista>
+    public class RepositorioRevista : RepositorioBase<Revista>
     {
     }
 }

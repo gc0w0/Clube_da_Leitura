@@ -1,6 +1,7 @@
 ﻿using Clube_da_Leitura.Compartilhado;
 using Clube_da_Leitura.ModuloAmigo;
 using Clube_da_Leitura.ModuloCaixa;
+using Clube_da_Leitura.ModuloRevista;
 
 namespace Clube_da_Leitura
 {
@@ -14,6 +15,9 @@ namespace Clube_da_Leitura
             var repositorioCaixa = new RepositorioCaixa();
             var telaCaixa = new TelaCaixa(repositorioCaixa);
 
+            var repositorioRevista = new RepositorioRevista();
+            var telaRevista = new TelaRevista(repositorioCaixa, telaCaixa, repositorioRevista);
+
             var telaPrincipal = new TelaPrincipal();
 
             while (true)
@@ -26,12 +30,29 @@ namespace Clube_da_Leitura
                 else if (telaPrincipal.opcaoEscolhida == "2")
                     GerenciarCaixas(telaCaixa, telaPrincipal);
 
+                else if (telaPrincipal.opcaoEscolhida == "3")
+                    GerenciarRevistas(telaRevista, telaPrincipal);
+
                 else if (telaPrincipal.opcaoEscolhida == "S")
                 {
                     Console.WriteLine("Saindo do sistema...");
                     break;
                 }
             }
+        }
+
+        private static void GerenciarRevistas(TelaRevista telaRevista, TelaPrincipal telaPrincipal)
+        {
+            telaRevista.ExibirOpcoesMenu();
+
+            if (telaRevista.opcaoEscolhida == "1")
+                telaRevista.CadastrarRegistro();
+            else if (telaRevista.opcaoEscolhida == "2")
+                telaRevista.VisualizarRegistros(mostrarCabecalho: true);
+            else if (telaRevista.opcaoEscolhida == "3")
+                telaRevista.EditarRegistro();
+            else if (telaRevista.opcaoEscolhida == "4")
+                telaRevista.ExcluirRegistro();
         }
 
         private static void GerenciarCaixas(TelaCaixa telaCaixa, TelaPrincipal telaPrincipal)

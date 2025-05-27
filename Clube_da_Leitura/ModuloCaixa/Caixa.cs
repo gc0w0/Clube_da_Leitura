@@ -1,4 +1,5 @@
 ﻿using Clube_da_Leitura.Compartilhado;
+using Clube_da_Leitura.ModuloRevista;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,8 +12,9 @@ namespace Clube_da_Leitura.ModuloCaixa
     public class Caixa : EntidadeBase<Caixa>
     {
         public string etiqueta; //maximo de 50 caracteres
-        public string cor; //seleção de paleta ou hexadecimal
+        public string cor; //seleção de paleta ou hexadecimal como fazer?? windows forms? 
         public int dias; // padrao 7
+        public List<Revista> revistas = new List<Revista>();
 
         public Caixa(string etiqueta, string cor, int dias )
         {
