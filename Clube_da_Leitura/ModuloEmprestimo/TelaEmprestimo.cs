@@ -49,11 +49,14 @@ public class TelaEmprestimo : TelaBase<Emprestimo>
         Console.Write("Digite o ID da revista que deseja pegar emprestada: ");
         int idRevista = Convert.ToInt32(Console.ReadLine());
 
+        Revista revistaSelecionada = repositorioRevista.SelecionarPorId(idRevista);
+
         DateTime novaDataEmprestimo = DateTime.Now;
-        DateTime novaDataDevolucao = DateTime.Now;
+        int diasEmprestimo = revistaSelecionada.caixa.dias;
+        DateTime novaDataDevolucao = novaDataEmprestimo.AddDays(diasEmprestimo);
+
         string novoStatus = "Banana";
 
-        Revista revistaSelecionada = repositorioRevista.SelecionarPorId(idRevista);
         return new Emprestimo(amigoSelecionado, revistaSelecionada, novaDataEmprestimo, novaDataDevolucao, novoStatus);
     }
 }

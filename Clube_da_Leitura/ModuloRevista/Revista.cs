@@ -9,11 +9,11 @@ public class Revista : EntidadeBase<Revista>
     public string titulo; //minimo de 2 caracteres com no maximo 100
     public int numeroEdicao;
     public int anoPublicacao; 
-    public string status;
+    public StatusDisponveis status;
     public Caixa caixa;
     public List<Emprestimo> emprestimos = new List<Emprestimo>(); // em haver se precisa ou não
 
-    public Revista(string titulo, int numeroEdicao, int anoPublicacao, Caixa caixa, string status)
+    public Revista(string titulo, int numeroEdicao, int anoPublicacao, Caixa caixa, StatusDisponveis status)
     { 
         this.titulo = titulo;
         this.numeroEdicao = numeroEdicao;
@@ -21,6 +21,13 @@ public class Revista : EntidadeBase<Revista>
         this.caixa = caixa;
         this.status = status;
         caixa.revistas.Add(this);
+    }
+
+    public enum StatusDisponveis
+    {
+        Disponivel = 1,
+        Emprestada = 2,
+        Reservada = 3,
     }
 
     public override void AtualizarInformacoes(Revista revistaAtualizada)

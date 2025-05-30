@@ -3,6 +3,7 @@ using Clube_da_Leitura.ModuloAmigo;
 using Clube_da_Leitura.ModuloCaixa;
 using Clube_da_Leitura.ModuloEmprestimo;
 using Clube_da_Leitura.ModuloRevista;
+using static Clube_da_Leitura.ModuloCaixa.Caixa;
 
 namespace Clube_da_Leitura
 {
@@ -18,12 +19,12 @@ namespace Clube_da_Leitura
 
             var repositorioCaixa = new RepositorioCaixa();
             var telaCaixa = new TelaCaixa(repositorioCaixa);
-            var caixa = new Caixa("Etiqueta Teste", "Vermelho", 7);
+            var caixa = new Caixa("Etiqueta Teste", CorCaixa.Vermelha, 7);
             repositorioCaixa.InserirRegistro(caixa);
 
             var repositorioRevista = new RepositorioRevista();
             var telaRevista = new TelaRevista(repositorioCaixa, telaCaixa, repositorioRevista);
-            var revista = new Revista("Pequeno Principe", 2, 2025, caixa, "Liberado");
+            var revista = new Revista("Pequeno Principe", 2, 2025, caixa, Revista.StatusDisponveis.Disponivel);
             repositorioRevista.InserirRegistro(revista);
 
 

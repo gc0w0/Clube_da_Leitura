@@ -11,11 +11,7 @@ public class TelaAmigo : TelaBase<Amigo>
         repositorio = repositorioAmigo;
 
     }
-    public void ExcluirAmigo()
-    {
-        ExcluirRegistro(a => a.emprestimos.Count > 0);
-    }
-
+   
     public override void ExibirCabecalhoTabela()
     {
         Console.WriteLine(formatoColunasTabela, "Id", "Nome", "Nome do Responsavel", "Telefone", "Emprestimos");

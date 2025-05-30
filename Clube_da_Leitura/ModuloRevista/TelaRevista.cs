@@ -1,10 +1,13 @@
 ﻿using Clube_da_Leitura.Compartilhado;
+using Clube_da_Leitura.ModuloAmigo;
 using Clube_da_Leitura.ModuloCaixa;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static Clube_da_Leitura.ModuloCaixa.Caixa;
+using static Clube_da_Leitura.ModuloRevista.Revista;
 
 namespace Clube_da_Leitura.ModuloRevista
 {
@@ -45,8 +48,49 @@ namespace Clube_da_Leitura.ModuloRevista
             Console.Write("Digite o novo ano de publicação: ");
             int novoAnoPublicacao = int.Parse(Console.ReadLine());
 
-            Console.Write("Digite o novo status do livro: ");
-            string novoStatus = Console.ReadLine();
+            Console.WriteLine("Escolha o status da revista (ou pressione Enter para 'Disponivel'): ");
+            foreach (StatusDisponveis status in Enum.GetValues(typeof(StatusDisponveis)))
+            {
+                Console.WriteLine($"| {(int)status} - {status}");
+            }
+            Console.Write("Digite o numero da Opção: ");
+            string entradaStatus = Console.ReadLine();
+            StatusDisponveis novoStatus;
+
+            if (string.IsNullOrEmpty(entradaStatus))
+            {
+                novoStatus = StatusDisponveis.Disponivel;
+            }
+            else
+            {
+                int statusSelecionado;
+                while (!int.TryParse(entradaStatus, out statusSelecionado) || !Enum.IsDefined(typeof(StatusDisponveis), statusSelecionado))
+                {
+                    Console.Write("Opção inválida. Escolha novamente: ");
+                    entradaStatus = Console.ReadLine();
+                }
+                novoStatus = (StatusDisponveis)statusSelecionado;
+            }
+
+            var repositorioRevista = (RepositorioRevista)repositorio;
+
+            bool tituloDuplicado = repositorioRevista.ValidarDuplicidade(a => a.titulo == novoTitulo);
+            bool edicaoDuplicada = repositorioRevista.ValidarDuplicidade(a => a.numeroEdicao == novoAnoPublicacao);
+            if (tituloDuplicado)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("\nJá existe uma revista com esse \"Titulo\"!");
+                Console.ResetColor();
+                return ObterDados(); 
+            }
+
+            else if (edicaoDuplicada)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("\nJá existe uma revista com essa \"Edição\"!");
+                Console.ResetColor();
+                return ObterDados();
+            }
 
             this.telaCaixa.VisualizarRegistros(mostrarCabecalho: false);
 
