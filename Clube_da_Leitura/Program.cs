@@ -31,9 +31,9 @@ namespace Clube_da_Leitura
             var repositorioEmprestimo = new RepositorioEmprestimo();
             var telaEmprestimo = new TelaEmprestimo(
                 repositorioEmprestimo,  repositorioAmigo,  repositorioRevista,  
-                repositorioCaixa,  telaAmigo,  telaRevista,  telaCaixa);
+                repositorioCaixa,  telaAmigo,  telaRevista,  telaCaixa );
 
-            var emprestimo = new Emprestimo(amigo, revista, DateTime.Now, new DateTime(2025/05/29), "Liberado");
+            var emprestimo = new Emprestimo(amigo, revista, DateTime.Now, new DateTime(2025,06,01), Emprestimo.SituacoesDisponveis.Fechado);
             repositorioEmprestimo.InserirRegistro(emprestimo);
 
             var telaPrincipal = new TelaPrincipal();
@@ -69,11 +69,11 @@ namespace Clube_da_Leitura
             if (telaEmprestimo.opcaoEscolhida == "1")
                 telaEmprestimo.CadastrarRegistro();
             else if (telaEmprestimo.opcaoEscolhida == "2")
-                telaEmprestimo.VisualizarRegistros(mostrarCabecalho: true);
+                telaEmprestimo.VisualizarEmprestimosAbertos(mostrarCabecalho: true);
             else if (telaEmprestimo.opcaoEscolhida == "3")
-                telaEmprestimo.EditarRegistro();
+                telaEmprestimo.VisualizarEmprestimosFechados(mostrarCabecalho: true);
             else if (telaEmprestimo.opcaoEscolhida == "4")
-                telaEmprestimo.ExcluirRegistro();
+                telaEmprestimo.RegistrarDevolucao();
         }
 
         private static void GerenciarRevistas(TelaRevista telaRevista, TelaPrincipal telaPrincipal)

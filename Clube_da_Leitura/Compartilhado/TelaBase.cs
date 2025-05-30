@@ -1,4 +1,7 @@
-﻿using Gestao_de_Equipamentos.Compartilhado;
+﻿using Clube_da_Leitura.ModuloEmprestimo;
+using Gestao_de_Equipamentos.Compartilhado;
+using Microsoft.Win32;
+using static Clube_da_Leitura.ModuloEmprestimo.Emprestimo;
 namespace Clube_da_Leitura.Compartilhado;
 
 public abstract class TelaBase<T> where T : EntidadeBase<T>
@@ -15,6 +18,21 @@ public abstract class TelaBase<T> where T : EntidadeBase<T>
     public string ExibirOpcoesMenu()
     {
         Console.Clear();
+
+        if(modulo == "Emprestimos")
+        {
+            Console.WriteLine($"Bem-vindo ao Clube da Leitura!\n");
+            Console.WriteLine($"Digite 1 para cadastrar {modulo}:");
+            Console.WriteLine($"Digite 2 para exibir {modulo} abertos:");
+            Console.WriteLine($"Digite 3 para exibir {modulo} fechados:");
+            Console.WriteLine($"Digite 4 para registrar Devolução de {modulo}:");
+            Console.WriteLine("Digite S para sair");
+            Console.Write(">: ");
+
+            opcaoEscolhida = Console.ReadLine();
+            return opcaoEscolhida;
+        }
+
 
         Console.WriteLine($"Bem-vindo ao Clube da Leitura!\n");
         Console.WriteLine($"Digite 1 para cadastrar {modulo}:");
@@ -171,5 +189,7 @@ public abstract class TelaBase<T> where T : EntidadeBase<T>
     {
         return condicaoDeVinculo(registro);
     }
+
+    
 }
 

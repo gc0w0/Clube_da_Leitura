@@ -16,16 +16,23 @@ namespace Clube_da_Leitura.ModuloEmprestimo
         public Revista revista;
         public DateTime dataEmprestimo;
         public DateTime dataDevolucao;
-        public string situacao;//Aberto / Concluido / Atrasado
+        public SituacoesDisponveis situacao;//Aberto / Concluido / Atrasado
 
-        public Emprestimo(Amigo amigo, Revista revista, DateTime dataEmprestimo, DateTime dataDevolucao, string situacao)
+        public Emprestimo(Amigo amigo, Revista revista, DateTime dataEmprestimo, DateTime dataDevolucao, SituacoesDisponveis situacao)
         {
 
             this.dataEmprestimo = dataEmprestimo;
             this.dataDevolucao = dataDevolucao;
+            this.situacao = situacao;
             //amigo.emprestimo.Add(this);
             amigo.emprestimos.Add(this);
             revista.emprestimos.Add(this);
+        }
+
+        public enum SituacoesDisponveis
+        {
+            Aberto = 1,
+            Fechado = 2
         }
 
         public override void AtualizarInformacoes(Emprestimo emprestimoAtualizado)
@@ -44,16 +51,6 @@ namespace Clube_da_Leitura.ModuloEmprestimo
             string resultadoValidacao = "";
 
             return resultadoValidacao;
-        }
-
-        //public string ObterDataDevolucao()
-        //{
-        //    throw new NotImplementedException();
-        //}
-
-        public string RegistrarDevolucao()
-        {
-            throw new NotImplementedException();
         }
     }
 
