@@ -1,11 +1,4 @@
-﻿using Clube_da_Leitura.Compartilhado;
-using Gestao_de_Equipamentos.Compartilhado;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using static Clube_da_Leitura.ModuloEmprestimo.Emprestimo;
+﻿using Gestao_de_Equipamentos.Compartilhado;
 
 namespace Clube_da_Leitura.ModuloEmprestimo
 {
@@ -14,14 +7,14 @@ namespace Clube_da_Leitura.ModuloEmprestimo
         public List<Emprestimo> SelecionarTodosAbertos()
         {
             return SelecionarTodos()
-                .Where(e => e.situacao == SituacoesDisponveis.Aberto)
+                .Where(e => e.situacao == SituacaoEmprestimo.Aberto)
                 .ToList();
         }
 
         public List<Emprestimo> SelecionarTodosFechados()
         {
             return SelecionarTodos()
-                .Where(e => e.situacao == SituacoesDisponveis.Fechado)
+                .Where(e => e.situacao == SituacaoEmprestimo.Fechado)
                 .ToList();
         }
     }

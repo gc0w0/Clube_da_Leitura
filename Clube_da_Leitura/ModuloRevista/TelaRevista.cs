@@ -18,10 +18,12 @@ namespace Clube_da_Leitura.ModuloRevista
         private RepositorioRevista repositorioRevista;
         private TelaCaixa telaCaixa;
 
-        public TelaRevista(RepositorioCaixa repositorioCaixa, TelaCaixa telaCaixa, RepositorioRevista repositorioRevista)
+        public TelaRevista(RepositorioCaixa repositorioCaixa, TelaCaixa telaCaixa, 
+            RepositorioRevista repositorioRevista)
         {
             this.telaCaixa = telaCaixa;
             this.repositorioCaixa = repositorioCaixa;
+
             repositorio = repositorioRevista;
             modulo = "Revistas";
 

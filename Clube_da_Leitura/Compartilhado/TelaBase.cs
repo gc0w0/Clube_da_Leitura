@@ -15,24 +15,9 @@ public abstract class TelaBase<T> where T : EntidadeBase<T>
 
     public RepositorioBase<T> repositorio;
 
-    public string ExibirOpcoesMenu()
+    public virtual string ExibirOpcoesMenu()
     {
-        Console.Clear();
-
-        if(modulo == "Emprestimos")
-        {
-            Console.WriteLine($"Bem-vindo ao Clube da Leitura!\n");
-            Console.WriteLine($"Digite 1 para cadastrar {modulo}:");
-            Console.WriteLine($"Digite 2 para exibir {modulo} abertos:");
-            Console.WriteLine($"Digite 3 para exibir {modulo} fechados:");
-            Console.WriteLine($"Digite 4 para registrar Devolução de {modulo}:");
-            Console.WriteLine("Digite S para sair");
-            Console.Write(">: ");
-
-            opcaoEscolhida = Console.ReadLine();
-            return opcaoEscolhida;
-        }
-
+        Console.Clear();       
 
         Console.WriteLine($"Bem-vindo ao Clube da Leitura!\n");
         Console.WriteLine($"Digite 1 para cadastrar {modulo}:");

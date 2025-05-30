@@ -26,7 +26,6 @@ public class RepositorioBase<T> where T : EntidadeBase<T>
         return true;
     }
 
-
     public T SelecionarPorId(int id)
     {
         return registros.FirstOrDefault(e => e.id == id);

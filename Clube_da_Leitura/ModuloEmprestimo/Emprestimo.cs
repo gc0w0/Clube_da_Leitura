@@ -10,30 +10,38 @@ using System.Threading.Tasks;
 
 namespace Clube_da_Leitura.ModuloEmprestimo
 {
+
     public class Emprestimo : EntidadeBase<Emprestimo>
     {
         public Amigo amigo;
         public Revista revista;
         public DateTime dataEmprestimo;
         public DateTime dataDevolucao;
-        public SituacoesDisponveis situacao;//Aberto / Concluido / Atrasado
+        public SituacaoEmprestimo situacao;//Aberto / Concluido / Atrasado
 
-        public Emprestimo(Amigo amigo, Revista revista, DateTime dataEmprestimo, DateTime dataDevolucao, SituacoesDisponveis situacao)
+        public Emprestimo(Amigo amigo, Revista revista)
         {
+            this.amigo = amigo;
+            this.revista = revista;            
 
-            this.dataEmprestimo = dataEmprestimo;
-            this.dataDevolucao = dataDevolucao;
-            this.situacao = situacao;
-            //amigo.emprestimo.Add(this);
             amigo.emprestimos.Add(this);
             revista.emprestimos.Add(this);
+
+            RegistrarEmprestimo();
         }
 
-        public enum SituacoesDisponveis
+        private void RegistrarEmprestimo()
         {
-            Aberto = 1,
-            Fechado = 2
+            this.situacao = SituacaoEmprestimo.Aberto;
+            revista.status = Revista.StatusDisponveis.Emprestada;
+
+            this.dataEmprestimo = DateTime.Now;
+
+            int diasEmprestimo = revista.caixa.dias;
+            dataDevolucao = DateTime.Now.AddDays(diasEmprestimo);
         }
+
+       
 
         public override void AtualizarInformacoes(Emprestimo emprestimoAtualizado)
         {

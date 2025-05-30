@@ -12,13 +12,16 @@ public class TelaEmprestimo : TelaBase<Emprestimo>
     private RepositorioAmigo repositorioAmigo;
     private RepositorioRevista repositorioRevista;
     private RepositorioCaixa repositorioCaixa;
+
+    private RepositorioEmprestimo repositorioEmprestimo;
+
     private TelaAmigo telaAmigo;
     private TelaRevista telaRevista;
     private TelaCaixa telaCaixa;
-    private RepositorioEmprestimo repositorioEmprestimo;
-    protected List<Emprestimo> registros; 
 
-    public TelaEmprestimo(RepositorioEmprestimo repositorioEmprestimo, RepositorioAmigo repositorioAmigo, RepositorioRevista repositorioRevista, RepositorioCaixa repositorioCaixa, TelaAmigo telaAmigo, TelaRevista telaRevista, TelaCaixa telaCaixa)
+    public TelaEmprestimo(RepositorioEmprestimo repositorioEmprestimo, RepositorioAmigo repositorioAmigo,
+        RepositorioRevista repositorioRevista, RepositorioCaixa repositorioCaixa, TelaAmigo telaAmigo,
+        TelaRevista telaRevista, TelaCaixa telaCaixa)
     {
         this.repositorioAmigo = repositorioAmigo;
         this.repositorioRevista = repositorioRevista;
@@ -26,9 +29,26 @@ public class TelaEmprestimo : TelaBase<Emprestimo>
         this.telaAmigo = telaAmigo;
         this.telaRevista = telaRevista;
         this.telaCaixa = telaCaixa;
+
+        this.repositorio = repositorioEmprestimo;
         this.repositorioEmprestimo = repositorioEmprestimo;
-        this.registros = registros;
+
         modulo = "Emprestimos";
+    }
+
+    public override string ExibirOpcoesMenu()
+    {
+        Console.WriteLine($"Bem-vindo ao Clube da Leitura!\n");
+        Console.WriteLine($"Digite 1 para registrar Empréstimo");
+        Console.WriteLine($"Digite 2 para registrar Devolução");
+        Console.WriteLine($"Digite 3 para exibir empréstimos abertos:");
+        Console.WriteLine($"Digite 4 para exibir empréstimos fechados:");
+
+        Console.WriteLine("Digite S para sair");
+        Console.Write(">: ");
+
+        opcaoEscolhida = Console.ReadLine();
+        return opcaoEscolhida;
     }
 
     public override void ExibirCabecalhoTabela()
@@ -66,15 +86,7 @@ public class TelaEmprestimo : TelaBase<Emprestimo>
 
         Revista revistaSelecionada = repositorioRevista.SelecionarPorId(idRevista);
 
-        DateTime novaDataEmprestimo = DateTime.Now;
-        int diasEmprestimo = revistaSelecionada.caixa.dias;
-        DateTime novaDataDevolucao = novaDataEmprestimo.AddDays(diasEmprestimo);
-
-        SituacoesDisponveis novaSituacao;
-        novaSituacao = SituacoesDisponveis.Fechado;
-        revistaSelecionada.status = Revista.StatusDisponveis.Reservada;
-
-        return new Emprestimo(amigoSelecionado, revistaSelecionada, novaDataEmprestimo, novaDataDevolucao, novaSituacao);
+        return new Emprestimo(amigoSelecionado, revistaSelecionada);
     }
 
     public void VisualizarEmprestimosAbertos(bool mostrarCabecalho)
@@ -94,7 +106,7 @@ public class TelaEmprestimo : TelaBase<Emprestimo>
 
         Console.WriteLine("-------------------------------------------------------------------------------------------------");
 
-        repositorioEmprestimo.SelecionarTodosAbertos();
+        List<Emprestimo> registros = repositorioEmprestimo.SelecionarTodosAbertos();
 
         foreach (var registro in registros)
         {
@@ -141,8 +153,8 @@ public class TelaEmprestimo : TelaBase<Emprestimo>
     {
         Console.Clear();
         VisualizarEmprestimosAbertos(false);
-        var repositorioEmprestimo = (RepositorioEmprestimo)repositorio;
-        repositorioEmprestimo.SelecionarTodosAbertos();
+
+        List<Emprestimo> registros = repositorioEmprestimo.SelecionarTodosAbertos();
 
         foreach (var registro in registros)
         {

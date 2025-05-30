@@ -5,11 +5,11 @@ public class TelaAmigo : TelaBase<Amigo>
 {
     private const string formatoColunasTabela = "{0, -10} | {1, -20} | {2, -20} | {3, -15} | {4, -10}";
     RepositorioAmigo repositorioAmigo;
+
     public TelaAmigo(RepositorioAmigo repositorioAmigo)
     {
         modulo = "Amigos";
         repositorio = repositorioAmigo;
-
     }
    
     public override void ExibirCabecalhoTabela()

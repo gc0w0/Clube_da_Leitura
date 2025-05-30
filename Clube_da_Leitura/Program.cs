@@ -8,13 +8,16 @@ using static Clube_da_Leitura.ModuloCaixa.Caixa;
 namespace Clube_da_Leitura
 {
     internal class Program
-    {
+    {      
         static void Main(string[] args)
-        {
+        {                        
             var repositorioAmigo = new RepositorioAmigo();
             var telaAmigo = new TelaAmigo(repositorioAmigo);
             var amigo = new Amigo("Markswell", "Gabriel", "49984327736");
+            var amigo2 = new Amigo("Gregory", "Gabriel", "11111111111");
+
             repositorioAmigo.InserirRegistro(amigo);
+            repositorioAmigo.InserirRegistro(amigo2);
 
 
             var repositorioCaixa = new RepositorioCaixa();
@@ -29,13 +32,11 @@ namespace Clube_da_Leitura
 
 
             var repositorioEmprestimo = new RepositorioEmprestimo();
+
             var telaEmprestimo = new TelaEmprestimo(
                 repositorioEmprestimo,  repositorioAmigo,  repositorioRevista,  
                 repositorioCaixa,  telaAmigo,  telaRevista,  telaCaixa );
-
-            var emprestimo = new Emprestimo(amigo, revista, DateTime.Now, new DateTime(2025,06,01), Emprestimo.SituacoesDisponveis.Fechado);
-            repositorioEmprestimo.InserirRegistro(emprestimo);
-
+           
             var telaPrincipal = new TelaPrincipal();
 
             while (true)
