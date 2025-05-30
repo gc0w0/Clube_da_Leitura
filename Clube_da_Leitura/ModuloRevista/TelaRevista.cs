@@ -74,8 +74,8 @@ namespace Clube_da_Leitura.ModuloRevista
 
             var repositorioRevista = (RepositorioRevista)repositorio;
 
-            bool tituloDuplicado = repositorioRevista.ValidarDuplicidade(a => a.titulo == novoTitulo);
-            bool edicaoDuplicada = repositorioRevista.ValidarDuplicidade(a => a.numeroEdicao == novoAnoPublicacao);
+            bool tituloDuplicado = repositorioRevista.Validacoes(a => a.titulo == novoTitulo);
+            bool edicaoDuplicada = repositorioRevista.Validacoes(a => a.numeroEdicao == novoAnoPublicacao);
             if (tituloDuplicado)
             {
                 Console.ForegroundColor = ConsoleColor.Red;

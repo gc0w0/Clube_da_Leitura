@@ -90,7 +90,7 @@ public class TelaCaixa : TelaBase<Caixa>
 
         var repositorioCaixa = (RepositorioCaixa)repositorio;
 
-        bool duplicado = repositorioCaixa.ValidarDuplicidade(a => a.etiqueta == novaEtiqueta);
+        bool duplicado = repositorioCaixa.Validacoes(a => a.etiqueta == novaEtiqueta);
         if (duplicado)
         {
             Console.ForegroundColor = ConsoleColor.Red;

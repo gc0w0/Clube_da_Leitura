@@ -46,7 +46,7 @@ public class RepositorioBase<T> where T : EntidadeBase<T>
     }
 
     //TODO Feito para que possa ser valiado duplicidade em qualquer lugar
-    public bool ValidarDuplicidade(Func<T, bool> validacao)
+    public bool Validacoes(Func<T, bool> validacao)
     {
         return registros.Any(validacao);
     }

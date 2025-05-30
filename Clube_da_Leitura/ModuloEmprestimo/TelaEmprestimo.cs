@@ -44,6 +44,17 @@ public class TelaEmprestimo : TelaBase<Emprestimo>
         int idAmigo = Convert.ToInt32(Console.ReadLine());
 
         Amigo amigoSelecionado = repositorioAmigo.SelecionarPorId(idAmigo);
+        
+        bool jaTemEmprestimoAtivo = amigoSelecionado.emprestimos.Any(e => e.id >= 1 );
+
+        if (jaTemEmprestimoAtivo)
+        {
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.WriteLine("Este amigo já possui um empréstimo em aberto e não pode fazer outro!");
+            Console.ResetColor();
+            Console.ReadKey();
+            return ObterDados(); 
+        }
 
         this.telaRevista.VisualizarRegistros(mostrarCabecalho: false);
         Console.Write("Digite o ID da revista que deseja pegar emprestada: ");

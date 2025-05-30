@@ -12,8 +12,8 @@ namespace Clube_da_Leitura.ModuloEmprestimo
 {
     public class Emprestimo : EntidadeBase<Emprestimo>
     {
-        public List<Amigo> amigos = new List<Amigo>();
-        public List<Revista> revistas = new List<Revista>();
+        public Amigo amigo;
+        public Revista revista;
         public DateTime dataEmprestimo;
         public DateTime dataDevolucao;
         public string situacao;//Aberto / Concluido / Atrasado
@@ -24,8 +24,8 @@ namespace Clube_da_Leitura.ModuloEmprestimo
             this.dataEmprestimo = dataEmprestimo;
             this.dataDevolucao = dataDevolucao;
             //amigo.emprestimo.Add(this);
-            revista.emprestimos.Add(this);
             amigo.emprestimos.Add(this);
+            revista.emprestimos.Add(this);
         }
 
         public override void AtualizarInformacoes(Emprestimo emprestimoAtualizado)

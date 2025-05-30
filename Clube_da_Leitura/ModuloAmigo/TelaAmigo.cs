@@ -35,7 +35,7 @@ public class TelaAmigo : TelaBase<Amigo>
 
         var repositorioAmigo = (RepositorioAmigo)repositorio;
 
-        bool duplicado = repositorioAmigo.ValidarDuplicidade(a => a.nome == novoNome || a.telefone == novoTelefone);
+        bool duplicado = repositorioAmigo.Validacoes(a => a.nome == novoNome || a.telefone == novoTelefone);
 
         if (duplicado)
         {
