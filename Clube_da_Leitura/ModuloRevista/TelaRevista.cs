@@ -10,8 +10,9 @@ namespace Clube_da_Leitura.ModuloRevista
 {
     public class TelaRevista : TelaBase<Revista>
     {
-        private const string formatoColunasTabela = "{0, -10} | {1, -20} | {2, -15} | {3, -15}";
+        private const string formatoColunasTabela = "{0, -10} | {1, -20} | {2, -20} | {3, -15}";
         private RepositorioCaixa repositorioCaixa;
+        private RepositorioRevista repositorioRevista;
         private TelaCaixa telaCaixa;
 
         public TelaRevista(RepositorioCaixa repositorioCaixa, TelaCaixa telaCaixa, RepositorioRevista repositorioRevista)

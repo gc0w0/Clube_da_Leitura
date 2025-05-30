@@ -1,5 +1,7 @@
 ﻿using Clube_da_Leitura.Compartilhado;
+using Clube_da_Leitura.ModuloAmigo;
 using Clube_da_Leitura.ModuloCaixa;
+using Clube_da_Leitura.ModuloEmprestimo;
 
 namespace Clube_da_Leitura.ModuloRevista;
 public class Revista : EntidadeBase<Revista>
@@ -7,8 +9,9 @@ public class Revista : EntidadeBase<Revista>
     public string titulo; //minimo de 2 caracteres com no maximo 100
     public int numeroEdicao;
     public int anoPublicacao; 
-    public Caixa caixa;
     public string status;
+    public Caixa caixa;
+    public List<Emprestimo> emprestimos = new List<Emprestimo>(); // em haver se precisa ou não
 
     public Revista(string titulo, int numeroEdicao, int anoPublicacao, Caixa caixa, string status)
     { 

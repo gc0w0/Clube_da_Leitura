@@ -1,6 +1,7 @@
 ﻿using Clube_da_Leitura.Compartilhado;
 using Clube_da_Leitura.ModuloAmigo;
 using Clube_da_Leitura.ModuloCaixa;
+using Clube_da_Leitura.ModuloEmprestimo;
 using Clube_da_Leitura.ModuloRevista;
 
 namespace Clube_da_Leitura
@@ -11,12 +12,28 @@ namespace Clube_da_Leitura
         {
             var repositorioAmigo = new RepositorioAmigo();
             var telaAmigo = new TelaAmigo(repositorioAmigo);
+            var amigo = new Amigo("Markswell", "Gabriel", "49984327736");
+            repositorioAmigo.InserirRegistro(amigo);
+
 
             var repositorioCaixa = new RepositorioCaixa();
             var telaCaixa = new TelaCaixa(repositorioCaixa);
+            var caixa = new Caixa("Etiqueta Teste", "Vermelho", 7);
+            repositorioCaixa.InserirRegistro(caixa);
 
             var repositorioRevista = new RepositorioRevista();
             var telaRevista = new TelaRevista(repositorioCaixa, telaCaixa, repositorioRevista);
+            var revista = new Revista("Pequeno Principe", 2, 2025, caixa, "Liberado");
+            repositorioRevista.InserirRegistro(revista);
+
+
+            var repositorioEmprestimo = new RepositorioEmprestimo();
+            var telaEmprestimo = new TelaEmprestimo(
+                repositorioEmprestimo,  repositorioAmigo,  repositorioRevista,  
+                repositorioCaixa,  telaAmigo,  telaRevista,  telaCaixa);
+
+            var emprestimo = new Emprestimo(amigo, revista, DateTime.Now, new DateTime(2025/05/29), "Liberado");
+            repositorioEmprestimo.InserirRegistro(emprestimo);
 
             var telaPrincipal = new TelaPrincipal();
 
@@ -33,12 +50,29 @@ namespace Clube_da_Leitura
                 else if (telaPrincipal.opcaoEscolhida == "3")
                     GerenciarRevistas(telaRevista, telaPrincipal);
 
+                else if (telaPrincipal.opcaoEscolhida == "4")
+                    GerenciarEmprestimos(telaEmprestimo, telaPrincipal);
+
                 else if (telaPrincipal.opcaoEscolhida == "S")
                 {
                     Console.WriteLine("Saindo do sistema...");
                     break;
                 }
             }
+        }
+
+        private static void GerenciarEmprestimos(TelaEmprestimo telaEmprestimo, TelaPrincipal telaPrincipal)
+        {
+            telaEmprestimo.ExibirOpcoesMenu();
+
+            if (telaEmprestimo.opcaoEscolhida == "1")
+                telaEmprestimo.CadastrarRegistro();
+            else if (telaEmprestimo.opcaoEscolhida == "2")
+                telaEmprestimo.VisualizarRegistros(mostrarCabecalho: true);
+            else if (telaEmprestimo.opcaoEscolhida == "3")
+                telaEmprestimo.EditarRegistro();
+            else if (telaEmprestimo.opcaoEscolhida == "4")
+                telaEmprestimo.ExcluirRegistro();
         }
 
         private static void GerenciarRevistas(TelaRevista telaRevista, TelaPrincipal telaPrincipal)
@@ -66,7 +100,7 @@ namespace Clube_da_Leitura
             else if (telaCaixa.opcaoEscolhida == "3")
                 telaCaixa.EditarRegistro();
             else if (telaCaixa.opcaoEscolhida == "4")
-                telaCaixa.ExcluirRegistro();
+                telaCaixa.ExcluirRegistro(a => a.revistas.Count > 0); //passa por parametro a validação de registro vinculados.
         }
 
         private static void GerenciarAmigos(TelaAmigo telaAmigo, TelaPrincipal telaPrincipal)
@@ -80,8 +114,11 @@ namespace Clube_da_Leitura
             else if (telaAmigo.opcaoEscolhida == "3")
                 telaAmigo.EditarRegistro();
             else if (telaAmigo.opcaoEscolhida == "4")
-                telaAmigo.ExcluirRegistro();
+                //TODO Verificar os Emprestimos de Amigo.
+                //TODO Feito para que possa validar relacionamentos em qualqeur lugar.
+                telaAmigo.ExcluirRegistro(a => a.emprestimos.Count > 0); //passa por parametro a validação registro vinculados.
         }
+
 
 
     }

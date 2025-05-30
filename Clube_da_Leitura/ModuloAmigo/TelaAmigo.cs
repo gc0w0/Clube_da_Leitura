@@ -3,24 +3,27 @@ namespace Clube_da_Leitura.ModuloAmigo;
 
 public class TelaAmigo : TelaBase<Amigo>
 {
-    private const string formatoColunasTabela = "{0, -10} | {1, -20} | {2, -15} | {3, -15}";
-    private RepositorioAmigo repositorioAmigo;
-    private TelaAmigo telaAmigo;
+    private const string formatoColunasTabela = "{0, -10} | {1, -20} | {2, -20} | {3, -15} | {4, -10}";
+    RepositorioAmigo repositorioAmigo;
     public TelaAmigo(RepositorioAmigo repositorioAmigo)
     {
         modulo = "Amigos";
         repositorio = repositorioAmigo;
-        
+
+    }
+    public void ExcluirAmigo()
+    {
+        ExcluirRegistro(a => a.emprestimos.Count > 0);
     }
 
     public override void ExibirCabecalhoTabela()
     {
-        Console.WriteLine(formatoColunasTabela, "Id", "Nome", "Nome do Responsavel", "Telefone");
+        Console.WriteLine(formatoColunasTabela, "Id", "Nome", "Nome do Responsavel", "Telefone", "Emprestimos");
     }
-
+    
     public override void ExibirLinhaTabela(Amigo a)
     {
-        Console.WriteLine(formatoColunasTabela, a.id, a.nome, a.nomeReponsavel, a.telefone);
+        Console.WriteLine(formatoColunasTabela, a.id, a.nome, a.nomeReponsavel, a.telefone, a.emprestimos.Count);
     }
 
     public override Amigo ObterDados()
@@ -33,6 +36,18 @@ public class TelaAmigo : TelaBase<Amigo>
 
         Console.Write("Digite o novo número de telefone: "); // verificar para aplicar a mascara.
         string novoTelefone = Console.ReadLine();
+
+        var repositorioAmigo = (RepositorioAmigo)repositorio;
+
+        bool duplicado = repositorioAmigo.ValidarDuplicidade(a => a.nome == novoNome || a.telefone == novoTelefone);
+
+        if (duplicado)
+        {
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine("\nJá existe um amigo com esse nome e telefone!");
+            Console.ResetColor();
+            return ObterDados(); // se só chamar o metodo ele salva oq foi inserido antes e acaba inserindo os duplicados.
+        }
 
         //this.telaAmigo.VisualizarRegistros(mostrarCabecalho: false);
 

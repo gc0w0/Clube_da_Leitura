@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Clube_da_Leitura.ModuloEmprestimo
 {
-    internal class RepositorioEmprestimo : RepositorioBase<Emprestimo>
+    public class RepositorioEmprestimo : RepositorioBase<Emprestimo>
     {
     }
 }

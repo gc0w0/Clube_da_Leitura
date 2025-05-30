@@ -1,4 +1,5 @@
 ﻿using Clube_da_Leitura.Compartilhado;
+using Clube_da_Leitura.ModuloCaixa;
 
 namespace Gestao_de_Equipamentos.Compartilhado;
 
@@ -30,7 +31,6 @@ public class RepositorioBase<T> where T : EntidadeBase<T>
         return registros.FirstOrDefault(e => e.id == id);
     }
 
-
     public bool ExcluirRegistro(int id)
     {
         T? registro = SelecionarPorId(id);
@@ -45,5 +45,12 @@ public class RepositorioBase<T> where T : EntidadeBase<T>
         return registros;
     }
 
+    //TODO Feito para que possa ser valiado duplicidade em qualquer lugar
+    public bool ValidarDuplicidade(Func<T, bool> validacao)
+    {
+        return registros.Any(validacao);
+    }
+
+    
 }
 

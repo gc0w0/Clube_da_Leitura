@@ -33,9 +33,11 @@ public abstract class TelaBase<T> where T : EntidadeBase<T>
     {
         Console.Clear();
 
-        Console.WriteLine($"Modulo de {modulo}s");
+        Console.WriteLine($"Modulo de {modulo}");
 
-        Console.WriteLine($"Cadastrando {modulo}s...");
+        Console.WriteLine($"Cadastrando {modulo}...");
+
+        Console.WriteLine();
 
         T registro = ObterDados();
 
@@ -101,7 +103,7 @@ public abstract class TelaBase<T> where T : EntidadeBase<T>
 
         ExibirCabecalhoTabela();
 
-        Console.WriteLine("----------------------------------------------------------------");
+        Console.WriteLine("-------------------------------------------------------------------------------------------------");
 
         List<T> registros = repositorio.SelecionarTodos();
 
@@ -118,13 +120,13 @@ public abstract class TelaBase<T> where T : EntidadeBase<T>
         Console.ReadLine();
     }
 
-    public void ExcluirRegistro()
+    public void ExcluirRegistro(Func<T, bool> condicaoDeVinculo = null)
     {
         Console.Clear();
 
-        Console.WriteLine($"Módulo de {modulo}"); 
+        Console.WriteLine($"Módulo de {modulo}");
 
-        Console.WriteLine($"Editando {modulo}..."); 
+        Console.WriteLine($"Editando {modulo}...");
 
         Console.WriteLine();
 
@@ -132,6 +134,18 @@ public abstract class TelaBase<T> where T : EntidadeBase<T>
 
         Console.Write($"Digite o {modulo} que deseja excluir: ");
         var id = int.Parse(Console.ReadLine());
+
+        T registro = repositorio.SelecionarPorId(id);
+
+        //TODO Verifica vinculo, se foi passada uma condição
+        if (condicaoDeVinculo != null && RegistroPossuiVinculo(registro, condicaoDeVinculo))
+        {
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.WriteLine("\nEste registro possui vínculos e não pode ser excluído!");
+            Console.ResetColor();
+            Console.ReadKey();
+            return;
+        }
 
         bool conseguiuExcluir = repositorio.ExcluirRegistro(id);
 
@@ -149,7 +163,13 @@ public abstract class TelaBase<T> where T : EntidadeBase<T>
 
     public abstract T ObterDados();
 
-    public abstract void ExibirCabecalhoTabela(); 
+    public abstract void ExibirCabecalhoTabela();
 
-    public abstract void ExibirLinhaTabela(T registro); 
+    public abstract void ExibirLinhaTabela(T registro);
+
+    protected bool RegistroPossuiVinculo(T registro, Func<T, bool> condicaoDeVinculo)
+    {
+        return condicaoDeVinculo(registro);
+    }
 }
+

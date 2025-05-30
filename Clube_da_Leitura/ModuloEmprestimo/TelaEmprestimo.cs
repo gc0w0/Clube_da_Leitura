@@ -1,27 +1,59 @@
 ﻿using Clube_da_Leitura.Compartilhado;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Clube_da_Leitura.ModuloAmigo;
+using Clube_da_Leitura.ModuloCaixa;
+using Clube_da_Leitura.ModuloRevista;
+namespace Clube_da_Leitura.ModuloEmprestimo;
 
-namespace Clube_da_Leitura.ModuloEmprestimo
+public class TelaEmprestimo : TelaBase<Emprestimo>
 {
-    internal class TelaEmprestimo : TelaBase<Emprestimo>
+    private const string formatoColunasTabela = "{0, -10} | {1, -20} | {2, -25} | {3, -15}";
+
+    private RepositorioAmigo repositorioAmigo;
+    private RepositorioRevista repositorioRevista;
+    private RepositorioCaixa repositorioCaixa;
+    private TelaAmigo telaAmigo;
+    private TelaRevista telaRevista;
+    private TelaCaixa telaCaixa;
+
+    public TelaEmprestimo(RepositorioEmprestimo repositorioEmprestimo, RepositorioAmigo repositorioAmigo, RepositorioRevista repositorioRevista, RepositorioCaixa repositorioCaixa, TelaAmigo telaAmigo, TelaRevista telaRevista, TelaCaixa telaCaixa)
     {
-        public override void ExibirCabecalhoTabela()
-        {
-            throw new NotImplementedException();
-        }
+        this.repositorioAmigo = repositorioAmigo;
+        this.repositorioRevista = repositorioRevista;
+        this.repositorioCaixa = repositorioCaixa;
+        this.telaAmigo = telaAmigo;
+        this.telaRevista = telaRevista;
+        this.telaCaixa = telaCaixa;
+        repositorio = repositorioEmprestimo;
+        modulo = "Emprestimos";
+    }
 
-        public override void ExibirLinhaTabela(Emprestimo registro)
-        {
-            throw new NotImplementedException();
-        }
+    public override void ExibirCabecalhoTabela()
+    {
+        Console.WriteLine(formatoColunasTabela, "Id", "Data Emprestimo", "Data Devolução", "Status");
+    }
 
-        public override Emprestimo ObterDados()
-        {
-            throw new NotImplementedException();
-        }
+    public override void ExibirLinhaTabela(Emprestimo e)
+    {
+        Console.WriteLine(formatoColunasTabela, e.id, e.dataEmprestimo, e.dataDevolucao, e.situacao);
+    }
+
+    public override Emprestimo ObterDados()
+    {
+        this.telaAmigo.VisualizarRegistros(mostrarCabecalho: false);
+        Console.Write("Digite o seu ID de amigo: ");
+        int idAmigo = Convert.ToInt32(Console.ReadLine());
+
+        Amigo amigoSelecionado = repositorioAmigo.SelecionarPorId(idAmigo);
+
+        this.telaRevista.VisualizarRegistros(mostrarCabecalho: false);
+        Console.Write("Digite o ID da revista que deseja pegar emprestada: ");
+        int idRevista = Convert.ToInt32(Console.ReadLine());
+
+        DateTime novaDataEmprestimo = DateTime.Now;
+        DateTime novaDataDevolucao = DateTime.Now;
+        string novoStatus = "Banana";
+
+        Revista revistaSelecionada = repositorioRevista.SelecionarPorId(idRevista);
+        return new Emprestimo(amigoSelecionado, revistaSelecionada, novaDataEmprestimo, novaDataDevolucao, novoStatus);
     }
 }

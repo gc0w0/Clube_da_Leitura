@@ -1,5 +1,8 @@
 ﻿using Clube_da_Leitura.Compartilhado;
+using Clube_da_Leitura.ModuloEmprestimo;
+using Clube_da_Leitura.ModuloRevista;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,6 +15,10 @@ namespace Clube_da_Leitura.ModuloAmigo
         public string nome; //minimo 3 caracteres no maximo 100
         public string nomeReponsavel; //minimo 3 caracteres no maximo 100
         public string telefone; //implementar Validação de caracteres (formato validado: (XX) XXXX-XXXX ou (XX) XXXXX-XXXX)
+        public List<Emprestimo> emprestimos = new List<Emprestimo>();
+        public RepositorioAmigo repositorioAmigo;
+        //public List<Revista> revista = new List<Revista>();
+
         public Amigo(string nome, string nomeResponsavel, string telefone) 
         {
             this.nome = nome;
@@ -24,11 +31,12 @@ namespace Clube_da_Leitura.ModuloAmigo
             this.nome = amigoAtualizado.nome;
             this.nomeReponsavel = amigoAtualizado.nomeReponsavel;
             this.telefone = amigoAtualizado.telefone;
-        }
+            this.emprestimos = amigoAtualizado.emprestimos;
+        }   
 
         public override void MostrarInformacoes()
         {
-            Console.WriteLine($"ID de Registro: {id} | Nome: {nome} | Nome Responsavel {nomeReponsavel} | Telefone: {telefone} ");
+            Console.WriteLine($"ID de Registro: {id} | Nome: {nome} | Nome Responsavel {nomeReponsavel} | Telefone: {telefone} | Emprestimos: {emprestimos.Count}");
         }
 
         public override string Validar()
