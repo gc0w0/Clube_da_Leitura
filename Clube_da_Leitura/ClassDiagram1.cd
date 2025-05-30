@@ -1,0 +1,38 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Clube_da_Leitura.ModuloAmigo.Amigo">
+    <Position X="1.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQAAAAAAAAAAAIAAAAAAAAAAAAAAAQAAAAAAAAAwQAA=</HashCode>
+      <FileName>ModuloAmigo\Amigo.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Clube_da_Leitura.ModuloCaixa.Caixa">
+    <Position X="3.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEAAAAAAAAAAAAAAAAAAAQQAAAAAAQAAAAAAgAAwAAA=</HashCode>
+      <FileName>ModuloCaixa\Caixa.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Field Name="revistas" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="Clube_da_Leitura.ModuloRevista.Revista">
+    <Position X="6.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAAAAAAAAAAAAgABAAQAAAAAgEAAwAAA=</HashCode>
+      <FileName>ModuloRevista\Revista.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="caixa" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="Clube_da_Leitura.ModuloEmprestimo.Emprestimo">
+    <Position X="8.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAwAAA=</HashCode>
+      <FileName>ModuloEmprestimo\Emprestimo.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
