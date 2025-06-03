@@ -2,7 +2,6 @@
 using Clube_da_Leitura.ModuloAmigo;
 using Clube_da_Leitura.ModuloCaixa;
 using Clube_da_Leitura.ModuloRevista;
-using static Clube_da_Leitura.ModuloEmprestimo.Emprestimo;
 namespace Clube_da_Leitura.ModuloEmprestimo;
 
 public class TelaEmprestimo : TelaBase<Emprestimo>
@@ -38,11 +37,13 @@ public class TelaEmprestimo : TelaBase<Emprestimo>
 
     public override string ExibirOpcoesMenu()
     {
+        Console.Clear();
         Console.WriteLine($"Bem-vindo ao Clube da Leitura!\n");
         Console.WriteLine($"Digite 1 para registrar Empréstimo");
         Console.WriteLine($"Digite 2 para registrar Devolução");
         Console.WriteLine($"Digite 3 para exibir empréstimos abertos:");
         Console.WriteLine($"Digite 4 para exibir empréstimos fechados:");
+        Console.WriteLine($"Digite 5 para exibir todos empréstimos:");
 
         Console.WriteLine("Digite S para sair");
         Console.Write(">: ");
@@ -97,7 +98,7 @@ public class TelaEmprestimo : TelaBase<Emprestimo>
 
             Console.WriteLine($"Módulo de {modulo}"); //título
 
-            Console.WriteLine($"Visualizando registros de {modulo}..."); //subtítulo
+            Console.WriteLine($"Visualizando devoluções em aberto de {modulo}..."); //subtítulo
         }
 
         Console.WriteLine();
@@ -127,7 +128,7 @@ public class TelaEmprestimo : TelaBase<Emprestimo>
 
             Console.WriteLine($"Módulo de {modulo}"); //título
 
-            Console.WriteLine($"Visualizando registros de {modulo}..."); //subtítulo
+            Console.WriteLine($"Visualizando devoluções fechadas de {modulo}..."); //subtítulo
         }
 
         Console.WriteLine();
@@ -149,10 +150,19 @@ public class TelaEmprestimo : TelaBase<Emprestimo>
         Console.ReadLine();
     }
 
-    public string RegistrarDevolucao()
+    public void RegistrarDevolucao()
     {
         Console.Clear();
-        VisualizarEmprestimosAbertos(false);
+
+        Console.WriteLine($"Módulo de {modulo}");
+
+        Console.WriteLine($"Registrando devoluções em aberto de {modulo}...");
+
+        Console.WriteLine();
+
+        ExibirCabecalhoTabela();
+
+        Console.WriteLine("-------------------------------------------------------------------------------------------------");
 
         List<Emprestimo> registros = repositorioEmprestimo.SelecionarTodosAbertos();
 
@@ -165,13 +175,19 @@ public class TelaEmprestimo : TelaBase<Emprestimo>
         }
 
         Console.ReadLine();
-        Console.WriteLine("Insira o ID da revista para registrar a devolução: ");
+        Console.Write("Insira o ID da revista para registrar a devolução: ");
         int idRevista = Convert.ToInt32(Console.ReadLine());
         Revista revistaSelecionada = repositorioRevista.SelecionarPorId(idRevista);
         revistaSelecionada.status = Revista.StatusDisponveis.Disponivel;
+        Emprestimo emprestimoSelecionado = repositorioEmprestimo.SelecionarPorId(idRevista);
+        emprestimoSelecionado.situacao = SituacaoEmprestimo.Fechado;
 
-        return "";
+
+        Console.WriteLine("Devolução da revista {0} registrada com sucesso", revistaSelecionada.titulo);
+        Console.ReadKey();
+
     }
+ 
 }
 
 

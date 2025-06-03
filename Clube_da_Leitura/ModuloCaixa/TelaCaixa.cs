@@ -98,9 +98,6 @@ public class TelaCaixa : TelaBase<Caixa>
             Console.ResetColor();
             return ObterDados(); 
         }
-
-
-
         return new Caixa(novaEtiqueta, novaCor, novoDiasEmprestimo);
     }
     //TODO Mostra as cores na hora de Obter Dados

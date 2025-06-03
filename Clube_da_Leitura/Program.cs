@@ -2,6 +2,8 @@
 using Clube_da_Leitura.ModuloAmigo;
 using Clube_da_Leitura.ModuloCaixa;
 using Clube_da_Leitura.ModuloEmprestimo;
+using Clube_da_Leitura.ModuloMultas;
+using Clube_da_Leitura.ModuloReservas;
 using Clube_da_Leitura.ModuloRevista;
 using static Clube_da_Leitura.ModuloCaixa.Caixa;
 
@@ -19,23 +21,32 @@ namespace Clube_da_Leitura
             repositorioAmigo.InserirRegistro(amigo);
             repositorioAmigo.InserirRegistro(amigo2);
 
-
             var repositorioCaixa = new RepositorioCaixa();
             var telaCaixa = new TelaCaixa(repositorioCaixa);
             var caixa = new Caixa("Etiqueta Teste", CorCaixa.Vermelha, 7);
+            var caixa2 = new Caixa("Caixa 2", CorCaixa.Amarela, 12);
             repositorioCaixa.InserirRegistro(caixa);
+            repositorioCaixa.InserirRegistro(caixa2);
 
             var repositorioRevista = new RepositorioRevista();
             var telaRevista = new TelaRevista(repositorioCaixa, telaCaixa, repositorioRevista);
             var revista = new Revista("Pequeno Principe", 2, 2025, caixa, Revista.StatusDisponveis.Disponivel);
+            var revista2 = new Revista("Teste2", 3, 1999, caixa2, Revista.StatusDisponveis.Disponivel);
             repositorioRevista.InserirRegistro(revista);
-
+            repositorioRevista.InserirRegistro(revista2);
 
             var repositorioEmprestimo = new RepositorioEmprestimo();
 
             var telaEmprestimo = new TelaEmprestimo(
                 repositorioEmprestimo,  repositorioAmigo,  repositorioRevista,  
                 repositorioCaixa,  telaAmigo,  telaRevista,  telaCaixa );
+
+            var repositorioMulta = new RepositorioMulta();
+            var telaMulta = new TelaMulta();
+
+            var repositorioReserva = new RepositorioReserva();
+            var telaReserva = new TelaReserva();
+
            
             var telaPrincipal = new TelaPrincipal();
 
@@ -55,12 +66,28 @@ namespace Clube_da_Leitura
                 else if (telaPrincipal.opcaoEscolhida == "4")
                     GerenciarEmprestimos(telaEmprestimo, telaPrincipal);
 
+                else if (telaPrincipal.opcaoEscolhida == "5")
+                    GerenciarMultas(telaMulta, telaPrincipal);
+
+                else if (telaPrincipal.opcaoEscolhida == "6")
+                    GerenciarReservar(telaReserva, telaPrincipal);
+
                 else if (telaPrincipal.opcaoEscolhida == "S")
                 {
                     Console.WriteLine("Saindo do sistema...");
                     break;
                 }
             }
+        }
+
+        private static void GerenciarReservar(TelaReserva telaReserva, TelaPrincipal telaPrincipal)
+        {
+            telaReserva.ExibirOpcoesMenu();
+        }
+
+        private static void GerenciarMultas(TelaMulta telaMulta, TelaPrincipal telaPrincipal)
+        {
+            telaMulta.ExibirOpcoesMenu();
         }
 
         private static void GerenciarEmprestimos(TelaEmprestimo telaEmprestimo, TelaPrincipal telaPrincipal)
@@ -70,13 +97,16 @@ namespace Clube_da_Leitura
             if (telaEmprestimo.opcaoEscolhida == "1")
                 telaEmprestimo.CadastrarRegistro();
             else if (telaEmprestimo.opcaoEscolhida == "2")
-                telaEmprestimo.VisualizarEmprestimosAbertos(mostrarCabecalho: true);
+                telaEmprestimo.RegistrarDevolucao();//TODO Implementar Registrr devolução
             else if (telaEmprestimo.opcaoEscolhida == "3")
-                telaEmprestimo.VisualizarEmprestimosFechados(mostrarCabecalho: true);
+                telaEmprestimo.VisualizarEmprestimosAbertos(mostrarCabecalho: true);
             else if (telaEmprestimo.opcaoEscolhida == "4")
-                telaEmprestimo.RegistrarDevolucao();
-        }
+                telaEmprestimo.VisualizarEmprestimosFechados(mostrarCabecalho: true);
+            else if (telaEmprestimo.opcaoEscolhida == "5")
+                telaEmprestimo.VisualizarRegistros(mostrarCabecalho: true);
 
+        }
+        
         private static void GerenciarRevistas(TelaRevista telaRevista, TelaPrincipal telaPrincipal)
         {
             telaRevista.ExibirOpcoesMenu();

@@ -12,9 +12,9 @@ namespace Clube_da_Leitura.ModuloAmigo
 {
     public class Amigo : EntidadeBase<Amigo>
     {
-        public string nome; //minimo 3 caracteres no maximo 100
-        public string nomeReponsavel; //minimo 3 caracteres no maximo 100
-        public string telefone; //implementar Validação de caracteres (formato validado: (XX) XXXX-XXXX ou (XX) XXXXX-XXXX)
+        public string nome, nomeReponsavel, telefone; //minimo 3 caracteres no maximo 100
+        //minimo 3 caracteres no maximo 100
+        //implementar Validação de caracteres (formato validado: (XX) XXXX-XXXX ou (XX) XXXXX-XXXX)
         public List<Emprestimo> emprestimos = new List<Emprestimo>();
         public RepositorioAmigo repositorioAmigo;
         //public List<Revista> revista = new List<Revista>();
