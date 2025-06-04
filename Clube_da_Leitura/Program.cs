@@ -13,6 +13,7 @@ namespace Clube_da_Leitura
     {      
         static void Main(string[] args)
         {                        
+            
             var repositorioAmigo = new RepositorioAmigo();
             var telaAmigo = new TelaAmigo(repositorioAmigo);
             var amigo = new Amigo("Markswell", "Gabriel", "49984327736");
@@ -23,29 +24,35 @@ namespace Clube_da_Leitura
 
             var repositorioCaixa = new RepositorioCaixa();
             var telaCaixa = new TelaCaixa(repositorioCaixa);
-            var caixa = new Caixa("Etiqueta Teste", CorCaixa.Vermelha, 7);
-            var caixa2 = new Caixa("Caixa 2", CorCaixa.Amarela, 12);
+            var caixa = new Caixa("Etiqueta Teste", CorCaixa.Vermelha, 2);
+            var caixa2 = new Caixa("Caixa 2", CorCaixa.Amarela, 1);
             repositorioCaixa.InserirRegistro(caixa);
             repositorioCaixa.InserirRegistro(caixa2);
 
             var repositorioRevista = new RepositorioRevista();
             var telaRevista = new TelaRevista(repositorioCaixa, telaCaixa, repositorioRevista);
-            var revista = new Revista("Pequeno Principe", 2, 2025, caixa, Revista.StatusDisponveis.Disponivel);
+            var revista = new Revista("Pequeno Principe", 2, 2025, caixa, Revista.StatusDisponveis.Emprestada);
             var revista2 = new Revista("Teste2", 3, 1999, caixa2, Revista.StatusDisponveis.Disponivel);
             repositorioRevista.InserirRegistro(revista);
             repositorioRevista.InserirRegistro(revista2);
 
             var repositorioEmprestimo = new RepositorioEmprestimo();
+            var emprestimo = new Emprestimo(amigo, revista);
+            var emprestimo2 = new Emprestimo(amigo2, revista2);
+            repositorioEmprestimo.InserirRegistro(emprestimo);
+            //repositorioEmprestimo.InserirRegistro(emprestimo2);
+
+            var repositorioMulta = new RepositorioMulta();
+
+            var repositorioReserva = new RepositorioReserva();
 
             var telaEmprestimo = new TelaEmprestimo(
                 repositorioEmprestimo,  repositorioAmigo,  repositorioRevista,  
-                repositorioCaixa,  telaAmigo,  telaRevista,  telaCaixa );
+                repositorioCaixa,  telaAmigo,  telaRevista,  telaCaixa, repositorioMulta);
 
-            var repositorioMulta = new RepositorioMulta();
-            var telaMulta = new TelaMulta();
-
-            var repositorioReserva = new RepositorioReserva();
-            var telaReserva = new TelaReserva();
+            var telaMulta = new TelaMulta(repositorioMulta, repositorioAmigo, repositorioEmprestimo, telaAmigo, telaEmprestimo, emprestimo);
+            var telaReserva = new TelaReserva(repositorioEmprestimo, repositorioReserva, repositorioAmigo, repositorioRevista, 
+                repositorioMulta, telaAmigo, telaRevista, telaMulta);
 
            
             var telaPrincipal = new TelaPrincipal();
@@ -83,11 +90,32 @@ namespace Clube_da_Leitura
         private static void GerenciarReservar(TelaReserva telaReserva, TelaPrincipal telaPrincipal)
         {
             telaReserva.ExibirOpcoesMenu();
+
+            if (telaReserva.opcaoEscolhida == "1")
+                telaReserva.CadastrarRegistro();
+            else if (telaReserva.opcaoEscolhida == "2")
+                telaReserva.CancelarReservas();//TODO Implementar Registrr devolução
+            else if (telaReserva.opcaoEscolhida == "3")
+                telaReserva.VisualizarReservasAbertas(mostrarCabecalho: true);
+            else if (telaReserva.opcaoEscolhida == "4")
+                telaReserva.RetirarRevista();//TODO Implementar Registrr devolução
         }
 
         private static void GerenciarMultas(TelaMulta telaMulta, TelaPrincipal telaPrincipal)
         {
             telaMulta.ExibirOpcoesMenu();
+
+            if (telaMulta.opcaoEscolhida == "1")
+                telaMulta.VisualizarMultasAbertas(mostrarCabecalho: true);
+            else if (telaMulta.opcaoEscolhida == "2")
+                telaMulta.QuitarMultas();//TODO Implementar Registrr devolução
+            else if (telaMulta.opcaoEscolhida == "3")
+                telaMulta.ExibirMultasAmigo (mostrarCabecalho: true);
+            else if (telaMulta.opcaoEscolhida == "4")
+                telaMulta.GerarMultas();
+            else if (telaMulta.opcaoEscolhida == "5")
+                telaMulta.VisualizarRegistros(mostrarCabecalho: true);
+
         }
 
         private static void GerenciarEmprestimos(TelaEmprestimo telaEmprestimo, TelaPrincipal telaPrincipal)

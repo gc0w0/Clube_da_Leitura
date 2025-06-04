@@ -1,12 +1,7 @@
 ﻿using Clube_da_Leitura.Compartilhado;
 using Clube_da_Leitura.ModuloEmprestimo;
-using Clube_da_Leitura.ModuloRevista;
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Clube_da_Leitura.ModuloMultas;
+using Clube_da_Leitura.ModuloReservas;
 
 namespace Clube_da_Leitura.ModuloAmigo
 {
@@ -16,10 +11,12 @@ namespace Clube_da_Leitura.ModuloAmigo
         //minimo 3 caracteres no maximo 100
         //implementar Validação de caracteres (formato validado: (XX) XXXX-XXXX ou (XX) XXXXX-XXXX)
         public List<Emprestimo> emprestimos = new List<Emprestimo>();
-        public RepositorioAmigo repositorioAmigo;
+        //public RepositorioAmigo repositorioAmigo;
+        public List<Multa> multa = new List<Multa>();
+        public List<Reserva> reserva = new List<Reserva>();
         //public List<Revista> revista = new List<Revista>();
 
-        public Amigo(string nome, string nomeResponsavel, string telefone) 
+        public Amigo(string nome, string nomeResponsavel, string telefone)
         {
             this.nome = nome;
             this.nomeReponsavel = nomeResponsavel;
@@ -32,11 +29,11 @@ namespace Clube_da_Leitura.ModuloAmigo
             this.nomeReponsavel = amigoAtualizado.nomeReponsavel;
             this.telefone = amigoAtualizado.telefone;
             this.emprestimos = amigoAtualizado.emprestimos;
-        }   
+        }
 
         public override void MostrarInformacoes()
         {
-            Console.WriteLine($"ID de Registro: {id} | Nome: {nome} | Nome Responsavel {nomeReponsavel} | Telefone: {telefone} | Emprestimos: {emprestimos.Count}");
+            Console.WriteLine($"ID de Registro: {id} | Nome: {nome} | Nome Responsavel {nomeReponsavel} | Telefone: {telefone} | Emprestimos: {emprestimos.Count} | Multas: {multa.Count}");
         }
 
         public override string Validar()
@@ -61,7 +58,7 @@ namespace Clube_da_Leitura.ModuloAmigo
             if (nomeReponsavel.Length > 100)
                 resultadoValidacao += "O campo \"Nome de Responsavel\" pode ter no maximo 100 letras" + "\n";
 
-            if(telefone.Length < 10)
+            if (telefone.Length < 10)
                 resultadoValidacao += "O campo \"Telefone\" precisa ter no mínimo 10 caracteres" + "\n";
 
             if (telefone.Length > 11)

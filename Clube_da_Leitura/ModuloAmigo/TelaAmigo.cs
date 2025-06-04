@@ -3,7 +3,7 @@ namespace Clube_da_Leitura.ModuloAmigo;
 
 public class TelaAmigo : TelaBase<Amigo>
 {
-    private const string formatoColunasTabela = "{0, -10} | {1, -20} | {2, -20} | {3, -15} | {4, -10}";
+    private const string formatoColunasTabela = "{0, -10} | {1, -20} | {2, -20} | {3, -15} | {4, -12} | {5, -10}";
     RepositorioAmigo repositorioAmigo;
 
     public TelaAmigo(RepositorioAmigo repositorioAmigo)
@@ -14,12 +14,12 @@ public class TelaAmigo : TelaBase<Amigo>
    
     public override void ExibirCabecalhoTabela()
     {
-        Console.WriteLine(formatoColunasTabela, "Id", "Nome", "Nome do Responsavel", "Telefone", "Emprestimos");
+        Console.WriteLine(formatoColunasTabela, "Id", "Nome", "Nome do Responsavel", "Telefone", "Emprestimos", "Multas");
     }
     
     public override void ExibirLinhaTabela(Amigo a)
     {
-        Console.WriteLine(formatoColunasTabela, a.id, a.nome, a.nomeReponsavel, a.telefone, a.emprestimos.Count);
+        Console.WriteLine(formatoColunasTabela, a.id, a.nome, a.nomeReponsavel, a.telefone, a.emprestimos.Count, a.multa.Count);
     }
 
     public override Amigo ObterDados()

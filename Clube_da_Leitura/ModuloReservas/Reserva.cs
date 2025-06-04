@@ -1,4 +1,7 @@
 ﻿using Clube_da_Leitura.Compartilhado;
+using Clube_da_Leitura.ModuloAmigo;
+using Clube_da_Leitura.ModuloEmprestimo;
+using Clube_da_Leitura.ModuloRevista;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,19 +12,41 @@ namespace Clube_da_Leitura.ModuloReservas
 {
     public class Reserva : EntidadeBase<Reserva>
     {
-        public override void AtualizarInformacoes(Reserva registroAtualizado)
+        public Amigo amigo;
+        public Revista revista;
+        public DateTime dataReserva;
+        public SituacaoReserva situacao;
+
+        public Reserva(Amigo amigo, Revista revista)
         {
-            throw new NotImplementedException();
+            this.amigo = amigo;
+            this.revista = revista;
+            this.dataReserva = DateTime.Now;
+            RegistrarReserva();
+        }
+
+        private void RegistrarReserva()
+        {
+            this.situacao = SituacaoReserva.Ativa;
+            revista.status = Revista.StatusDisponveis.Reservada;
+
+        }
+
+        public override void AtualizarInformacoes(Reserva reservaAtualizada)
+        {
+            this.dataReserva = reservaAtualizada.dataReserva;
         }
 
         public override void MostrarInformacoes()
         {
-            throw new NotImplementedException();
+            Console.WriteLine($"ID de Registro: {id} | Amigo: {amigo.nome} | Revista: {revista.titulo} | Status: {situacao} | Data da Reserva {dataReserva}");
         }
 
         public override string Validar()
         {
-            throw new NotImplementedException();
+            string resultadoValidacao = "";
+
+            return resultadoValidacao;
         }
     }
 }

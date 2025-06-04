@@ -3,6 +3,7 @@
     public enum SituacaoReserva
     {
         Ativa = 1,
-        Concluida = 2
+        Concluida = 2,
+        Cancelada = 3
     }
 }

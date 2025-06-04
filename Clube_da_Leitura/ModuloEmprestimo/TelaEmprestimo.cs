@@ -1,6 +1,7 @@
 ﻿using Clube_da_Leitura.Compartilhado;
 using Clube_da_Leitura.ModuloAmigo;
 using Clube_da_Leitura.ModuloCaixa;
+using Clube_da_Leitura.ModuloMultas;
 using Clube_da_Leitura.ModuloRevista;
 namespace Clube_da_Leitura.ModuloEmprestimo;
 
@@ -13,14 +14,14 @@ public class TelaEmprestimo : TelaBase<Emprestimo>
     private RepositorioCaixa repositorioCaixa;
 
     private RepositorioEmprestimo repositorioEmprestimo;
-
+    private RepositorioMulta repositorioMulta;
     private TelaAmigo telaAmigo;
     private TelaRevista telaRevista;
     private TelaCaixa telaCaixa;
-
+    private TelaMulta telaMulta;
     public TelaEmprestimo(RepositorioEmprestimo repositorioEmprestimo, RepositorioAmigo repositorioAmigo,
         RepositorioRevista repositorioRevista, RepositorioCaixa repositorioCaixa, TelaAmigo telaAmigo,
-        TelaRevista telaRevista, TelaCaixa telaCaixa)
+        TelaRevista telaRevista, TelaCaixa telaCaixa, RepositorioMulta repositorioMulta)
     {
         this.repositorioAmigo = repositorioAmigo;
         this.repositorioRevista = repositorioRevista;
@@ -28,11 +29,13 @@ public class TelaEmprestimo : TelaBase<Emprestimo>
         this.telaAmigo = telaAmigo;
         this.telaRevista = telaRevista;
         this.telaCaixa = telaCaixa;
-
+        this.telaMulta = telaMulta;
+        this.repositorioMulta = repositorioMulta;
         this.repositorio = repositorioEmprestimo;
         this.repositorioEmprestimo = repositorioEmprestimo;
 
         modulo = "Emprestimos";
+        this.telaMulta = telaMulta;
     }
 
     public override string ExibirOpcoesMenu()
@@ -71,7 +74,18 @@ public class TelaEmprestimo : TelaBase<Emprestimo>
         Amigo amigoSelecionado = repositorioAmigo.SelecionarPorId(idAmigo);
 
         bool jaTemEmprestimoAtivo = amigoSelecionado.emprestimos.Any(e => e.id >= 1);
+        bool temMultaVinculada = amigoSelecionado.multa.Any(e => e.id >= 1);
+       
 
+
+        if (temMultaVinculada)
+        {
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.WriteLine("Este amigo possui uma multa em aberto e não pode realizar emprestimos até a quitação!");
+            Console.ResetColor();
+            Console.ReadKey();
+            return ObterDados();
+        }
         if (jaTemEmprestimoAtivo)
         {
             Console.ForegroundColor = ConsoleColor.Yellow;
@@ -81,11 +95,32 @@ public class TelaEmprestimo : TelaBase<Emprestimo>
             return ObterDados();
         }
 
+
         this.telaRevista.VisualizarRegistros(mostrarCabecalho: false);
         Console.Write("Digite o ID da revista que deseja pegar emprestada: ");
         int idRevista = Convert.ToInt32(Console.ReadLine());
 
         Revista revistaSelecionada = repositorioRevista.SelecionarPorId(idRevista);
+        bool revistaEmprestada = revistaSelecionada.emprestimos.Any(e => e.id >= 1);
+        bool revistaReservada = revistaSelecionada.reserva.Any(e => e.id >= 1);
+
+        if (revistaEmprestada)
+        {
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.WriteLine("Essa revista está emprestada no momento tente outra!");
+            Console.ResetColor();
+            Console.ReadKey();
+            return ObterDados();
+        }
+
+        else if (revistaReservada)
+        {
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.WriteLine("Essa revista está reservada no momento tente retirar na seção de Retirada!");
+            Console.ResetColor();
+            Console.ReadKey();
+            return ObterDados();
+        }
 
         return new Emprestimo(amigoSelecionado, revistaSelecionada);
     }
@@ -181,8 +216,6 @@ public class TelaEmprestimo : TelaBase<Emprestimo>
         revistaSelecionada.status = Revista.StatusDisponveis.Disponivel;
         Emprestimo emprestimoSelecionado = repositorioEmprestimo.SelecionarPorId(idRevista);
         emprestimoSelecionado.situacao = SituacaoEmprestimo.Fechado;
-
-
         Console.WriteLine("Devolução da revista {0} registrada com sucesso", revistaSelecionada.titulo);
         Console.ReadKey();
 

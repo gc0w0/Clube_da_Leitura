@@ -1,6 +1,7 @@
 ﻿using Clube_da_Leitura.Compartilhado;
 using Clube_da_Leitura.ModuloAmigo;
 using Clube_da_Leitura.ModuloCaixa;
+using Clube_da_Leitura.ModuloMultas;
 using Clube_da_Leitura.ModuloRevista;
 using System;
 using System.Collections.Generic;
@@ -18,12 +19,13 @@ namespace Clube_da_Leitura.ModuloEmprestimo
         public DateTime dataEmprestimo;
         public DateTime dataDevolucao;
         public SituacaoEmprestimo situacao;//Aberto / Concluido / Atrasado
+        public List<Multa> multa = new List<Multa>();
+        public RepositorioMulta repositorioMulta;
 
         public Emprestimo(Amigo amigo, Revista revista)
         {
             this.amigo = amigo;
             this.revista = revista;            
-
             amigo.emprestimos.Add(this);
             revista.emprestimos.Add(this);
 
@@ -33,12 +35,13 @@ namespace Clube_da_Leitura.ModuloEmprestimo
         private void RegistrarEmprestimo()
         {
             this.situacao = SituacaoEmprestimo.Aberto;
-            revista.status = Revista.StatusDisponveis.Emprestada;
 
-            this.dataEmprestimo = DateTime.Now;
+            //this.dataEmprestimo = DateTime.Now; //TODO alterando pra 2 dias antes pra testar 
+            this.dataEmprestimo = new DateTime(2025, 06,01);
 
             int diasEmprestimo = revista.caixa.dias;
-            dataDevolucao = DateTime.Now.AddDays(diasEmprestimo);
+            dataDevolucao = DateTime.Now.AddDays(diasEmprestimo -1);
+            //dataDevolucao = DateTime.Now.AddDays(-1);
         }
 
        

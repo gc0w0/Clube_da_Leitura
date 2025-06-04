@@ -1,4 +1,7 @@
 ﻿using Clube_da_Leitura.Compartilhado;
+using Clube_da_Leitura.ModuloAmigo;
+using Clube_da_Leitura.ModuloEmprestimo;
+using Clube_da_Leitura.ModuloRevista;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,19 +12,54 @@ namespace Clube_da_Leitura.ModuloMultas
 {
     public class Multa : EntidadeBase<Multa>
     {
-        public override void AtualizarInformacoes(Multa registroAtualizado)
+        public Amigo amigo;
+        public Revista revista;
+        public Emprestimo emprestimo;
+        public SituacaoMulta situacao;
+        public float valorMulta;
+
+
+        public Multa(Amigo amigo, Revista revista, Emprestimo emprestimo, SituacaoMulta situacao, float valorMulta)
         {
-            throw new NotImplementedException();
+            this.amigo = amigo;
+            this.revista = revista;
+            this.emprestimo = emprestimo;
+            this.situacao = situacao;
+            this.valorMulta = valorMulta;
+            RegistrarMulta();
+            amigo.multa.Add(this);
+            emprestimo.multa.Add(this);
+
+        }
+
+        public void RegistrarMulta()
+        {
+            this.valorMulta = 2.0f;
+            this.situacao = SituacaoMulta.Quitada;
+
+            if (DateTime.Now > emprestimo.dataDevolucao)
+            {
+                valorMulta = +2.0f;
+                situacao = SituacaoMulta.Pendente;
+            }
+        }
+
+        public override void AtualizarInformacoes(Multa multaAtualizada)
+        {
+            this.situacao = multaAtualizada.situacao;
+            this.valorMulta = multaAtualizada.valorMulta;
         }
 
         public override void MostrarInformacoes()
         {
-            throw new NotImplementedException();
+            Console.WriteLine($"ID de Registro: {id} | DataDevolução {emprestimo.dataDevolucao} | Status: {situacao} | Valor da Multa: R$:{valorMulta}");
         }
 
         public override string Validar()
         {
-            throw new NotImplementedException();
+            string resultadoValidacao = "";
+
+            return resultadoValidacao;
         }
     }
 }

@@ -2,6 +2,7 @@
 using Clube_da_Leitura.ModuloAmigo;
 using Clube_da_Leitura.ModuloCaixa;
 using Clube_da_Leitura.ModuloEmprestimo;
+using Clube_da_Leitura.ModuloReservas;
 
 namespace Clube_da_Leitura.ModuloRevista;
 public class Revista : EntidadeBase<Revista>
@@ -12,6 +13,7 @@ public class Revista : EntidadeBase<Revista>
     public StatusDisponveis status;
     public Caixa caixa;
     public List<Emprestimo> emprestimos = new List<Emprestimo>(); // em haver se precisa ou não
+    public List<Reserva> reserva = new List<Reserva>();
 
     public Revista(string titulo, int numeroEdicao, int anoPublicacao, Caixa caixa, StatusDisponveis status)
     { 
