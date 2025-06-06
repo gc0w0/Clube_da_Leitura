@@ -75,17 +75,18 @@ namespace Clube_da_Leitura.ModuloReservas
             Amigo amigoSelecionado = repositorioAmigo.SelecionarPorId(idAmigo);
 
             bool jaTemEmprestimoAtivo = amigoSelecionado.emprestimos.Any(e => e.id >= 1);
-            bool temMultaVinculada = amigoSelecionado.multa.Any(e => e.id >= 1);
+            bool temMultaPendente = amigoSelecionado.multas
+            .Any(m => m.situacao == SituacaoMulta.Pendente);
 
-
-            if (temMultaVinculada)
+            if (temMultaPendente)
             {
                 Console.ForegroundColor = ConsoleColor.Yellow;
                 Console.WriteLine("Este amigo possui uma multa em aberto e não pode realizar reservas até a quitação!");
                 Console.ResetColor();
                 Console.ReadKey();
-                return ObterDados();
+                return ObterDados(); 
             }
+
             if (jaTemEmprestimoAtivo)
             {
                 Console.ForegroundColor = ConsoleColor.Yellow;
@@ -101,16 +102,34 @@ namespace Clube_da_Leitura.ModuloReservas
             int idRevista = Convert.ToInt32(Console.ReadLine());
 
             Revista revistaSelecionada = repositorioRevista.SelecionarPorId(idRevista);
-            bool revistaEmprestada = revistaSelecionada.emprestimos.Any(e => e.id >= 1);
+
+            bool revistaEmprestada = revistaSelecionada.emprestimos
+                .Any(e => e.situacao == SituacaoEmprestimo.Aberto || e.situacao == SituacaoEmprestimo.Atrasado);
+
+            bool revistaReservada = revistaSelecionada.reserva
+            .Any(r => r.situacao == SituacaoReserva.Ativa);
+
             if (revistaEmprestada)
             {
                 Console.ForegroundColor = ConsoleColor.Yellow;
-                Console.WriteLine("Essa revista está emprestada no momento tente outra!");
+                Console.WriteLine("Essa revista está emprestada no momento, tente outra!");
                 Console.ResetColor();
                 Console.ReadKey();
                 return ObterDados();
             }
+
+            else if (revistaReservada)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("Essa revista já está reservada por outra pessoa.");
+                Console.ResetColor();
+                Console.ReadKey();
+                return ObterDados();
+            }
+
+
             return new Reserva(amigoSelecionado, revistaSelecionada);
+
 
         }
 
@@ -220,7 +239,8 @@ namespace Clube_da_Leitura.ModuloReservas
             Console.WriteLine("Emprestimo registrado.");
             Console.ReadKey();
 
-            return new Emprestimo(amigoSelecionado, revistaSelecionada);
+            var emprestimo = new Emprestimo(amigoSelecionado, revistaSelecionada);
+            return emprestimo;
         }
     }
 }

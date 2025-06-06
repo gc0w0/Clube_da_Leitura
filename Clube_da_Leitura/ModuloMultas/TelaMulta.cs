@@ -54,7 +54,7 @@ namespace Clube_da_Leitura.ModuloMultas
 
         public override void ExibirLinhaTabela(Multa m)
         {
-            Console.WriteLine(formatoColunasTabela, m.id, emprestimos.dataDevolucao, m.situacao, m.valorMulta);
+            Console.WriteLine(formatoColunasTabela, m.id, emprestimos.dataPrevistaDevolucao, m.situacao, m.valorMulta);
         }
 
         public override Multa ObterDados()
@@ -146,9 +146,9 @@ namespace Clube_da_Leitura.ModuloMultas
                 if (e == null || e.situacao != SituacaoEmprestimo.Aberto)
                     continue;
 
-                if (DateTime.Now.Date > e.dataDevolucao.Date)
+                if (DateTime.Now.Date > e.dataPrevistaDevolucao.Date)
                 {
-                    int diasAtraso = (DateTime.Now.Date - e.dataDevolucao.Date).Days;
+                    int diasAtraso = (DateTime.Now.Date - e.dataPrevistaDevolucao.Date).Days;
                     int valorMulta = diasAtraso * 2; 
                     var multaExistente = e.multa?.FirstOrDefault(m => m.situacao == SituacaoMulta.Pendente);
 

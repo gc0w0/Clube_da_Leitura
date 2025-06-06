@@ -40,6 +40,7 @@ namespace Clube_da_Leitura
             var emprestimo = new Emprestimo(amigo, revista);
             var emprestimo2 = new Emprestimo(amigo2, revista2);
             repositorioEmprestimo.InserirRegistro(emprestimo);
+            repositorioEmprestimo.InserirRegistro(emprestimo2);
             //repositorioEmprestimo.InserirRegistro(emprestimo2);
 
             var repositorioMulta = new RepositorioMulta();
@@ -74,9 +75,6 @@ namespace Clube_da_Leitura
                     GerenciarEmprestimos(telaEmprestimo, telaPrincipal);
 
                 else if (telaPrincipal.opcaoEscolhida == "5")
-                    GerenciarMultas(telaMulta, telaPrincipal);
-
-                else if (telaPrincipal.opcaoEscolhida == "6")
                     GerenciarReservar(telaReserva, telaPrincipal);
 
                 else if (telaPrincipal.opcaoEscolhida == "S")
@@ -101,22 +99,6 @@ namespace Clube_da_Leitura
                 telaReserva.RetirarRevista();//TODO Implementar Registrr devolução
         }
 
-        private static void GerenciarMultas(TelaMulta telaMulta, TelaPrincipal telaPrincipal)
-        {
-            telaMulta.ExibirOpcoesMenu();
-
-            if (telaMulta.opcaoEscolhida == "1")
-                telaMulta.VisualizarMultasAbertas(mostrarCabecalho: true);
-            else if (telaMulta.opcaoEscolhida == "2")
-                telaMulta.QuitarMultas();//TODO Implementar Registrr devolução
-            else if (telaMulta.opcaoEscolhida == "3")
-                telaMulta.ExibirMultasAmigo (mostrarCabecalho: true);
-            else if (telaMulta.opcaoEscolhida == "4")
-                telaMulta.GerarMultas();
-            else if (telaMulta.opcaoEscolhida == "5")
-                telaMulta.VisualizarRegistros(mostrarCabecalho: true);
-
-        }
 
         private static void GerenciarEmprestimos(TelaEmprestimo telaEmprestimo, TelaPrincipal telaPrincipal)
         {
@@ -177,6 +159,8 @@ namespace Clube_da_Leitura
                 //TODO Verificar os Emprestimos de Amigo.
                 //TODO Feito para que possa validar relacionamentos em qualqeur lugar.
                 telaAmigo.ExcluirRegistro(a => a.emprestimos.Count > 0); //passa por parametro a validação registro vinculados.
+            else if (telaAmigo.opcaoEscolhida == "5")
+                telaAmigo.QuitarMulta();
         }
 
 

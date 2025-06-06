@@ -4,6 +4,7 @@ using Clube_da_Leitura.ModuloEmprestimo;
 using Clube_da_Leitura.ModuloRevista;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -27,8 +28,14 @@ namespace Clube_da_Leitura.ModuloMultas
             this.situacao = situacao;
             this.valorMulta = valorMulta;
             RegistrarMulta();
-            amigo.multa.Add(this);
+            amigo.multas.Add(this);
             emprestimo.multa.Add(this);
+
+        }
+
+        public Multa(int diasDeAtraso)
+        {
+            valorMulta = diasDeAtraso * 2;
 
         }
 
@@ -37,7 +44,7 @@ namespace Clube_da_Leitura.ModuloMultas
             this.valorMulta = 2.0f;
             this.situacao = SituacaoMulta.Quitada;
 
-            if (DateTime.Now > emprestimo.dataDevolucao)
+            if (DateTime.Now > emprestimo.dataPrevistaDevolucao)
             {
                 valorMulta = +2.0f;
                 situacao = SituacaoMulta.Pendente;
@@ -52,7 +59,7 @@ namespace Clube_da_Leitura.ModuloMultas
 
         public override void MostrarInformacoes()
         {
-            Console.WriteLine($"ID de Registro: {id} | DataDevolução {emprestimo.dataDevolucao} | Status: {situacao} | Valor da Multa: R$:{valorMulta}");
+            Console.WriteLine($"ID de Registro: {id} | DataDevolução {emprestimo.dataPrevistaDevolucao} | Status: {situacao} | Valor da Multa: R$:{valorMulta}");
         }
 
         public override string Validar()

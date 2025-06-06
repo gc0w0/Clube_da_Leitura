@@ -12,7 +12,8 @@ namespace Clube_da_Leitura.ModuloAmigo
         //implementar Validação de caracteres (formato validado: (XX) XXXX-XXXX ou (XX) XXXXX-XXXX)
         public List<Emprestimo> emprestimos = new List<Emprestimo>();
         //public RepositorioAmigo repositorioAmigo;
-        public List<Multa> multa = new List<Multa>();
+        public List<Multa> multas = new List<Multa>();
+        public Multa infoMulta;
         public List<Reserva> reserva = new List<Reserva>();
         //public List<Revista> revista = new List<Revista>();
 
@@ -29,11 +30,12 @@ namespace Clube_da_Leitura.ModuloAmigo
             this.nomeReponsavel = amigoAtualizado.nomeReponsavel;
             this.telefone = amigoAtualizado.telefone;
             this.emprestimos = amigoAtualizado.emprestimos;
+            this.infoMulta = amigoAtualizado.infoMulta;
         }
 
         public override void MostrarInformacoes()
         {
-            Console.WriteLine($"ID de Registro: {id} | Nome: {nome} | Nome Responsavel {nomeReponsavel} | Telefone: {telefone} | Emprestimos: {emprestimos.Count} | Multas: {multa.Count}");
+            Console.WriteLine($"ID de Registro: {id} | Nome: {nome} | Nome Responsavel {nomeReponsavel} | Telefone: {telefone} | Emprestimos: {emprestimos.Count} | Multas: {multas.Count}");
         }
 
         public override string Validar()
@@ -65,6 +67,11 @@ namespace Clube_da_Leitura.ModuloAmigo
                 resultadoValidacao += "O campo \"Telefone\" pode ter no maximo 11 caracteres" + "\n";
 
             return resultadoValidacao;
+        }
+
+        public void RegistrarMulta(Multa novaMulta)
+        {
+            multas.Add(novaMulta);
         }
     }
 }

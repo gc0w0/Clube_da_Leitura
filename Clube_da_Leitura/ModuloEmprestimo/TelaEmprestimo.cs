@@ -62,7 +62,7 @@ public class TelaEmprestimo : TelaBase<Emprestimo>
 
     public override void ExibirLinhaTabela(Emprestimo e)
     {
-        Console.WriteLine(formatoColunasTabela, e.id, e.dataEmprestimo, e.dataDevolucao, e.situacao);
+        Console.WriteLine(formatoColunasTabela, e.id, e.dataEmprestimo, e.dataPrevistaDevolucao, e.situacao);
     }
 
     public override Emprestimo ObterDados()
@@ -74,7 +74,7 @@ public class TelaEmprestimo : TelaBase<Emprestimo>
         Amigo amigoSelecionado = repositorioAmigo.SelecionarPorId(idAmigo);
 
         bool jaTemEmprestimoAtivo = amigoSelecionado.emprestimos.Any(e => e.id >= 1);
-        bool temMultaVinculada = amigoSelecionado.multa.Any(e => e.id >= 1);
+        bool temMultaVinculada = amigoSelecionado.multas.Any(e => e.id >= 1);
        
 
 
@@ -215,6 +215,11 @@ public class TelaEmprestimo : TelaBase<Emprestimo>
         Revista revistaSelecionada = repositorioRevista.SelecionarPorId(idRevista);
         revistaSelecionada.status = Revista.StatusDisponveis.Disponivel;
         Emprestimo emprestimoSelecionado = repositorioEmprestimo.SelecionarPorId(idRevista);
+
+        Console.Write("Digite a data de devolução: ");
+        DateTime datadevolucao = Convert.ToDateTime(Console.ReadLine());
+        emprestimoSelecionado.RegistrarDevolucao(datadevolucao);
+
         emprestimoSelecionado.situacao = SituacaoEmprestimo.Fechado;
         Console.WriteLine("Devolução da revista {0} registrada com sucesso", revistaSelecionada.titulo);
         Console.ReadKey();
