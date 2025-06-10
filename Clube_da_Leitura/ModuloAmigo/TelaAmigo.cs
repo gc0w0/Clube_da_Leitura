@@ -1,5 +1,7 @@
 ﻿using Clube_da_Leitura.Compartilhado;
+using Clube_da_Leitura.ModuloEmprestimo;
 using Clube_da_Leitura.ModuloMultas;
+using System.Collections.Concurrent;
 using System.Globalization;
 namespace Clube_da_Leitura.ModuloAmigo;
 
@@ -8,10 +10,12 @@ public class TelaAmigo : TelaBase<Amigo>
     private const string formatoColunasTabela = "{0, -10} | {1, -20} | {2, -20} | {3, -15} | {4, -12} | {5, -5} | {6, -10}";
     RepositorioAmigo repositorioAmigo;
 
+
     public TelaAmigo(RepositorioAmigo repositorioAmigo)
     {
         modulo = "Amigos";
         repositorio = repositorioAmigo;
+        this.repositorioAmigo = repositorioAmigo;
     }
 
     public override string ExibirOpcoesMenu()
@@ -24,6 +28,7 @@ public class TelaAmigo : TelaBase<Amigo>
         Console.WriteLine($"Digite 3 para editar {modulo}:");
         Console.WriteLine($"Digite 4 para excluir {modulo}:");
         Console.WriteLine($"Digite 5 para quitar Multas {modulo}");
+        Console.WriteLine($"Digite 6 para fitlrar {modulo}");
         Console.WriteLine("Digite S para sair");
         Console.Write(">: ");
 
@@ -122,5 +127,42 @@ public class TelaAmigo : TelaBase<Amigo>
         }
 
         Console.ReadKey();
+    }
+
+    public void FiltroAmigos()
+    {
+        Console.Clear();
+        Console.WriteLine("Filtre amigos por letra:");
+        Console.Write("Selecione a letra que deseja buscar: ");
+        string letraSelecionada = Console.ReadLine();
+        List<Amigo> registros = repositorioAmigo.SelecionarPorFiltro2(FiltrarIniciandoComLetraA);
+        List<Amigo> registros2 = repositorioAmigo.SelecionarPorFiltro2(FiltrarIniciandoComLetraB);
+
+
+        if (registros.Count == 0)
+        {
+            Console.WriteLine("Nenhum amigo encontrado com essa letra.");
+        }
+        else
+        {
+            foreach (Amigo amigo in registros)
+            {
+                ExibirLinhaTabela(amigo);
+
+            }
+        }
+
+        Console.WriteLine("\nPressione qualquer tecla para voltar...");
+        Console.ReadKey();
+    }
+
+    public bool FiltrarIniciandoComLetraA(Amigo amigo)
+    { 
+        return amigo.nome.Contains("A"); ;
+    }
+
+    public bool FiltrarIniciandoComLetraB(Amigo amigo)
+    {
+        return amigo.nome.StartsWith("B");
     }
 }

@@ -161,6 +161,8 @@ namespace Clube_da_Leitura
                 telaAmigo.ExcluirRegistro(a => a.emprestimos.Count > 0); //passa por parametro a validação registro vinculados.
             else if (telaAmigo.opcaoEscolhida == "5")
                 telaAmigo.QuitarMulta();
+            else if (telaAmigo.opcaoEscolhida == "6")
+                telaAmigo.FiltroAmigos();
         }
 
 
