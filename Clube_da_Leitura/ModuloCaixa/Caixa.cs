@@ -24,6 +24,11 @@ namespace Clube_da_Leitura.ModuloCaixa
             Roxa = 5,
             Laranja = 6
         }
+
+        public Caixa()
+        {
+            
+        }
         public Caixa(string etiqueta, CorCaixa cor, int dias )
         {
             this.etiqueta = etiqueta;

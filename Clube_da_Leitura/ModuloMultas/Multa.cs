@@ -19,7 +19,10 @@ namespace Clube_da_Leitura.ModuloMultas
         public SituacaoMulta situacao;
         public float valorMulta;
 
-
+        public Multa()
+        {
+            
+        }
         public Multa(Amigo amigo, Revista revista, Emprestimo emprestimo, SituacaoMulta situacao, float valorMulta)
         {
             this.amigo = amigo;

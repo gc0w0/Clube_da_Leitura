@@ -16,7 +16,10 @@ namespace Clube_da_Leitura.ModuloReservas
         public Revista revista;
         public DateTime dataReserva;
         public SituacaoReserva situacao;
-
+        public Reserva()
+        {
+            
+        }
         public Reserva(Amigo amigo, Revista revista)
         {
             this.amigo = amigo;

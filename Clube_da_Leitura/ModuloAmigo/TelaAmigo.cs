@@ -1,18 +1,81 @@
 ﻿using Clube_da_Leitura.Compartilhado;
 using Clube_da_Leitura.ModuloMultas;
+using Gestao_de_Equipamentos.Compartilhado;
 using System.Globalization;
 namespace Clube_da_Leitura.ModuloAmigo;
 
 public class TelaAmigo : TelaBase<Amigo>
 {
     private const string formatoColunasTabela = "{0, -10} | {1, -20} | {2, -20} | {3, -15} | {4, -12} | {5, -5} | {6, -10}";
-    RepositorioAmigo repositorioAmigo;
+    IRepositorioAmigo repositorioAmigo;
 
-    public TelaAmigo(RepositorioAmigo repositorioAmigo)
+    public TelaAmigo(IRepositorioAmigo repositorioAmigo)
     {
         modulo = "Amigos";
-        repositorio = repositorioAmigo;
+        this.repositorioAmigo = repositorioAmigo;
+        //repositorio = (RepositorioBase<Amigo>)repositorioAmigo;
     }
+
+    public override void CadastrarRegistro()
+    {
+        Console.Clear();
+
+        Console.WriteLine($"Modulo de {modulo}");
+
+        Console.WriteLine($"Cadastrando {modulo}...");
+
+        Console.WriteLine();
+
+        Amigo registro = ObterDados();
+
+        string resultadoValidacao = registro.Validar();
+
+        if (resultadoValidacao != "")
+        {
+            Console.WriteLine(resultadoValidacao);
+            Console.ReadKey();
+            CadastrarRegistro();
+            return;
+        }
+
+        repositorio.InserirRegistro(registro);
+
+        Console.WriteLine("Registro inserido com sucesso \n");
+        Console.ReadKey();
+    }
+
+    public override void VisualizarRegistros(bool mostrarCabecalho)
+    {
+        if (mostrarCabecalho)
+        {
+            Console.Clear();
+
+            Console.WriteLine($"Módulo de {modulo}"); //título
+
+            Console.WriteLine($"Visualizando registros de {modulo}..."); //subtítulo
+        }
+
+        Console.WriteLine();
+
+        ExibirCabecalhoTabela();
+
+        Console.WriteLine("-------------------------------------------------------------------------------------------------");
+
+        var registros = repositorioAmigo.SelecionarTodos();
+
+        for (int i = 0; i < registros.Count; i++)
+        {
+            var registro = registros[i];
+
+            if (registro == null)
+                continue;
+
+            ExibirLinhaTabela(registro);
+        }
+
+        Console.ReadLine();
+    }
+
 
     public override string ExibirOpcoesMenu()
     {
@@ -60,7 +123,7 @@ public class TelaAmigo : TelaBase<Amigo>
         Console.Write("Digite o novo número de telefone: "); // verificar para aplicar a mascara.
         string novoTelefone = Console.ReadLine();
 
-        var repositorioAmigo = (RepositorioAmigo)repositorio;
+        var repositorioAmigo = (RepositorioAmigoEmMemoria)repositorio;
 
         bool duplicado = repositorioAmigo.Validacoes(a => a.nome == novoNome || a.telefone == novoTelefone);
 
@@ -123,4 +186,5 @@ public class TelaAmigo : TelaBase<Amigo>
 
         Console.ReadKey();
     }
+  
 }

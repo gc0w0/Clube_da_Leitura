@@ -11,7 +11,7 @@ namespace Clube_da_Leitura.ModuloReservas
         private const string formatoColunasTabela = "{0, -10} | {1, -20} | {2, -25} | {3, -18} | {4, -10}";
         private RepositorioEmprestimo repositorioEmprestimo;
         private RepositorioReserva repositorioReserva;
-        private RepositorioAmigo repositorioAmigo;
+        private IRepositorioAmigo repositorioAmigo;
         private RepositorioRevista repositorioRevista;
         private RepositorioMulta repositorioMulta;
 
@@ -24,7 +24,7 @@ namespace Clube_da_Leitura.ModuloReservas
         public Multa multa;
 
         public TelaReserva(RepositorioEmprestimo repositorioEmprestimo, RepositorioReserva repositorioReserva,
-            RepositorioAmigo repositorioAmigo, RepositorioRevista repositorioRevista, RepositorioMulta repositorioMulta,
+            IRepositorioAmigo repositorioAmigo, RepositorioRevista repositorioRevista, RepositorioMulta repositorioMulta,
             TelaAmigo telaAmigo, TelaRevista telaRevista, TelaMulta telaMulta)
         {
             this.repositorioEmprestimo = repositorioEmprestimo;

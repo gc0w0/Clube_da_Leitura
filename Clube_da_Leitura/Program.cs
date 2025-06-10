@@ -5,18 +5,155 @@ using Clube_da_Leitura.ModuloEmprestimo;
 using Clube_da_Leitura.ModuloMultas;
 using Clube_da_Leitura.ModuloReservas;
 using Clube_da_Leitura.ModuloRevista;
+using System.Buffers;
 using static Clube_da_Leitura.ModuloCaixa.Caixa;
 
 namespace Clube_da_Leitura
 {
+    public interface IVoar
+    {
+        void Voar();
+    }
+
+    public interface INadar
+    {
+        void Nadar();
+    }
+
+    public abstract class Animal
+    {
+        string especie;
+    }
+
+    public class GralhaAzul : Animal, IVoar
+    {
+        public void Voar()
+        {
+            Console.WriteLine("A gralha está voando...");
+        }
+    }
+
+    public class Galinha : Animal, IVoar
+    {
+        public void Voar()
+        {
+            Console.WriteLine("A galinha está voando...");
+        }
+    }
+
+    public class Pato : Animal, IVoar, INadar
+    {
+        public void Nadar()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Voar()
+        {
+            Console.WriteLine("O pato está voando bem male má...");
+        }
+    }
+
+    public class Cachorro : Animal, INadar
+    {
+        public void Nadar()
+        {
+            throw new NotImplementedException();
+        }
+    }
+
+    public delegate int OperacaoMatematica(int a, int b);
+
     internal class Program
-    {      
+    {
+
+        static int Somar(int x, int y)
+        {
+            return x + y;
+        }
+
+        static int Subtrair(int x, int y)
+        {
+            return x - y;
+        }
+
+        static string Multiplicar(int x, int y)
+        {
+            return Convert.ToString( x * y );
+        }
+
+        static void ApresentarResultadoOperacao(OperacaoMatematica op)
+        {
+            int a = 10;
+            int b = 10;
+
+            Console.WriteLine("Resultado da operação: " + op(a, b));
+
+            Func<int, int, int> teste1 = Somar;
+
+            Func<int, int, string> teste3 = Multiplicar;
+
+            Predicate<Emprestimo> teste2 = FiltroPorStatusAberto;
+
+            //var emprestimoSelecionado = repositorioEmprestimo.SelecionarTodos().Where(x => x.situacao == SituacaoEmprestimo.Aberto);
+        }
+
+        static bool FiltroPorStatusAberto(Emprestimo emprestimo)
+        {
+            return emprestimo.situacao == SituacaoEmprestimo.Aberto;
+        }
+
+        static void Main2(string[] args)
+        {
+            var pato = new Pato();
+
+            ApresentarNado(new Cachorro());
+            ApresentarNado(pato);
+
+            ApresentarVoo(pato);
+        }
+
+        private static void ApresentarVoo(IVoar animal)
+        {
+            animal.Voar();
+        }
+
+        static void ApresentarNado(INadar animal)
+        {
+            animal.Nadar();
+        }
+
         static void Main(string[] args)
-        {                        
-            
-            var repositorioAmigo = new RepositorioAmigo();
-            var telaAmigo = new TelaAmigo(repositorioAmigo);
+        {
+            Predicate<Amigo> condicao;
+
+            //programação funcional
+
+            //ApresentarResultadoOperacao(Subtrair);
+
+            //ApresentarResultadoOperacao(Somar);
+
+            var caixa = new Caixa("Etiqueta Teste", CorCaixa.Vermelha, 2);
+            var revista = new Revista("Pequeno Principe", 2, 2025, caixa, Revista.StatusDisponveis.Emprestada);
             var amigo = new Amigo("Markswell", "Gabriel", "49984327736");
+
+            var repositorioEmprestimo = new RepositorioEmprestimo();
+            var emprestimo1 = new Emprestimo(amigo, revista);
+            emprestimo1.situacao = SituacaoEmprestimo.Fechado;
+
+            var emprestimo2 = new Emprestimo(amigo, revista);
+            emprestimo2.situacao = SituacaoEmprestimo.Fechado;
+
+            var emprestimo3 = new Emprestimo(amigo, revista);
+
+            repositorioEmprestimo.InserirRegistro(emprestimo1);
+            repositorioEmprestimo.InserirRegistro(emprestimo2);
+            repositorioEmprestimo.InserirRegistro(emprestimo3);
+         
+
+            var repositorioAmigo = new RepositorioAmigoEmBancoDados();
+            var telaAmigo = new TelaAmigo(repositorioAmigo);
+
             var amigo2 = new Amigo("Gregory", "Gabriel", "11111111111");
 
             repositorioAmigo.InserirRegistro(amigo);
@@ -24,22 +161,18 @@ namespace Clube_da_Leitura
 
             var repositorioCaixa = new RepositorioCaixa();
             var telaCaixa = new TelaCaixa(repositorioCaixa);
-            var caixa = new Caixa("Etiqueta Teste", CorCaixa.Vermelha, 2);
             var caixa2 = new Caixa("Caixa 2", CorCaixa.Amarela, 1);
             repositorioCaixa.InserirRegistro(caixa);
             repositorioCaixa.InserirRegistro(caixa2);
 
             var repositorioRevista = new RepositorioRevista();
             var telaRevista = new TelaRevista(repositorioCaixa, telaCaixa, repositorioRevista);
-            var revista = new Revista("Pequeno Principe", 2, 2025, caixa, Revista.StatusDisponveis.Emprestada);
             var revista2 = new Revista("Teste2", 3, 1999, caixa2, Revista.StatusDisponveis.Disponivel);
             repositorioRevista.InserirRegistro(revista);
             repositorioRevista.InserirRegistro(revista2);
 
-            var repositorioEmprestimo = new RepositorioEmprestimo();
-            var emprestimo = new Emprestimo(amigo, revista);
-            var emprestimo2 = new Emprestimo(amigo2, revista2);
-            repositorioEmprestimo.InserirRegistro(emprestimo);
+            var emprestimo4 = new Emprestimo(amigo2, revista2);
+            repositorioEmprestimo.InserirRegistro(emprestimo4);
             repositorioEmprestimo.InserirRegistro(emprestimo2);
             //repositorioEmprestimo.InserirRegistro(emprestimo2);
 
@@ -48,14 +181,14 @@ namespace Clube_da_Leitura
             var repositorioReserva = new RepositorioReserva();
 
             var telaEmprestimo = new TelaEmprestimo(
-                repositorioEmprestimo,  repositorioAmigo,  repositorioRevista,  
-                repositorioCaixa,  telaAmigo,  telaRevista,  telaCaixa, repositorioMulta);
+                repositorioEmprestimo, repositorioAmigo, repositorioRevista,
+                repositorioCaixa, telaAmigo, telaRevista, telaCaixa, repositorioMulta);
 
-            var telaMulta = new TelaMulta(repositorioMulta, repositorioAmigo, repositorioEmprestimo, telaAmigo, telaEmprestimo, emprestimo);
-            var telaReserva = new TelaReserva(repositorioEmprestimo, repositorioReserva, repositorioAmigo, repositorioRevista, 
+            var telaMulta = new TelaMulta(repositorioMulta, repositorioAmigo, repositorioEmprestimo, telaAmigo, telaEmprestimo, emprestimo4);
+            var telaReserva = new TelaReserva(repositorioEmprestimo, repositorioReserva, repositorioAmigo, repositorioRevista,
                 repositorioMulta, telaAmigo, telaRevista, telaMulta);
 
-           
+
             var telaPrincipal = new TelaPrincipal();
 
             while (true)
@@ -63,13 +196,13 @@ namespace Clube_da_Leitura
                 telaPrincipal.ExibirOpcoesMenu();
 
                 if (telaPrincipal.opcaoEscolhida == "1")
-                    GerenciarAmigos(telaAmigo, telaPrincipal);
+                    GerenciarRegistros(telaAmigo, telaPrincipal);
 
                 else if (telaPrincipal.opcaoEscolhida == "2")
-                    GerenciarCaixas(telaCaixa, telaPrincipal);
+                    GerenciarRegistros(telaCaixa, telaPrincipal);
 
                 else if (telaPrincipal.opcaoEscolhida == "3")
-                    GerenciarRevistas(telaRevista, telaPrincipal);
+                    GerenciarRegistros(telaRevista, telaPrincipal);
 
                 else if (telaPrincipal.opcaoEscolhida == "4")
                     GerenciarEmprestimos(telaEmprestimo, telaPrincipal);
@@ -116,54 +249,30 @@ namespace Clube_da_Leitura
                 telaEmprestimo.VisualizarRegistros(mostrarCabecalho: true);
 
         }
-        
-        private static void GerenciarRevistas(TelaRevista telaRevista, TelaPrincipal telaPrincipal)
+
+
+        private static void GerenciarRegistros<T>(TelaBase<T> telaCrud, TelaPrincipal telaPrincipal) where T : EntidadeBase<T>
         {
-            telaRevista.ExibirOpcoesMenu();
+            telaCrud.ExibirOpcoesMenu();
 
-            if (telaRevista.opcaoEscolhida == "1")
-                telaRevista.CadastrarRegistro();
-            else if (telaRevista.opcaoEscolhida == "2")
-                telaRevista.VisualizarRegistros(mostrarCabecalho: true);
-            else if (telaRevista.opcaoEscolhida == "3")
-                telaRevista.EditarRegistro();
-            else if (telaRevista.opcaoEscolhida == "4")
-                telaRevista.ExcluirRegistro();
-        }
+            if (telaCrud.opcaoEscolhida == "1")
+                telaCrud.CadastrarRegistro();
 
-        private static void GerenciarCaixas(TelaCaixa telaCaixa, TelaPrincipal telaPrincipal)
-        {
-            telaCaixa.ExibirOpcoesMenu();
+            else if (telaCrud.opcaoEscolhida == "2")
+                telaCrud.VisualizarRegistros(mostrarCabecalho: true);
 
-            if (telaCaixa.opcaoEscolhida == "1")
-                telaCaixa.CadastrarRegistro();
-            else if (telaCaixa.opcaoEscolhida == "2")
-                telaCaixa.VisualizarRegistros(mostrarCabecalho: true);
-            else if (telaCaixa.opcaoEscolhida == "3")
-                telaCaixa.EditarRegistro();
-            else if (telaCaixa.opcaoEscolhida == "4")
-                telaCaixa.ExcluirRegistro(a => a.revistas.Count > 0); //passa por parametro a validação de registro vinculados.
-        }
+            else if (telaCrud.opcaoEscolhida == "3")
+                telaCrud.EditarRegistro();
 
-        private static void GerenciarAmigos(TelaAmigo telaAmigo, TelaPrincipal telaPrincipal)
-        {
-            telaAmigo.ExibirOpcoesMenu();
+            else if (telaCrud.opcaoEscolhida == "4")
+                telaCrud.ExcluirRegistro();
 
-            if (telaAmigo.opcaoEscolhida == "1")
-                telaAmigo.CadastrarRegistro();
-            else if (telaAmigo.opcaoEscolhida == "2")
-                telaAmigo.VisualizarRegistros(mostrarCabecalho: true);
-            else if (telaAmigo.opcaoEscolhida == "3")
-                telaAmigo.EditarRegistro();
-            else if (telaAmigo.opcaoEscolhida == "4")
-                //TODO Verificar os Emprestimos de Amigo.
-                //TODO Feito para que possa validar relacionamentos em qualqeur lugar.
-                telaAmigo.ExcluirRegistro(a => a.emprestimos.Count > 0); //passa por parametro a validação registro vinculados.
-            else if (telaAmigo.opcaoEscolhida == "5")
+            else if (telaCrud.opcaoEscolhida == "5")
+            {
+                TelaAmigo telaAmigo = telaCrud as TelaAmigo;
                 telaAmigo.QuitarMulta();
-        }
-
-
+            }
+        }            
 
     }
 }
