@@ -15,6 +15,10 @@ public class Revista : EntidadeBase<Revista>
     public List<Emprestimo> emprestimos = new List<Emprestimo>(); // em haver se precisa ou não
     public List<Reserva> reserva = new List<Reserva>();
 
+    public Revista()
+    {
+        
+    }
     public Revista(string titulo, int numeroEdicao, int anoPublicacao, Caixa caixa, StatusDisponveis status)
     { 
         this.titulo = titulo;

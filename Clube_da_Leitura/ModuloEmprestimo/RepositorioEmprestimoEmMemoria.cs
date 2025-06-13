@@ -2,7 +2,7 @@
 
 namespace Clube_da_Leitura.ModuloEmprestimo
 {
-    public class RepositorioEmprestimo : RepositorioBase<Emprestimo>, IRepositorioEmprestimo
+    public class RepositorioEmprestimoEmMemoria : RepositorioBase<Emprestimo>, IRepositorioEmprestimo
     {
         public List<Emprestimo> SelecionarPorFiltro(string letra)
         {

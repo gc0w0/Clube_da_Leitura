@@ -24,11 +24,72 @@ namespace Clube_da_Leitura.ModuloRevista
         {
             this.telaCaixa = telaCaixa;
             this.repositorioCaixa = repositorioCaixa;
-
-            repositorio = (RepositorioBase<Revista>)repositorioRevista;
+            this.repositorioRevista = repositorioRevista;
+            //repositorio = (RepositorioBase<Revista>)repositorioRevista;
             modulo = "Revistas";
 
         }
+
+        public override void CadastrarRegistro()
+        {
+            Console.Clear();
+
+            Console.WriteLine($"Modulo de {modulo}");
+
+            Console.WriteLine($"Cadastrando {modulo}...");
+
+            Console.WriteLine();
+
+            Revista registro = ObterDados();
+
+            string resultadoValidacao = registro.Validar();
+
+            if (resultadoValidacao != "")
+            {
+                Console.WriteLine(resultadoValidacao);
+                Console.ReadKey();
+                CadastrarRegistro();
+                return;
+            }
+
+            repositorio.InserirRegistro(registro);
+
+            Console.WriteLine("Registro inserido com sucesso \n");
+            Console.ReadKey();
+        }
+
+        public override void VisualizarRegistros(bool mostrarCabecalho)
+        {
+            if (mostrarCabecalho)
+            {
+                Console.Clear();
+
+                Console.WriteLine($"Módulo de {modulo}"); //título
+
+                Console.WriteLine($"Visualizando registros de {modulo}..."); //subtítulo
+            }
+
+            Console.WriteLine();
+
+            ExibirCabecalhoTabela();
+
+            Console.WriteLine("-------------------------------------------------------------------------------------------------");
+
+            var registros = repositorioRevista.SelecionarTodos();
+
+            for (int i = 0; i < registros.Count; i++)
+            {
+                var registro = registros[i];
+
+                if (registro == null)
+                    continue;
+
+                ExibirLinhaTabela(registro);
+            }
+
+            Console.ReadLine();
+        }
+
 
         public override void ExibirCabecalhoTabela()
         {
@@ -75,7 +136,7 @@ namespace Clube_da_Leitura.ModuloRevista
                 novoStatus = (StatusDisponveis)statusSelecionado;
             }
 
-            var repositorioRevista = (RepositorioRevista)repositorio;
+            var repositorioRevista = (IRepositorioRevista)repositorio;
 
             bool tituloDuplicado = repositorioRevista.Validacoes(a => a.titulo == novoTitulo);
             bool edicaoDuplicada = repositorioRevista.Validacoes(a => a.numeroEdicao == novoAnoPublicacao);

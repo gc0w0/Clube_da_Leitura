@@ -15,7 +15,5 @@ namespace Clube_da_Leitura.ModuloRevista
         bool ExcluirRegistro(int id);
         List<Revista> SelecionarTodos();
         bool Validacoes(Func<Revista, bool> validacao);
-        List<Revista> SelecionarPorFiltro(string letra);
-        List<Revista> SelecionarPorFiltro2(Predicate<Revista> condicao);
     }
 }

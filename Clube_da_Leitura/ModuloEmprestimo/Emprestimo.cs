@@ -21,6 +21,10 @@ namespace Clube_da_Leitura.ModuloEmprestimo
         public List<Multa> multa = new List<Multa>();
         public RepositorioMulta repositorioMulta;
 
+        public Emprestimo()
+        {
+            
+        }
         public Emprestimo(Amigo amigo, Revista revista)
         {
             this.amigo = amigo;

@@ -1,5 +1,6 @@
 ﻿using Clube_da_Leitura.Compartilhado;
 using Clube_da_Leitura.ModuloAmigo;
+using Clube_da_Leitura.ModuloCaixa;
 using Clube_da_Leitura.ModuloEmprestimo;
 using Clube_da_Leitura.ModuloMultas;
 using Clube_da_Leitura.ModuloRevista;
@@ -10,10 +11,10 @@ namespace Clube_da_Leitura.ModuloReservas
     public class TelaReserva : TelaBase<Reserva>
     {
         private const string formatoColunasTabela = "{0, -10} | {1, -20} | {2, -25} | {3, -18} | {4, -10}";
-        private RepositorioEmprestimo repositorioEmprestimo;
+        private IRepositorioEmprestimo repositorioEmprestimo;
         private IRepositorioReserva repositorioReserva;
         private IRepositorioAmigo repositorioAmigo;
-        private RepositorioRevista repositorioRevista;
+        private IRepositorioRevista repositorioRevista;
         private RepositorioMulta repositorioMulta;
 
         private TelaAmigo telaAmigo;
@@ -24,8 +25,8 @@ namespace Clube_da_Leitura.ModuloReservas
         public Revista revista;
         public Multa multa;
 
-        public TelaReserva(RepositorioEmprestimo repositorioEmprestimo, IRepositorioReserva repositorioReserva,
-            IRepositorioAmigo repositorioAmigo, RepositorioRevista repositorioRevista, RepositorioMulta repositorioMulta,
+        public TelaReserva(IRepositorioEmprestimo repositorioEmprestimo, IRepositorioReserva repositorioReserva,
+            IRepositorioAmigo repositorioAmigo, IRepositorioRevista repositorioRevista, RepositorioMulta repositorioMulta,
             TelaAmigo telaAmigo, TelaRevista telaRevista, TelaMulta telaMulta)
         {
             this.repositorioEmprestimo = repositorioEmprestimo;
@@ -36,11 +37,70 @@ namespace Clube_da_Leitura.ModuloReservas
             this.telaAmigo = telaAmigo;
             this.telaRevista = telaRevista;
             this.telaMulta = telaMulta;
-            repositorio = (RepositorioBase<Reserva>)repositorioReserva;
+            //repositorio = (RepositorioBase<Reserva>)repositorioReserva;
 
             modulo = "Reservas";
         }
 
+        public override void CadastrarRegistro()
+        {
+            Console.Clear();
+
+            Console.WriteLine($"Modulo de {modulo}");
+
+            Console.WriteLine($"Cadastrando {modulo}...");
+
+            Console.WriteLine();
+
+            Reserva registro = ObterDados();
+
+            string resultadoValidacao = registro.Validar();
+
+            if (resultadoValidacao != "")
+            {
+                Console.WriteLine(resultadoValidacao);
+                Console.ReadKey();
+                CadastrarRegistro();
+                return;
+            }
+
+            repositorio.InserirRegistro(registro);
+
+            Console.WriteLine("Registro inserido com sucesso \n");
+            Console.ReadKey();
+        }
+
+        public override void VisualizarRegistros(bool mostrarCabecalho)
+        {
+            if (mostrarCabecalho)
+            {
+                Console.Clear();
+
+                Console.WriteLine($"Módulo de {modulo}"); //título
+
+                Console.WriteLine($"Visualizando registros de {modulo}..."); //subtítulo
+            }
+
+            Console.WriteLine();
+
+            ExibirCabecalhoTabela();
+
+            Console.WriteLine("-------------------------------------------------------------------------------------------------");
+
+            var registros = repositorioReserva.SelecionarTodos();
+
+            for (int i = 0; i < registros.Count; i++)
+            {
+                var registro = registros[i];
+
+                if (registro == null)
+                    continue;
+
+                ExibirLinhaTabela(registro);
+            }
+
+            Console.ReadLine();
+        }
         public override string ExibirOpcoesMenu()
         {
             Console.Clear();

@@ -29,14 +29,14 @@ namespace Clube_da_Leitura
             repositorioCaixa.InserirRegistro(caixa);
             repositorioCaixa.InserirRegistro(caixa2);
 
-            var repositorioRevista = new RepositorioRevista();
+            var repositorioRevista = new RepositorioRevistaEmArquivo();
             var telaRevista = new TelaRevista(repositorioCaixa, telaCaixa, repositorioRevista);
             var revista = new Revista("Pequeno Principe", 2, 2025, caixa, Revista.StatusDisponveis.Emprestada);
             var revista2 = new Revista("Teste2", 3, 1999, caixa2, Revista.StatusDisponveis.Disponivel);
             repositorioRevista.InserirRegistro(revista);
             repositorioRevista.InserirRegistro(revista2);
 
-            var repositorioEmprestimo = new RepositorioEmprestimo();
+            var repositorioEmprestimo = new RepositorioEmprestimoEmArquivo();
             var emprestimo = new Emprestimo(amigo, revista);
             var emprestimo2 = new Emprestimo(amigo2, revista2);
             repositorioEmprestimo.InserirRegistro(emprestimo);
@@ -45,8 +45,9 @@ namespace Clube_da_Leitura
 
             var repositorioMulta = new RepositorioMulta();
 
-            var repositorioReserva = new RepositorioReservaEmMemoria();
-
+            var repositorioReserva = new RepositorioReservaEmArquivo();
+            var reserva = new Reserva(amigo, revista);
+            repositorioReserva.InserirRegistro(reserva);
             var telaEmprestimo = new TelaEmprestimo(
                 repositorioEmprestimo,  repositorioAmigo,  repositorioRevista,  
                 repositorioCaixa,  telaAmigo,  telaRevista,  telaCaixa, repositorioMulta);

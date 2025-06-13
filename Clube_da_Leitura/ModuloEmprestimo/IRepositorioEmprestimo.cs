@@ -15,7 +15,7 @@ namespace Clube_da_Leitura.ModuloEmprestimo
         bool ExcluirRegistro(int id);
         List<Emprestimo> SelecionarTodos();
         bool Validacoes(Func<Emprestimo, bool> validacao);
-        List<Emprestimo> SelecionarPorFiltro(string letra);
-        List<Emprestimo> SelecionarPorFiltro2(Predicate<Emprestimo> condicao);
+        List<Emprestimo> SelecionarTodosAbertos();
+        List<Emprestimo> SelecionarTodosFechados();
     }
 }

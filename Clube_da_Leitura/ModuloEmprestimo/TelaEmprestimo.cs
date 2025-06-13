@@ -11,17 +11,17 @@ public class TelaEmprestimo : TelaBase<Emprestimo>
     private const string formatoColunasTabela = "{0, -10} | {1, -20} | {2, -25} | {3, -15}";
 
     private IRepositorioAmigo repositorioAmigo;
-    private RepositorioRevista repositorioRevista;
-    private RepositorioCaixaEmArquivo repositorioCaixa;
+    private IRepositorioRevista repositorioRevista;
+    private IRepositorioCaixa repositorioCaixa;
 
-    private RepositorioEmprestimo repositorioEmprestimo;
+    private IRepositorioEmprestimo repositorioEmprestimo;
     private RepositorioMulta repositorioMulta;
     private TelaAmigo telaAmigo;
     private TelaRevista telaRevista;
     private TelaCaixa telaCaixa;
     private TelaMulta telaMulta;
-    public TelaEmprestimo(RepositorioEmprestimo repositorioEmprestimo, IRepositorioAmigo repositorioAmigo,
-        RepositorioRevista repositorioRevista, RepositorioCaixaEmArquivo repositorioCaixa, TelaAmigo telaAmigo,
+    public TelaEmprestimo(IRepositorioEmprestimo repositorioEmprestimo, IRepositorioAmigo repositorioAmigo,
+        IRepositorioRevista repositorioRevista, IRepositorioCaixa repositorioCaixa, TelaAmigo telaAmigo,
         TelaRevista telaRevista, TelaCaixa telaCaixa, RepositorioMulta repositorioMulta)
     {
         this.repositorioAmigo = repositorioAmigo;
@@ -33,11 +33,71 @@ public class TelaEmprestimo : TelaBase<Emprestimo>
         this.telaMulta = telaMulta;
         this.repositorioMulta = repositorioMulta;
         this.repositorioEmprestimo = repositorioEmprestimo; 
-        this.repositorio = (RepositorioBase<Emprestimo>)repositorioEmprestimo;
+        //this.repositorio = (RepositorioBase<Emprestimo>)repositorioEmprestimo;
 
         modulo = "Emprestimos";
         this.telaMulta = telaMulta;
     }
+    public override void CadastrarRegistro()
+    {
+        Console.Clear();
+
+        Console.WriteLine($"Modulo de {modulo}");
+
+        Console.WriteLine($"Cadastrando {modulo}...");
+
+        Console.WriteLine();
+
+        Emprestimo registro = ObterDados();
+
+        string resultadoValidacao = registro.Validar();
+
+        if (resultadoValidacao != "")
+        {
+            Console.WriteLine(resultadoValidacao);
+            Console.ReadKey();
+            CadastrarRegistro();
+            return;
+        }
+
+        repositorio.InserirRegistro(registro);
+
+        Console.WriteLine("Registro inserido com sucesso \n");
+        Console.ReadKey();
+    }
+
+    public override void VisualizarRegistros(bool mostrarCabecalho)
+    {
+        if (mostrarCabecalho)
+        {
+            Console.Clear();
+
+            Console.WriteLine($"Módulo de {modulo}"); //título
+
+            Console.WriteLine($"Visualizando registros de {modulo}..."); //subtítulo
+        }
+
+        Console.WriteLine();
+
+        ExibirCabecalhoTabela();
+
+        Console.WriteLine("-------------------------------------------------------------------------------------------------");
+
+        var registros = repositorioEmprestimo.SelecionarTodos();
+
+        for (int i = 0; i < registros.Count; i++)
+        {
+            var registro = registros[i];
+
+            if (registro == null)
+                continue;
+
+            ExibirLinhaTabela(registro);
+        }
+
+        Console.ReadLine();
+    }
+
 
     public override string ExibirOpcoesMenu()
     {

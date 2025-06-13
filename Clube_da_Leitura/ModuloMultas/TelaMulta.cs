@@ -9,8 +9,8 @@ namespace Clube_da_Leitura.ModuloMultas
     {
         private RepositorioMulta repositorioMulta;
         private IRepositorioAmigo repositorioAmigo;
-        private RepositorioRevista repositorioRevista;
-        public RepositorioEmprestimo repositorioEmprestimo;
+        private RepositorioRevistaEmMemoria repositorioRevista;
+        public IRepositorioEmprestimo repositorioEmprestimo;
         private Emprestimo emprestimos;
         private List<Multa> multas;
         private TelaAmigo telaAmigo;
@@ -18,7 +18,7 @@ namespace Clube_da_Leitura.ModuloMultas
         private TelaMulta telaMulta;
         public TelaEmprestimo telaEmprestimo;
 
-        public TelaMulta(RepositorioMulta repositorioMulta, IRepositorioAmigo repositorioAmigo, RepositorioEmprestimo repositorioEmprestimo, TelaAmigo telaAmigo, TelaEmprestimo telaEmprestimo, Emprestimo emprestimos)
+        public TelaMulta(RepositorioMulta repositorioMulta, IRepositorioAmigo repositorioAmigo, IRepositorioEmprestimo repositorioEmprestimo, TelaAmigo telaAmigo, TelaEmprestimo telaEmprestimo, Emprestimo emprestimos)
         {
             this.repositorioMulta = repositorioMulta;
             this.repositorioAmigo = repositorioAmigo;
