@@ -6,14 +6,13 @@ namespace Clube_da_Leitura.Compartilhado;
 
 public abstract class TelaBase<T> where T : EntidadeBase<T>
 {
-
     public string opcaoEscolhida;
 
     public string titulo;
 
     public string modulo;
 
-    public RepositorioBase<T> repositorio;
+    protected IRepositorio<T> repositorio;
 
     public virtual string ExibirOpcoesMenu()
     {

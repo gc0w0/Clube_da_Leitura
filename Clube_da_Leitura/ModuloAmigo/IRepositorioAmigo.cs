@@ -1,6 +1,8 @@
-﻿namespace Clube_da_Leitura.ModuloAmigo
+﻿using Clube_da_Leitura.Compartilhado;
+
+namespace Clube_da_Leitura.ModuloAmigo
 {
-    public interface IRepositorioAmigo
+    public interface IRepositorioAmigo : IRepositorio<Amigo>
     {
         void InserirRegistro(Amigo registro);
         bool EditarRegistro(int id, Amigo registroAtualizado);
