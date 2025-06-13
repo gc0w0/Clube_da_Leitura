@@ -19,7 +19,7 @@ namespace Clube_da_Leitura.ModuloReservas
 
         private TelaAmigo telaAmigo;
         private TelaRevista telaRevista;
-        private TelaMulta telaMulta;
+        //private TelaMulta telaMulta;
         public Emprestimo emprestimo;
         public Amigo amigo;
         public Revista revista;
@@ -27,7 +27,7 @@ namespace Clube_da_Leitura.ModuloReservas
 
         public TelaReserva(IRepositorioEmprestimo repositorioEmprestimo, IRepositorioReserva repositorioReserva,
             IRepositorioAmigo repositorioAmigo, IRepositorioRevista repositorioRevista, RepositorioMulta repositorioMulta,
-            TelaAmigo telaAmigo, TelaRevista telaRevista, TelaMulta telaMulta)
+            TelaAmigo telaAmigo, TelaRevista telaRevista)
         {
             this.repositorioEmprestimo = repositorioEmprestimo;
             this.repositorioReserva = repositorioReserva;
@@ -36,7 +36,7 @@ namespace Clube_da_Leitura.ModuloReservas
             this.repositorioMulta = repositorioMulta;
             this.telaAmigo = telaAmigo;
             this.telaRevista = telaRevista;
-            this.telaMulta = telaMulta;
+            //this.telaMulta = telaMulta;
             //repositorio = (RepositorioBase<Reserva>)repositorioReserva;
 
             modulo = "Reservas";

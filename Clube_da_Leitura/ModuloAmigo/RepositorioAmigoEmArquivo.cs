@@ -6,56 +6,98 @@ namespace Clube_da_Leitura.ModuloAmigo;
 public class RepositorioAmigoEmArquivo : IRepositorioAmigo
 {
     protected List<Amigo> registros = new List<Amigo>();
+    private const string caminhoArquivo = @"C:\temp\amigos.json";
+    public void SalvarEmArquivo()
+    {
+        var opcoes = new JsonSerializerOptions
+        {
+            IncludeFields = true,
+            ReferenceHandler = ReferenceHandler.Preserve,
+            WriteIndented = true
+        };
+
+        string conteudo = JsonSerializer.Serialize(registros, opcoes);
+        File.WriteAllText(caminhoArquivo, conteudo);
+    }
+    public void CarregarDoArquivo()
+    {
+        if (!File.Exists(caminhoArquivo))
+        {
+            registros = new List<Amigo>();
+            return;
+        }
+
+        var opcoes = new JsonSerializerOptions
+        {
+            IncludeFields = true,
+            ReferenceHandler = ReferenceHandler.Preserve
+        };
+
+        string conteudo = File.ReadAllText(caminhoArquivo);
+        registros = JsonSerializer.Deserialize<List<Amigo>>(conteudo, opcoes) ?? new List<Amigo>();
+    }
 
     public void InserirRegistro(Amigo registro)
     {
+        CarregarDoArquivo();
         registro.id = registros.Count + 1;
         registros.Add(registro);
-
-        var opcoes = new JsonSerializerOptions();
-        opcoes.IncludeFields = true;
-        opcoes.ReferenceHandler = ReferenceHandler.Preserve;
-        string conteudoArquivo = JsonSerializer.Serialize(registros, opcoes);
-
-        File.WriteAllText(@"C:\temp\amigos.json", conteudoArquivo);
+        SalvarEmArquivo();
     }
     public bool EditarRegistro(int id, Amigo registroAtualizado)
+    
     {
-        throw new NotImplementedException();
+        CarregarDoArquivo();
+        var registro = registros.FirstOrDefault(r => r.id == id);
+
+        if (registro == null)
+            return false;
+
+        registro.AtualizarInformacoes(registroAtualizado);
+        SalvarEmArquivo();
+        return true;
     }
 
     public bool ExcluirRegistro(int id)
     {
-        throw new NotImplementedException();
+        CarregarDoArquivo();
+        var registro = registros.FirstOrDefault(r => r.id == id);
+
+        if (registro == null)
+            return false;
+
+        registros.Remove(registro);
+        SalvarEmArquivo();
+        return true;
     }
 
     public List<Amigo> SelecionarPorFiltro(string letra)
     {
-        throw new NotImplementedException();
+        CarregarDoArquivo();
+        return SelecionarTodos().Where(a => a.nome.StartsWith(letra, StringComparison.OrdinalIgnoreCase)).ToList();
     }
 
     public List<Amigo> SelecionarPorFiltro2(Predicate<Amigo> condicao)
     {
-        throw new NotImplementedException();
+        CarregarDoArquivo();
+        return SelecionarTodos().FindAll(condicao).ToList();
     }
 
     public Amigo SelecionarPorId(int id)
     {
-        throw new NotImplementedException();
+        CarregarDoArquivo();
+        return registros.FirstOrDefault(e => e.id == id);
     }
 
     public List<Amigo> SelecionarTodos()
     {
-        var opcoes = new JsonSerializerOptions();
-        opcoes.IncludeFields = true;
-        opcoes.ReferenceHandler = ReferenceHandler.Preserve;
-        var conteudo = File.ReadAllText(@"C:\temp\amigos.json");
-        var amigos = JsonSerializer.Deserialize<List<Amigo>>(conteudo, opcoes);
-        return amigos;
+        CarregarDoArquivo();
+        return registros;
     }
 
     public bool Validacoes(Func<Amigo, bool> validacao)
     {
-        throw new NotImplementedException();
+        CarregarDoArquivo();
+        return registros.Any(validacao);
     }
 }

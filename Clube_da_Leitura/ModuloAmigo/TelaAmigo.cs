@@ -40,12 +40,42 @@ public class TelaAmigo : TelaBase<Amigo>
             return;
         }
 
-        repositorio.InserirRegistro(registro);
+        repositorioAmigo.InserirRegistro(registro);
 
         Console.WriteLine("Registro inserido com sucesso \n");
         Console.ReadKey();
     }
 
+    public override void EditarRegistro()
+    {
+        Console.Clear();
+
+        Console.WriteLine($"Módulo de {modulo}"); //título
+
+        Console.WriteLine($"Editando {modulo}..."); //subtítulo
+
+        Console.WriteLine();
+
+        VisualizarRegistros(mostrarCabecalho: false);
+
+        Console.Write($"Digite o {modulo} que deseja editar: ");
+        var id = int.Parse(Console.ReadLine());
+
+        Amigo registro = ObterDados();
+
+        bool conseguiuEditar = repositorioAmigo.EditarRegistro(id, registro);
+
+        if (conseguiuEditar == false)
+        {
+            Console.WriteLine("Não foi possível editar o registro selecionado");
+            Console.ReadKey();
+            EditarRegistro();
+            return;
+        }
+
+        Console.WriteLine($"{modulo} editado com sucesso!");
+        Console.ReadKey();
+    }
     public override void VisualizarRegistros(bool mostrarCabecalho)
     {
         if (mostrarCabecalho)
@@ -78,6 +108,46 @@ public class TelaAmigo : TelaBase<Amigo>
         Console.ReadLine();
     }
 
+    public override void ExcluirRegistro(Func<Amigo, bool> condicaoDeVinculo = null)
+    {
+        Console.Clear();
+
+        Console.WriteLine($"Módulo de {modulo}");
+
+        Console.WriteLine($"Editando {modulo}...");
+
+        Console.WriteLine();
+
+        VisualizarRegistros(mostrarCabecalho: false);
+
+        Console.Write($"Digite o {modulo} que deseja excluir: ");
+        var id = int.Parse(Console.ReadLine());
+
+        Amigo registro = repositorioAmigo.SelecionarPorId(id);
+
+        //TODO Verifica vinculo, se foi passada uma condição
+        if (condicaoDeVinculo != null && RegistroPossuiVinculo(registro, condicaoDeVinculo))
+        {
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.WriteLine("\nEste registro possui vínculos e não pode ser excluído!");
+            Console.ResetColor();
+            Console.ReadKey();
+            return;
+        }
+
+        bool conseguiuExcluir = repositorioAmigo.ExcluirRegistro(id);
+
+        if (conseguiuExcluir == false)
+        {
+            Console.WriteLine("Não foi possível excluir o registro selecionado");
+            Console.ReadKey();
+            ExcluirRegistro();
+            return;
+        }
+
+        Console.WriteLine("Amigo removido com sucesso!");
+        Console.ReadKey();
+    }
     public override string ExibirOpcoesMenu()
     {
         Console.Clear();
@@ -125,7 +195,7 @@ public class TelaAmigo : TelaBase<Amigo>
         Console.Write("Digite o novo número de telefone: "); // verificar para aplicar a mascara.
         string novoTelefone = Console.ReadLine();
 
-        var repositorioAmigo = (IRepositorioAmigo)repositorio;
+        //var repositorioAmigo = (IRepositorioAmigo)repositorio;
 
         bool duplicado = repositorioAmigo.Validacoes(a => a.nome == novoNome || a.telefone == novoTelefone);
 
@@ -195,8 +265,9 @@ public class TelaAmigo : TelaBase<Amigo>
         Console.WriteLine("Filtre amigos por letra:");
         Console.Write("Selecione a letra que deseja buscar: ");
         string letraSelecionada = Console.ReadLine();
-        List<Amigo> registros = repositorioAmigo.SelecionarPorFiltro2(FiltrarIniciandoComLetraA);
-        List<Amigo> registros2 = repositorioAmigo.SelecionarPorFiltro2(FiltrarIniciandoComLetraB);
+        List<Amigo> registros = repositorioAmigo.SelecionarPorFiltro(letraSelecionada);
+        //List<Amigo> registros = repositorioAmigo.SelecionarPorFiltro2(FiltrarIniciandoComLetraA);
+        //List<Amigo> registros2 = repositorioAmigo.SelecionarPorFiltro2(FiltrarIniciandoComLetraB);
 
 
         if (registros.Count == 0)

@@ -60,7 +60,7 @@ public abstract class TelaBase<T> where T : EntidadeBase<T>
         Console.ReadKey();
     }
 
-    public void EditarRegistro()
+    public virtual void EditarRegistro()
     {
         Console.Clear();
 
@@ -123,7 +123,7 @@ public abstract class TelaBase<T> where T : EntidadeBase<T>
         Console.ReadLine();
     }
 
-    public void ExcluirRegistro(Func<T, bool> condicaoDeVinculo = null)
+    public virtual void ExcluirRegistro(Func<T, bool> condicaoDeVinculo = null)
     {
         Console.Clear();
 
