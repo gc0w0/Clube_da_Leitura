@@ -1,5 +1,6 @@
 ﻿using Clube_da_Leitura.Compartilhado;
 using Clube_da_Leitura.ModuloAmigo;
+using Gestao_de_Equipamentos.Compartilhado;
 using System.Runtime.InteropServices;
 using static Clube_da_Leitura.ModuloCaixa.Caixa;
 namespace Clube_da_Leitura.ModuloCaixa;
@@ -7,17 +8,79 @@ namespace Clube_da_Leitura.ModuloCaixa;
 public class TelaCaixa : TelaBase<Caixa>
 {
     private const string formatoColunasTabela = "{0, -10} | {1, -20} | {2, -15} | {3, -15}";
-    private RepositorioCaixa repositorioCaixa;
+    private IRepositorioCaixa repositorioCaixa;
     private TelaCaixa telaCaixa;
-    public TelaCaixa(RepositorioCaixa repositorioCaixa)
+    public TelaCaixa(IRepositorioCaixa repositorioCaixa)
     {
         modulo = "Caixas";
-        repositorio = repositorioCaixa;
+        this.repositorioCaixa = repositorioCaixa;
+        //repositorio = (RepositorioBase<Caixa>)repositorioCaixa;
     }
     public override void ExibirCabecalhoTabela()
     {
         Console.WriteLine(formatoColunasTabela, "Id", "Etiqueta", "Cor", "Dias");
     }
+
+    public override void CadastrarRegistro()
+    {
+        Console.Clear();
+
+        Console.WriteLine($"Modulo de {modulo}");
+
+        Console.WriteLine($"Cadastrando {modulo}...");
+
+        Console.WriteLine();
+
+        Caixa registro = ObterDados();
+
+        string resultadoValidacao = registro.Validar();
+
+        if (resultadoValidacao != "")
+        {
+            Console.WriteLine(resultadoValidacao);
+            Console.ReadKey();
+            CadastrarRegistro();
+            return;
+        }
+
+        repositorio.InserirRegistro(registro);
+
+        Console.WriteLine("Registro inserido com sucesso \n");
+        Console.ReadKey();
+    }
+
+    public override void VisualizarRegistros(bool mostrarCabecalho)
+    {
+        if (mostrarCabecalho)
+        {
+            Console.Clear();
+
+            Console.WriteLine($"Módulo de {modulo}"); //título
+
+            Console.WriteLine($"Visualizando registros de {modulo}..."); //subtítulo
+        }
+
+        Console.WriteLine();
+
+        ExibirCabecalhoTabela();
+
+        Console.WriteLine("-------------------------------------------------------------------------------------------------");
+
+        var registros = repositorioCaixa.SelecionarTodos();
+
+        for (int i = 0; i < registros.Count; i++)
+        {
+            var registro = registros[i];
+
+            if (registro == null)
+                continue;
+
+            ExibirLinhaTabela(registro);
+        }
+
+        Console.ReadLine();
+    }
+
 
     public override void ExibirLinhaTabela(Caixa c)
     {
@@ -88,7 +151,7 @@ public class TelaCaixa : TelaBase<Caixa>
         if (!int.TryParse(dias, out novoDiasEmprestimo) || novoDiasEmprestimo == 0)
             novoDiasEmprestimo = 7;
 
-        var repositorioCaixa = (RepositorioCaixa)repositorio;
+        var repositorioCaixa = (IRepositorioCaixa)repositorio;
 
         bool duplicado = repositorioCaixa.Validacoes(a => a.etiqueta == novaEtiqueta);
         if (duplicado)

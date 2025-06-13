@@ -3,15 +3,16 @@ using Clube_da_Leitura.ModuloAmigo;
 using Clube_da_Leitura.ModuloCaixa;
 using Clube_da_Leitura.ModuloMultas;
 using Clube_da_Leitura.ModuloRevista;
+using Gestao_de_Equipamentos.Compartilhado;
 namespace Clube_da_Leitura.ModuloEmprestimo;
 
 public class TelaEmprestimo : TelaBase<Emprestimo>
 {
     private const string formatoColunasTabela = "{0, -10} | {1, -20} | {2, -25} | {3, -15}";
 
-    private RepositorioAmigoEmArquivo repositorioAmigo;
+    private IRepositorioAmigo repositorioAmigo;
     private RepositorioRevista repositorioRevista;
-    private RepositorioCaixa repositorioCaixa;
+    private RepositorioCaixaEmArquivo repositorioCaixa;
 
     private RepositorioEmprestimo repositorioEmprestimo;
     private RepositorioMulta repositorioMulta;
@@ -19,8 +20,8 @@ public class TelaEmprestimo : TelaBase<Emprestimo>
     private TelaRevista telaRevista;
     private TelaCaixa telaCaixa;
     private TelaMulta telaMulta;
-    public TelaEmprestimo(RepositorioEmprestimo repositorioEmprestimo, RepositorioAmigoEmArquivo repositorioAmigo,
-        RepositorioRevista repositorioRevista, RepositorioCaixa repositorioCaixa, TelaAmigo telaAmigo,
+    public TelaEmprestimo(RepositorioEmprestimo repositorioEmprestimo, IRepositorioAmigo repositorioAmigo,
+        RepositorioRevista repositorioRevista, RepositorioCaixaEmArquivo repositorioCaixa, TelaAmigo telaAmigo,
         TelaRevista telaRevista, TelaCaixa telaCaixa, RepositorioMulta repositorioMulta)
     {
         this.repositorioAmigo = repositorioAmigo;
@@ -31,8 +32,8 @@ public class TelaEmprestimo : TelaBase<Emprestimo>
         this.telaCaixa = telaCaixa;
         this.telaMulta = telaMulta;
         this.repositorioMulta = repositorioMulta;
-        this.repositorio = repositorioEmprestimo;
-        this.repositorioEmprestimo = repositorioEmprestimo;
+        this.repositorioEmprestimo = repositorioEmprestimo; 
+        this.repositorio = (RepositorioBase<Emprestimo>)repositorioEmprestimo;
 
         modulo = "Emprestimos";
         this.telaMulta = telaMulta;

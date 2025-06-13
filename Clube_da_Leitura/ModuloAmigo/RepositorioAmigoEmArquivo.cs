@@ -9,15 +9,15 @@ public class RepositorioAmigoEmArquivo : IRepositorioAmigo
 
     public void InserirRegistro(Amigo registro)
     {
-        //registro.id = registros.Count + 1;
-        //registros.Add(registro);
+        registro.id = registros.Count + 1;
+        registros.Add(registro);
 
-        //var opcoes = new JsonSerializerOptions();
-        //opcoes.IncludeFields = true;
-        //opcoes.ReferenceHandler = ReferenceHandler.Preserve;
-        //string conteudoArquivo = JsonSerializer.Serialize(registros, opcoes);
-           
-        //File.WriteAllText(@"C:\temp\amigos.json", conteudoArquivo);
+        var opcoes = new JsonSerializerOptions();
+        opcoes.IncludeFields = true;
+        opcoes.ReferenceHandler = ReferenceHandler.Preserve;
+        string conteudoArquivo = JsonSerializer.Serialize(registros, opcoes);
+
+        File.WriteAllText(@"C:\temp\amigos.json", conteudoArquivo);
     }
     public bool EditarRegistro(int id, Amigo registroAtualizado)
     {

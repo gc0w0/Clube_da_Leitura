@@ -8,7 +8,8 @@ using System.Threading.Tasks;
 
 namespace Clube_da_Leitura.ModuloCaixa
 {
-    public class RepositorioCaixa : RepositorioBase<Caixa>
+    public class RepositorioCaixaEmMemoria : RepositorioBase<Caixa>, IRepositorioCaixa
     {
+
     }
 }

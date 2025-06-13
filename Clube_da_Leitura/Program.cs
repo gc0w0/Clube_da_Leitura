@@ -19,10 +19,10 @@ namespace Clube_da_Leitura
             var amigo = new Amigo("Markswell", "Gabriel", "49984327736");
             var amigo2 = new Amigo("Gregory", "Gabriel", "11111111111");
 
-            repositorioAmigo.InserirRegistro(amigo);
+            repositorioAmigo.InserirRegistro(amigo); 
             repositorioAmigo.InserirRegistro(amigo2);
 
-            var repositorioCaixa = new RepositorioCaixa();
+            var repositorioCaixa = new RepositorioCaixaEmArquivo();
             var telaCaixa = new TelaCaixa(repositorioCaixa);
             var caixa = new Caixa("Etiqueta Teste", CorCaixa.Vermelha, 2);
             var caixa2 = new Caixa("Caixa 2", CorCaixa.Amarela, 1);
@@ -45,7 +45,7 @@ namespace Clube_da_Leitura
 
             var repositorioMulta = new RepositorioMulta();
 
-            var repositorioReserva = new RepositorioReserva();
+            var repositorioReserva = new RepositorioReservaEmMemoria();
 
             var telaEmprestimo = new TelaEmprestimo(
                 repositorioEmprestimo,  repositorioAmigo,  repositorioRevista,  

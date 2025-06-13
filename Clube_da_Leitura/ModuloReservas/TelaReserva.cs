@@ -3,6 +3,7 @@ using Clube_da_Leitura.ModuloAmigo;
 using Clube_da_Leitura.ModuloEmprestimo;
 using Clube_da_Leitura.ModuloMultas;
 using Clube_da_Leitura.ModuloRevista;
+using Gestao_de_Equipamentos.Compartilhado;
 
 namespace Clube_da_Leitura.ModuloReservas
 {
@@ -10,7 +11,7 @@ namespace Clube_da_Leitura.ModuloReservas
     {
         private const string formatoColunasTabela = "{0, -10} | {1, -20} | {2, -25} | {3, -18} | {4, -10}";
         private RepositorioEmprestimo repositorioEmprestimo;
-        private RepositorioReserva repositorioReserva;
+        private IRepositorioReserva repositorioReserva;
         private IRepositorioAmigo repositorioAmigo;
         private RepositorioRevista repositorioRevista;
         private RepositorioMulta repositorioMulta;
@@ -23,7 +24,7 @@ namespace Clube_da_Leitura.ModuloReservas
         public Revista revista;
         public Multa multa;
 
-        public TelaReserva(RepositorioEmprestimo repositorioEmprestimo, RepositorioReserva repositorioReserva,
+        public TelaReserva(RepositorioEmprestimo repositorioEmprestimo, IRepositorioReserva repositorioReserva,
             IRepositorioAmigo repositorioAmigo, RepositorioRevista repositorioRevista, RepositorioMulta repositorioMulta,
             TelaAmigo telaAmigo, TelaRevista telaRevista, TelaMulta telaMulta)
         {
@@ -35,7 +36,7 @@ namespace Clube_da_Leitura.ModuloReservas
             this.telaAmigo = telaAmigo;
             this.telaRevista = telaRevista;
             this.telaMulta = telaMulta;
-            repositorio = repositorioReserva;
+            repositorio = (RepositorioBase<Reserva>)repositorioReserva;
 
             modulo = "Reservas";
         }
