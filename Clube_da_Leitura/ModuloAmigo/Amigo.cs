@@ -17,6 +17,10 @@ namespace Clube_da_Leitura.ModuloAmigo
         public List<Reserva> reserva = new List<Reserva>();
         //public List<Revista> revista = new List<Revista>();
 
+        public Amigo()
+        {
+            
+        }
         public Amigo(string nome, string nomeResponsavel, string telefone)
         {
             this.nome = nome;

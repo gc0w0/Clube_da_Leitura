@@ -14,7 +14,7 @@ namespace Clube_da_Leitura
         static void Main(string[] args)
         {                        
             
-            var repositorioAmigo = new RepositorioAmigo();
+            var repositorioAmigo = new RepositorioAmigoEmArquivo();
             var telaAmigo = new TelaAmigo(repositorioAmigo);
             var amigo = new Amigo("Markswell", "Gabriel", "49984327736");
             var amigo2 = new Amigo("Gregory", "Gabriel", "11111111111");

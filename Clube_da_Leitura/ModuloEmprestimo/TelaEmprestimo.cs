@@ -9,7 +9,7 @@ public class TelaEmprestimo : TelaBase<Emprestimo>
 {
     private const string formatoColunasTabela = "{0, -10} | {1, -20} | {2, -25} | {3, -15}";
 
-    private RepositorioAmigo repositorioAmigo;
+    private RepositorioAmigoEmArquivo repositorioAmigo;
     private RepositorioRevista repositorioRevista;
     private RepositorioCaixa repositorioCaixa;
 
@@ -19,7 +19,7 @@ public class TelaEmprestimo : TelaBase<Emprestimo>
     private TelaRevista telaRevista;
     private TelaCaixa telaCaixa;
     private TelaMulta telaMulta;
-    public TelaEmprestimo(RepositorioEmprestimo repositorioEmprestimo, RepositorioAmigo repositorioAmigo,
+    public TelaEmprestimo(RepositorioEmprestimo repositorioEmprestimo, RepositorioAmigoEmArquivo repositorioAmigo,
         RepositorioRevista repositorioRevista, RepositorioCaixa repositorioCaixa, TelaAmigo telaAmigo,
         TelaRevista telaRevista, TelaCaixa telaCaixa, RepositorioMulta repositorioMulta)
     {

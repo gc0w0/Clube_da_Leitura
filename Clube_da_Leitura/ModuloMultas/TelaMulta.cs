@@ -8,7 +8,7 @@ namespace Clube_da_Leitura.ModuloMultas
     public class TelaMulta : TelaBase<Multa>
     {
         private RepositorioMulta repositorioMulta;
-        private RepositorioAmigo repositorioAmigo;
+        private IRepositorioAmigo repositorioAmigo;
         private RepositorioRevista repositorioRevista;
         public RepositorioEmprestimo repositorioEmprestimo;
         private Emprestimo emprestimos;
@@ -18,7 +18,7 @@ namespace Clube_da_Leitura.ModuloMultas
         private TelaMulta telaMulta;
         public TelaEmprestimo telaEmprestimo;
 
-        public TelaMulta(RepositorioMulta repositorioMulta, RepositorioAmigo repositorioAmigo, RepositorioEmprestimo repositorioEmprestimo, TelaAmigo telaAmigo, TelaEmprestimo telaEmprestimo, Emprestimo emprestimos)
+        public TelaMulta(RepositorioMulta repositorioMulta, IRepositorioAmigo repositorioAmigo, RepositorioEmprestimo repositorioEmprestimo, TelaAmigo telaAmigo, TelaEmprestimo telaEmprestimo, Emprestimo emprestimos)
         {
             this.repositorioMulta = repositorioMulta;
             this.repositorioAmigo = repositorioAmigo;

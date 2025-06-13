@@ -32,7 +32,7 @@ public abstract class TelaBase<T> where T : EntidadeBase<T>
         return opcaoEscolhida;
     }
 
-    public void CadastrarRegistro()
+    public virtual void CadastrarRegistro()
     {
         Console.Clear();
 
@@ -91,7 +91,7 @@ public abstract class TelaBase<T> where T : EntidadeBase<T>
         Console.ReadKey();
     }
 
-    public void VisualizarRegistros(bool mostrarCabecalho)
+    public virtual void VisualizarRegistros(bool mostrarCabecalho)
     {
         if (mostrarCabecalho)
         {
