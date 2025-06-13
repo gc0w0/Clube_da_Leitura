@@ -16,45 +16,45 @@ namespace Clube_da_Leitura
             
             var repositorioAmigo = new RepositorioAmigoEmArquivo();
             var telaAmigo = new TelaAmigo(repositorioAmigo);
-            var amigo = new Amigo("Markswell", "Gabriel", "49984327736");
-            var amigo2 = new Amigo("Gregory", "Gabriel", "11111111111");
+            //var amigo = new Amigo("Markswell", "Gabriel", "49984327736");
+            //var amigo2 = new Amigo("Gregory", "Gabriel", "11111111111");
 
-            repositorioAmigo.InserirRegistro(amigo); 
-            repositorioAmigo.InserirRegistro(amigo2);
+            //repositorioAmigo.InserirRegistro(amigo); 
+            //repositorioAmigo.InserirRegistro(amigo2);
 
             var repositorioCaixa = new RepositorioCaixaEmArquivo();
             var telaCaixa = new TelaCaixa(repositorioCaixa);
-            var caixa = new Caixa("Etiqueta Teste", CorCaixa.Vermelha, 2);
-            var caixa2 = new Caixa("Caixa 2", CorCaixa.Amarela, 1);
-            repositorioCaixa.InserirRegistro(caixa);
-            repositorioCaixa.InserirRegistro(caixa2);
+            //var caixa = new Caixa("Etiqueta Teste", CorCaixa.Vermelha, 2);
+            //var caixa2 = new Caixa("Caixa 2", CorCaixa.Amarela, 1);
+            //repositorioCaixa.InserirRegistro(caixa);
+            //repositorioCaixa.InserirRegistro(caixa2);
 
             var repositorioRevista = new RepositorioRevistaEmArquivo();
             var telaRevista = new TelaRevista(repositorioCaixa, telaCaixa, repositorioRevista);
-            var revista = new Revista("Pequeno Principe", 2, 2025, caixa, Revista.StatusDisponveis.Emprestada);
-            var revista2 = new Revista("Teste2", 3, 1999, caixa2, Revista.StatusDisponveis.Disponivel);
-            repositorioRevista.InserirRegistro(revista);
-            repositorioRevista.InserirRegistro(revista2);
+            //var revista = new Revista("Pequeno Principe", 2, 2025, caixa, Revista.StatusDisponveis.Emprestada);
+            //var revista2 = new Revista("Teste2", 3, 1999, caixa2, Revista.StatusDisponveis.Disponivel);
+            //repositorioRevista.InserirRegistro(revista);
+            //repositorioRevista.InserirRegistro(revista2);
 
             var repositorioEmprestimo = new RepositorioEmprestimoEmArquivo();
-            var emprestimo = new Emprestimo(amigo, revista);
-            var emprestimo2 = new Emprestimo(amigo2, revista2);
-            repositorioEmprestimo.InserirRegistro(emprestimo);
-            repositorioEmprestimo.InserirRegistro(emprestimo2);
+            //var emprestimo = new Emprestimo(amigo, revista);
+            //var emprestimo2 = new Emprestimo(amigo2, revista2);
+            //repositorioEmprestimo.InserirRegistro(emprestimo);
+            //repositorioEmprestimo.InserirRegistro(emprestimo2);
             //repositorioEmprestimo.InserirRegistro(emprestimo2);
 
             var repositorioMulta = new RepositorioMulta();
 
             var repositorioReserva = new RepositorioReservaEmArquivo();
-            var reserva = new Reserva(amigo, revista);
-            repositorioReserva.InserirRegistro(reserva);
+            //var reserva = new Reserva(amigo, revista);
+            //repositorioReserva.InserirRegistro(reserva);
             var telaEmprestimo = new TelaEmprestimo(
                 repositorioEmprestimo,  repositorioAmigo,  repositorioRevista,  
                 repositorioCaixa,  telaAmigo,  telaRevista,  telaCaixa, repositorioMulta);
 
-            var telaMulta = new TelaMulta(repositorioMulta, repositorioAmigo, repositorioEmprestimo, telaAmigo, telaEmprestimo, emprestimo);
+            //var telaMulta = new TelaMulta(repositorioMulta, repositorioAmigo, repositorioEmprestimo, telaAmigo, telaEmprestimo, emprestimo);
             var telaReserva = new TelaReserva(repositorioEmprestimo, repositorioReserva, repositorioAmigo, repositorioRevista, 
-                repositorioMulta, telaAmigo, telaRevista, telaMulta);
+                repositorioMulta, telaAmigo, telaRevista);
 
            
             var telaPrincipal = new TelaPrincipal();

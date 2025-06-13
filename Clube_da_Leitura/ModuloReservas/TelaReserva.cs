@@ -27,7 +27,7 @@ namespace Clube_da_Leitura.ModuloReservas
 
         public TelaReserva(IRepositorioEmprestimo repositorioEmprestimo, IRepositorioReserva repositorioReserva,
             IRepositorioAmigo repositorioAmigo, IRepositorioRevista repositorioRevista, RepositorioMulta repositorioMulta,
-            TelaAmigo telaAmigo, TelaRevista telaRevista, TelaMulta telaMulta)
+            TelaAmigo telaAmigo, TelaRevista telaRevista)
         {
             this.repositorioEmprestimo = repositorioEmprestimo;
             this.repositorioReserva = repositorioReserva;

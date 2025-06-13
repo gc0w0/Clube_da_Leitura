@@ -15,7 +15,6 @@ namespace Clube_da_Leitura.ModuloEmprestimo
         public RepositorioEmprestimoEmArquivo() : base(@"C:\temp\emprestimos.json")
         {
         }
-      
         public List<Emprestimo> SelecionarTodosAbertos()
         {
             return SelecionarTodos().Where(e => e.situacao == SituacaoEmprestimo.Aberto).ToList();

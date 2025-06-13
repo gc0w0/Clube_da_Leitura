@@ -14,7 +14,7 @@ namespace Clube_da_Leitura.ModuloRevista
 {
     public class TelaRevista : TelaBase<Revista>
     {
-        private const string formatoColunasTabela = "{0, -10} | {1, -20} | {2, -20} | {3, -15}";
+        private const string formatoColunasTabela = "{0, -10} | {1, -20} | {2, -20} | {3, -15} | {4, -20} | {5, -20}";
         private IRepositorioCaixa repositorioCaixa;
         private IRepositorioRevista repositorioRevista;
         private TelaCaixa telaCaixa;
@@ -93,12 +93,12 @@ namespace Clube_da_Leitura.ModuloRevista
 
         public override void ExibirCabecalhoTabela()
         {
-            Console.WriteLine(formatoColunasTabela, "Id", "Titulo", "Ano de Publicação", "Status");
+            Console.WriteLine(formatoColunasTabela, "Id", "Titulo", "Ano de Publicação", "Status" , "Caixa", "Dias Caixa");
         }
 
         public override void ExibirLinhaTabela(Revista r)
         {
-            Console.WriteLine(formatoColunasTabela, r.id, r.titulo, r.anoPublicacao, r.status);
+            Console.WriteLine(formatoColunasTabela, r.id, r.titulo, r.anoPublicacao, r.status, r.caixa.etiqueta, r.caixa.dias);
         }
 
         public override Revista ObterDados()
