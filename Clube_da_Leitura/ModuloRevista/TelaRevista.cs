@@ -25,7 +25,7 @@ namespace Clube_da_Leitura.ModuloRevista
             this.telaCaixa = telaCaixa;
             this.repositorioCaixa = repositorioCaixa;
             this.repositorioRevista = repositorioRevista;
-            //repositorio = (RepositorioBase<Revista>)repositorioRevista;
+            repositorio = repositorioRevista;
             modulo = "Revistas";
 
         }

@@ -1,4 +1,5 @@
-﻿using Clube_da_Leitura.ModuloAmigo;
+﻿using Clube_da_Leitura.Compartilhado;
+using Clube_da_Leitura.ModuloAmigo;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,15 +8,16 @@ using System.Threading.Tasks;
 
 namespace Clube_da_Leitura.ModuloEmprestimo
 {
-    public interface IRepositorioEmprestimo
+    public interface IRepositorioEmprestimo : IRepositorio<Emprestimo>
     {
-        void InserirRegistro(Emprestimo registro);
-        bool EditarRegistro(int id, Emprestimo registroAtualizado);
-        Emprestimo SelecionarPorId(int id);
-        bool ExcluirRegistro(int id);
-        List<Emprestimo> SelecionarTodos();
-        bool Validacoes(Func<Emprestimo, bool> validacao);
-        List<Emprestimo> SelecionarTodosAbertos();
-        List<Emprestimo> SelecionarTodosFechados();
+        public List<Emprestimo> SelecionarTodosAbertos()
+        {
+            return SelecionarTodos().Where(e => e.situacao == SituacaoEmprestimo.Aberto).ToList();
+        }
+
+        public List<Emprestimo> SelecionarTodosFechados()
+        {
+            return SelecionarTodos().Where(e => e.situacao == SituacaoEmprestimo.Fechado).ToList();
+        }
     }
 }

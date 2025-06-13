@@ -4,13 +4,14 @@ namespace Clube_da_Leitura.ModuloAmigo
 {
     public interface IRepositorioAmigo : IRepositorio<Amigo>
     {
-        void InserirRegistro(Amigo registro);
-        bool EditarRegistro(int id, Amigo registroAtualizado);
-        Amigo SelecionarPorId(int id);
-        bool ExcluirRegistro(int id);
-        List<Amigo> SelecionarTodos();
-        bool Validacoes(Func<Amigo, bool> validacao);
-        List<Amigo> SelecionarPorFiltro(string letra);
-        List<Amigo> SelecionarPorFiltro2(Predicate<Amigo> condicao);
+        public List<Amigo> SelecionarPorFiltro(string letra)
+        {
+            //return SelecionarTodos().Where(a => a.nome.StartsWith(letra, StringComparison.OrdinalIgnoreCase)).ToList();
+            return SelecionarTodos().Where(a => a.nome.StartsWith(letra, StringComparison.OrdinalIgnoreCase)).ToList();
+        }
+        public List<Amigo> SelecionarPorFiltro2(Predicate<Amigo> condicao)
+        {
+            return SelecionarTodos().FindAll(condicao).ToList();
+        }
     }
 }

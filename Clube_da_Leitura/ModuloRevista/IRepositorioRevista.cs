@@ -1,4 +1,5 @@
-﻿using Clube_da_Leitura.ModuloAmigo;
+﻿using Clube_da_Leitura.Compartilhado;
+using Clube_da_Leitura.ModuloAmigo;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Clube_da_Leitura.ModuloRevista
 {
-    public interface IRepositorioRevista
+    public interface IRepositorioRevista : IRepositorio<Revista>
     {
         void InserirRegistro(Revista registro);
         bool EditarRegistro(int id, Revista registroAtualizado);

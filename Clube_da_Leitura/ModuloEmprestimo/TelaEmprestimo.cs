@@ -33,7 +33,7 @@ public class TelaEmprestimo : TelaBase<Emprestimo>
         this.telaMulta = telaMulta;
         this.repositorioMulta = repositorioMulta;
         this.repositorioEmprestimo = repositorioEmprestimo; 
-        //this.repositorio = (RepositorioBase<Emprestimo>)repositorioEmprestimo;
+        this.repositorio = repositorioEmprestimo;
 
         modulo = "Emprestimos";
         this.telaMulta = telaMulta;

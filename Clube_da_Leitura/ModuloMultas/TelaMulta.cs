@@ -26,7 +26,7 @@ namespace Clube_da_Leitura.ModuloMultas
             this.telaAmigo = telaAmigo;
             this.telaEmprestimo = telaEmprestimo;
             this.emprestimos = emprestimos;
-            this.repositorio = repositorioMulta;
+            
             modulo = "Multas";
         }
 

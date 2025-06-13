@@ -15,7 +15,7 @@ public class TelaAmigo : TelaBase<Amigo>
     public TelaAmigo(IRepositorioAmigo repositorioAmigo)
     {
         modulo = "Amigos";
-        //repositorio = (RepositorioBase<Amigo>)repositorioAmigo;
+        this.repositorio = repositorioAmigo;
         this.repositorioAmigo = repositorioAmigo;
     }
     public override void CadastrarRegistro()

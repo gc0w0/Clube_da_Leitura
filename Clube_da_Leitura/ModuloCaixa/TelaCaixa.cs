@@ -14,7 +14,7 @@ public class TelaCaixa : TelaBase<Caixa>
     {
         modulo = "Caixas";
         this.repositorioCaixa = repositorioCaixa;
-        //repositorio = (RepositorioBase<Caixa>)repositorioCaixa;
+        repositorio = repositorioCaixa;
     }
     public override void ExibirCabecalhoTabela()
     {

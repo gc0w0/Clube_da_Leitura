@@ -4,7 +4,7 @@ using static Clube_da_Leitura.ModuloEmprestimo.Emprestimo;
 
 namespace Gestao_de_Equipamentos.Compartilhado;
 
-public class RepositorioBase<T> : IRepositorio<T> where T : EntidadeBase<T>
+public class RepositorioBaseEmMemoria<T> where T : EntidadeBase<T>
 {
     protected List<T> registros = new List<T>();
 

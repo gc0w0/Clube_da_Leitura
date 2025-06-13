@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Clube_da_Leitura.ModuloMultas
 {
-    public class RepositorioMulta : RepositorioBase<Multa>
+    public class RepositorioMulta : RepositorioBaseEmMemoria<Multa>
     {
         public List<Multa> SelecionarTodosAbertos()
         {

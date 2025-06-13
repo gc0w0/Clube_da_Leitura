@@ -5,7 +5,7 @@ using Gestao_de_Equipamentos.Compartilhado;
 
 namespace Clube_da_Leitura.ModuloAmigo
 {
-    public class RepositorioAmigoEmMemoria : RepositorioBase<Amigo>, IRepositorioAmigo
+    public class RepositorioAmigoEmMemoria : RepositorioBaseEmMemoria<Amigo>, IRepositorioAmigo
     {
         public List<Amigo> SelecionarPorFiltro(string letra)
         {

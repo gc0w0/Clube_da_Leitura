@@ -37,7 +37,7 @@ namespace Clube_da_Leitura.ModuloReservas
             this.telaAmigo = telaAmigo;
             this.telaRevista = telaRevista;
             this.telaMulta = telaMulta;
-            //repositorio = (RepositorioBase<Reserva>)repositorioReserva;
+            repositorio = repositorioReserva;
 
             modulo = "Reservas";
         }
