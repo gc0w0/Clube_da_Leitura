@@ -1,19 +1,13 @@
-﻿using Clube_da_Leitura.ModuloCaixa;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Text.Json.Serialization;
-using System.Text.Json;
-using System.Threading.Tasks;
+﻿using Clube_da_Leitura.Compartilhado;
 
 namespace Clube_da_Leitura.ModuloReservas
 {
-    public class RepositorioReservaEmArquivo :RepositorioBase<Reserva>, IRepositorioReserva
+    public class RepositorioReservaEmArquivo : RepositorioBaseEmArquivo<Reserva>, IRepositorioReserva
     {
-        public RepositorioReservaEmArquivo() : base(@"C:\temp\reservas.json")
+        public RepositorioReservaEmArquivo(ClubeLeituraContextoDados contextoDados) : base(contextoDados)
         {
         }
+
         public List<Reserva> SelecionarTodosAbertos()
         {
             return SelecionarTodos()
@@ -21,5 +15,9 @@ namespace Clube_da_Leitura.ModuloReservas
                .ToList();
         }
 
+        protected override List<Reserva> ObterRegistros()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

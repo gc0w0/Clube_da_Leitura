@@ -1,10 +1,8 @@
 ﻿using Clube_da_Leitura.Compartilhado;
 using Clube_da_Leitura.ModuloAmigo;
-using Clube_da_Leitura.ModuloCaixa;
 using Clube_da_Leitura.ModuloEmprestimo;
 using Clube_da_Leitura.ModuloMultas;
 using Clube_da_Leitura.ModuloRevista;
-using Gestao_de_Equipamentos.Compartilhado;
 
 namespace Clube_da_Leitura.ModuloReservas
 {
@@ -145,7 +143,7 @@ namespace Clube_da_Leitura.ModuloReservas
                 Console.WriteLine("Este amigo possui uma multa em aberto e não pode realizar reservas até a quitação!");
                 Console.ResetColor();
                 Console.ReadKey();
-                return ObterDados(); 
+                return ObterDados();
             }
 
             if (jaTemEmprestimoAtivo)
@@ -276,7 +274,7 @@ namespace Clube_da_Leitura.ModuloReservas
             Console.WriteLine("-------------------------------------------------------------------------------------------------");
 
             List<Reserva> registros = repositorioReserva.SelecionarTodosAbertos();
-            
+
             foreach (var registro in registros)
             {
                 if (registro == null)

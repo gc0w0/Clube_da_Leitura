@@ -3,7 +3,6 @@ using Clube_da_Leitura.ModuloAmigo;
 using Clube_da_Leitura.ModuloCaixa;
 using Clube_da_Leitura.ModuloMultas;
 using Clube_da_Leitura.ModuloRevista;
-using Gestao_de_Equipamentos.Compartilhado;
 namespace Clube_da_Leitura.ModuloEmprestimo;
 
 public class TelaEmprestimo : TelaBase<Emprestimo>
@@ -32,7 +31,7 @@ public class TelaEmprestimo : TelaBase<Emprestimo>
         this.telaCaixa = telaCaixa;
         this.telaMulta = telaMulta;
         this.repositorioMulta = repositorioMulta;
-        this.repositorioEmprestimo = repositorioEmprestimo; 
+        this.repositorioEmprestimo = repositorioEmprestimo;
         this.repositorio = repositorioEmprestimo;
 
         modulo = "Emprestimos";
@@ -136,7 +135,7 @@ public class TelaEmprestimo : TelaBase<Emprestimo>
 
         bool jaTemEmprestimoAtivo = amigoSelecionado.emprestimos.Any(e => e.id >= 1);
         bool temMultaVinculada = amigoSelecionado.multas.Any(e => e.id >= 1);
-       
+
 
 
         if (temMultaVinculada)
@@ -286,7 +285,7 @@ public class TelaEmprestimo : TelaBase<Emprestimo>
         Console.ReadKey();
 
     }
- 
+
 }
 
 

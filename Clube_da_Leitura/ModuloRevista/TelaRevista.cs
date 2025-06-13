@@ -1,13 +1,5 @@
 ﻿using Clube_da_Leitura.Compartilhado;
-using Clube_da_Leitura.ModuloAmigo;
 using Clube_da_Leitura.ModuloCaixa;
-using Gestao_de_Equipamentos.Compartilhado;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using static Clube_da_Leitura.ModuloCaixa.Caixa;
 using static Clube_da_Leitura.ModuloRevista.Revista;
 
 namespace Clube_da_Leitura.ModuloRevista
@@ -93,7 +85,7 @@ namespace Clube_da_Leitura.ModuloRevista
 
         public override void ExibirCabecalhoTabela()
         {
-            Console.WriteLine(formatoColunasTabela, "Id", "Titulo", "Ano de Publicação", "Status" , "Caixa", "Dias Caixa");
+            Console.WriteLine(formatoColunasTabela, "Id", "Titulo", "Ano de Publicação", "Status", "Caixa", "Dias Caixa");
         }
 
         public override void ExibirLinhaTabela(Revista r)
@@ -145,7 +137,7 @@ namespace Clube_da_Leitura.ModuloRevista
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine("\nJá existe uma revista com esse \"Titulo\"!");
                 Console.ResetColor();
-                return ObterDados(); 
+                return ObterDados();
             }
 
             else if (edicaoDuplicada)

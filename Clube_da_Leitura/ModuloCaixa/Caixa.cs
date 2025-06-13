@@ -1,10 +1,5 @@
 ﻿using Clube_da_Leitura.Compartilhado;
 using Clube_da_Leitura.ModuloRevista;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Clube_da_Leitura.ModuloCaixa
 {
@@ -27,9 +22,9 @@ namespace Clube_da_Leitura.ModuloCaixa
 
         public Caixa()
         {
-            
+
         }
-        public Caixa(string etiqueta, CorCaixa cor, int dias )
+        public Caixa(string etiqueta, CorCaixa cor, int dias)
         {
             this.etiqueta = etiqueta;
             this.cor = cor;
@@ -39,7 +34,7 @@ namespace Clube_da_Leitura.ModuloCaixa
         public override void AtualizarInformacoes(Caixa caixaAtualizado)
         {
             this.etiqueta = caixaAtualizado.etiqueta;
-            this.cor = caixaAtualizado .cor;
+            this.cor = caixaAtualizado.cor;
             this.dias = caixaAtualizado.dias;
         }
 
@@ -66,7 +61,7 @@ namespace Clube_da_Leitura.ModuloCaixa
                 resultadoValidacao += "O campo \"dias\" não foi preenchido, periodo padrão de 7 dias" + "\n";
                 dias = 7; // testar
             }
-                
+
             return resultadoValidacao;
         }
     }

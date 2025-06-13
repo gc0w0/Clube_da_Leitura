@@ -1,12 +1,6 @@
 ﻿using Clube_da_Leitura.Compartilhado;
 using Clube_da_Leitura.ModuloAmigo;
-using Clube_da_Leitura.ModuloEmprestimo;
 using Clube_da_Leitura.ModuloRevista;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Clube_da_Leitura.ModuloReservas
 {
@@ -19,7 +13,7 @@ namespace Clube_da_Leitura.ModuloReservas
 
         public Reserva()
         {
-            
+
         }
         public Reserva(Amigo amigo, Revista revista)
         {

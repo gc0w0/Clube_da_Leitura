@@ -1,5 +1,4 @@
 ﻿using Clube_da_Leitura.Compartilhado;
-using Clube_da_Leitura.ModuloAmigo;
 using Clube_da_Leitura.ModuloCaixa;
 using Clube_da_Leitura.ModuloEmprestimo;
 using Clube_da_Leitura.ModuloReservas;
@@ -9,7 +8,7 @@ public class Revista : EntidadeBase<Revista>
 {
     public string titulo; //minimo de 2 caracteres com no maximo 100
     public int numeroEdicao;
-    public int anoPublicacao; 
+    public int anoPublicacao;
     public StatusDisponveis status;
     public Caixa caixa;
     public List<Emprestimo> emprestimos = new List<Emprestimo>(); // em haver se precisa ou não
@@ -17,10 +16,10 @@ public class Revista : EntidadeBase<Revista>
 
     public Revista()
     {
-        
+
     }
     public Revista(string titulo, int numeroEdicao, int anoPublicacao, Caixa caixa, StatusDisponveis status)
-    { 
+    {
         this.titulo = titulo;
         this.numeroEdicao = numeroEdicao;
         this.anoPublicacao = anoPublicacao;

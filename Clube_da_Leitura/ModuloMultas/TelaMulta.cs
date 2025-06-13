@@ -26,7 +26,7 @@ namespace Clube_da_Leitura.ModuloMultas
             this.telaAmigo = telaAmigo;
             this.telaEmprestimo = telaEmprestimo;
             this.emprestimos = emprestimos;
-            
+
             modulo = "Multas";
         }
 
@@ -121,7 +121,7 @@ namespace Clube_da_Leitura.ModuloMultas
             multaSelecionada.situacao = SituacaoMulta.Quitada;
             Emprestimo emprestimoSelecionado = repositorioEmprestimo.SelecionarPorId(idMulta);
             emprestimoSelecionado.situacao = SituacaoEmprestimo.Fechado;
-            
+
 
             Console.WriteLine("Pagamento da Multa no valor de \"R$:{0}\" registrada com sucesso e Revista: \"{1}\" devolvida.", multaSelecionada.valorMulta, emprestimoSelecionado.revista.titulo);
             Console.ReadKey();
@@ -149,7 +149,7 @@ namespace Clube_da_Leitura.ModuloMultas
                 if (DateTime.Now.Date > e.dataPrevistaDevolucao.Date)
                 {
                     int diasAtraso = (DateTime.Now.Date - e.dataPrevistaDevolucao.Date).Days;
-                    int valorMulta = diasAtraso * 2; 
+                    int valorMulta = diasAtraso * 2;
                     var multaExistente = e.multa?.FirstOrDefault(m => m.situacao == SituacaoMulta.Pendente);
 
                     if (multaExistente != null)

@@ -1,7 +1,4 @@
 ﻿using Clube_da_Leitura.Compartilhado;
-using Clube_da_Leitura.ModuloAmigo;
-using Gestao_de_Equipamentos.Compartilhado;
-using System.Runtime.InteropServices;
 using static Clube_da_Leitura.ModuloCaixa.Caixa;
 namespace Clube_da_Leitura.ModuloCaixa;
 
@@ -85,7 +82,7 @@ public class TelaCaixa : TelaBase<Caixa>
     public override void ExibirLinhaTabela(Caixa c)
     {
         Console.Write($"{c.id,-10} | {c.etiqueta,-20} | ");
-        ImprimirComCor(c.cor, c.cor.ToString().PadRight(15)); 
+        ImprimirComCor(c.cor, c.cor.ToString().PadRight(15));
         Console.WriteLine($" | {c.dias,-15}");
     }
 
@@ -110,7 +107,7 @@ public class TelaCaixa : TelaBase<Caixa>
                 Console.ForegroundColor = ConsoleColor.Magenta;
                 break;
             case CorCaixa.Laranja:
-                Console.ForegroundColor = ConsoleColor.DarkYellow; 
+                Console.ForegroundColor = ConsoleColor.DarkYellow;
                 break;
 
             default:
@@ -159,7 +156,7 @@ public class TelaCaixa : TelaBase<Caixa>
             Console.ForegroundColor = ConsoleColor.Red;
             Console.WriteLine("\nJá existe uma caixa com essa etiqueta!");
             Console.ResetColor();
-            return ObterDados(); 
+            return ObterDados();
         }
         return new Caixa(novaEtiqueta, novaCor, novoDiasEmprestimo);
     }

@@ -1,6 +1,4 @@
 ﻿using Clube_da_Leitura.Compartilhado;
-using Clube_da_Leitura.ModuloCaixa;
-using static Clube_da_Leitura.ModuloEmprestimo.Emprestimo;
 
 namespace Gestao_de_Equipamentos.Compartilhado;
 
@@ -51,6 +49,6 @@ public class RepositorioBaseEmMemoria<T> where T : EntidadeBase<T>
         return registros.Any(validacao);
     }
 
-   
+
 }
 

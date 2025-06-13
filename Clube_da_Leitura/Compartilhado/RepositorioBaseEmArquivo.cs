@@ -1,97 +1,67 @@
 ﻿using Clube_da_Leitura.Compartilhado;
-using Clube_da_Leitura.ModuloAmigo;
-using System.Text.Json.Serialization;
-using System.Text.Json;
-
-public class RepositorioBase<T> : IRepositorio<T> where T : EntidadeBase<T>
+public abstract class RepositorioBaseEmArquivo<T> : IRepositorio<T> where T : EntidadeBase<T>
 {
-    protected List<T> registros = new List<T>();
-    public string caminhoArquivo;
+    public ClubeLeituraContextoDados contexto;
 
-    protected RepositorioBase(string caminhoArquivo)
+    protected RepositorioBaseEmArquivo(ClubeLeituraContextoDados contextoDados)
     {
-        this.caminhoArquivo = caminhoArquivo;
-        CarregarDoArquivo();
-    }
-    public void SalvarEmArquivo()
-    {
-        var opcoes = new JsonSerializerOptions
-        {
-            IncludeFields = true,
-            ReferenceHandler = ReferenceHandler.Preserve,
-            WriteIndented = true
-        };
-
-        string conteudo = JsonSerializer.Serialize(registros, opcoes);
-        File.WriteAllText(caminhoArquivo, conteudo);
-    }
-    public void CarregarDoArquivo()
-    {
-        if (!File.Exists(caminhoArquivo))
-        {
-            registros = new List<T>();
-            return;
-        }
-
-        var opcoes = new JsonSerializerOptions
-        {
-            IncludeFields = true,
-            ReferenceHandler = ReferenceHandler.Preserve
-        };
-
-        string conteudo = File.ReadAllText(caminhoArquivo);
-        registros = JsonSerializer.Deserialize<List<T>>(conteudo, opcoes) ?? new List<T>();
+        contexto = contextoDados;
     }
 
     public void InserirRegistro(T registro)
     {
-        CarregarDoArquivo();
+        List<T> registros = ObterRegistros();
+
         registro.id = registros.Count + 1;
         registros.Add(registro);
-        SalvarEmArquivo();
+
+        contexto.SalvarEmArquivo();
     }
 
     public bool EditarRegistro(int id, T registroAtualizado)
     {
-        CarregarDoArquivo();
         var registro = SelecionarPorId(id);
 
         if (registro == null)
             return false;
 
         registro.AtualizarInformacoes(registroAtualizado);
-        SalvarEmArquivo();
+        contexto.SalvarEmArquivo();
         return true;
     }
 
     public T SelecionarPorId(int id)
     {
-        CarregarDoArquivo();
+        List<T> registros = ObterRegistros();
+
         return registros.FirstOrDefault(r => r.id == id);
     }
 
     public bool ExcluirRegistro(int id)
     {
-        CarregarDoArquivo();
+        List<T> registros = ObterRegistros();
+
         var registro = SelecionarPorId(id);
 
         if (registro == null)
             return false;
 
         registros.Remove(registro);
-        SalvarEmArquivo();
+        contexto.SalvarEmArquivo();
         return true;
     }
 
     public List<T> SelecionarTodos()
     {
-        CarregarDoArquivo();
-        return registros;
+        return ObterRegistros();
     }
 
     public bool Validacoes(Func<T, bool> validacao)
     {
-        CarregarDoArquivo();
+        List<T> registros = ObterRegistros();
+
         return registros.Any(validacao);
     }
+
+    protected abstract List<T> ObterRegistros();
 }

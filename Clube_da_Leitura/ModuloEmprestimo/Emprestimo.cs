@@ -1,13 +1,7 @@
 ﻿using Clube_da_Leitura.Compartilhado;
 using Clube_da_Leitura.ModuloAmigo;
-using Clube_da_Leitura.ModuloCaixa;
 using Clube_da_Leitura.ModuloMultas;
 using Clube_da_Leitura.ModuloRevista;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Clube_da_Leitura.ModuloEmprestimo
 {
@@ -23,12 +17,12 @@ namespace Clube_da_Leitura.ModuloEmprestimo
 
         public Emprestimo()
         {
-            
+
         }
         public Emprestimo(Amigo amigo, Revista revista)
         {
             this.amigo = amigo;
-            this.revista = revista;            
+            this.revista = revista;
             amigo.emprestimos.Add(this);
             revista.emprestimos.Add(this);
 
@@ -49,7 +43,7 @@ namespace Clube_da_Leitura.ModuloEmprestimo
             //dataDevolucao = DateTime.Now.AddDays(-1);
         }
 
-       
+
 
         public override void AtualizarInformacoes(Emprestimo emprestimoAtualizado)
         {

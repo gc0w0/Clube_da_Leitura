@@ -10,33 +10,35 @@ using static Clube_da_Leitura.ModuloCaixa.Caixa;
 namespace Clube_da_Leitura
 {
     internal class Program
-    {      
+    {
         static void Main(string[] args)
-        {                        
-            
-            var repositorioAmigo = new RepositorioAmigoEmArquivo();
+        {
+            ClubeLeituraContextoDados contextoDados = new ClubeLeituraContextoDados(carregarDoArquivo: true);
+
+            var repositorioAmigo = new RepositorioAmigoEmArquivo(contextoDados);
+
             var telaAmigo = new TelaAmigo(repositorioAmigo);
-            //var amigo = new Amigo("Markswell", "Gabriel", "49984327736");
+            var amigo = new Amigo("Markswell", "Gabriel", "49984327736");
             //var amigo2 = new Amigo("Gregory", "Gabriel", "11111111111");
 
-            //repositorioAmigo.InserirRegistro(amigo); 
+            repositorioAmigo.InserirRegistro(amigo);
             //repositorioAmigo.InserirRegistro(amigo2);
 
-            var repositorioCaixa = new RepositorioCaixaEmArquivo();
+            var repositorioCaixa = new RepositorioCaixaEmArquivo(contextoDados);
             var telaCaixa = new TelaCaixa(repositorioCaixa);
-            //var caixa = new Caixa("Etiqueta Teste", CorCaixa.Vermelha, 2);
+            var caixa = new Caixa("Etiqueta Teste", CorCaixa.Vermelha, 2);
             //var caixa2 = new Caixa("Caixa 2", CorCaixa.Amarela, 1);
-            //repositorioCaixa.InserirRegistro(caixa);
+            repositorioCaixa.InserirRegistro(caixa);
             //repositorioCaixa.InserirRegistro(caixa2);
 
-            var repositorioRevista = new RepositorioRevistaEmArquivo();
+            var repositorioRevista = new RepositorioRevistaEmArquivo(contextoDados);
             var telaRevista = new TelaRevista(repositorioCaixa, telaCaixa, repositorioRevista);
             //var revista = new Revista("Pequeno Principe", 2, 2025, caixa, Revista.StatusDisponveis.Emprestada);
             //var revista2 = new Revista("Teste2", 3, 1999, caixa2, Revista.StatusDisponveis.Disponivel);
             //repositorioRevista.InserirRegistro(revista);
             //repositorioRevista.InserirRegistro(revista2);
 
-            var repositorioEmprestimo = new RepositorioEmprestimoEmArquivo();
+            var repositorioEmprestimo = new RepositorioEmprestimoEmArquivo(contextoDados);
             //var emprestimo = new Emprestimo(amigo, revista);
             //var emprestimo2 = new Emprestimo(amigo2, revista2);
             //repositorioEmprestimo.InserirRegistro(emprestimo);
@@ -45,18 +47,18 @@ namespace Clube_da_Leitura
 
             var repositorioMulta = new RepositorioMulta();
 
-            var repositorioReserva = new RepositorioReservaEmArquivo();
+            var repositorioReserva = new RepositorioReservaEmArquivo(contextoDados);
             //var reserva = new Reserva(amigo, revista);
             //repositorioReserva.InserirRegistro(reserva);
             var telaEmprestimo = new TelaEmprestimo(
-                repositorioEmprestimo,  repositorioAmigo,  repositorioRevista,  
-                repositorioCaixa,  telaAmigo,  telaRevista,  telaCaixa, repositorioMulta);
+                repositorioEmprestimo, repositorioAmigo, repositorioRevista,
+                repositorioCaixa, telaAmigo, telaRevista, telaCaixa, repositorioMulta);
 
             //var telaMulta = new TelaMulta(repositorioMulta, repositorioAmigo, repositorioEmprestimo, telaAmigo, telaEmprestimo, emprestimo);
-            var telaReserva = new TelaReserva(repositorioEmprestimo, repositorioReserva, repositorioAmigo, repositorioRevista, 
+            var telaReserva = new TelaReserva(repositorioEmprestimo, repositorioReserva, repositorioAmigo, repositorioRevista,
                 repositorioMulta, telaAmigo, telaRevista);
 
-           
+
             var telaPrincipal = new TelaPrincipal();
 
             while (true)
@@ -117,7 +119,7 @@ namespace Clube_da_Leitura
                 telaEmprestimo.VisualizarRegistros(mostrarCabecalho: true);
 
         }
-        
+
         private static void GerenciarRevistas(TelaRevista telaRevista, TelaPrincipal telaPrincipal)
         {
             telaRevista.ExibirOpcoesMenu();

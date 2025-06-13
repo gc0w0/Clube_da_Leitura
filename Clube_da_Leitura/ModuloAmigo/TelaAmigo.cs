@@ -1,8 +1,5 @@
 ﻿using Clube_da_Leitura.Compartilhado;
-using Clube_da_Leitura.ModuloEmprestimo;
 using Clube_da_Leitura.ModuloMultas;
-using Gestao_de_Equipamentos.Compartilhado;
-using System.Collections.Concurrent;
 using System.Globalization;
 namespace Clube_da_Leitura.ModuloAmigo;
 
@@ -217,7 +214,7 @@ public class TelaAmigo : TelaBase<Amigo>
     }
 
     public bool FiltrarIniciandoComLetraA(Amigo amigo)
-    { 
+    {
         return amigo.nome.Contains("A");
     }
 

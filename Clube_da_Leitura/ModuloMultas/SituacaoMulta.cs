@@ -3,5 +3,5 @@
 public enum SituacaoMulta
 {
     Pendente = 1,
-    Quitada =2
+    Quitada = 2
 }

@@ -1,8 +1,10 @@
-﻿namespace Clube_da_Leitura.ModuloAmigo
+﻿using Clube_da_Leitura.Compartilhado;
+
+namespace Clube_da_Leitura.ModuloAmigo
 {
-    public class RepositorioAmigoEmArquivo : RepositorioBase<Amigo>, IRepositorioAmigo
+    public class RepositorioAmigoEmArquivo : RepositorioBaseEmArquivo<Amigo>, IRepositorioAmigo
     {
-        public RepositorioAmigoEmArquivo(): base(@"C:\temp\amigos.json")
+        public RepositorioAmigoEmArquivo(ClubeLeituraContextoDados contexto) : base(contexto)
         {
         }
 
@@ -18,6 +20,11 @@
             return SelecionarTodos()
                 .FindAll(condicao)
                 .ToList();
+        }
+
+        protected override List<Amigo> ObterRegistros()
+        {
+            return contexto.Amigos;
         }
     }
 }

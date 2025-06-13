@@ -4,5 +4,5 @@ public enum SituacaoEmprestimo
 {
     Aberto = 1,
     Fechado = 2,
-    Atrasado =3
+    Atrasado = 3
 }
