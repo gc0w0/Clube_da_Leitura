@@ -158,7 +158,7 @@ public class TelaAmigo : TelaBase<Amigo>
         Console.WriteLine($"Digite 3 para editar {modulo}:");
         Console.WriteLine($"Digite 4 para excluir {modulo}:");
         Console.WriteLine($"Digite 5 para quitar Multas {modulo}");
-        Console.WriteLine($"Digite 6 para fitlrar {modulo}");
+        Console.WriteLine($"Digite 6 para filtrar {modulo}");
         Console.WriteLine("Digite S para sair");
         Console.Write(">: ");
 
