@@ -5,6 +5,7 @@ using Clube_da_Leitura.ModuloEmprestimo;
 using Clube_da_Leitura.ModuloMultas;
 using Clube_da_Leitura.ModuloReservas;
 using Clube_da_Leitura.ModuloRevista;
+using System.Globalization;
 using static Clube_da_Leitura.ModuloCaixa.Caixa;
 
 namespace Clube_da_Leitura
@@ -19,11 +20,12 @@ namespace Clube_da_Leitura
 
             var telaAmigo = new TelaAmigo(repositorioAmigo);
             var amigo = new Amigo("Markswell", "Gabriel", "49984327736");
+            repositorioAmigo.InserirRegistro(amigo);
+            #region AMIGO Inserindo via parametro
             //var amigo2 = new Amigo("Gregory", "Gabriel", "11111111111");
 
-            repositorioAmigo.InserirRegistro(amigo);
             //repositorioAmigo.InserirRegistro(amigo2);
-
+            #endregion
             var repositorioCaixa = new RepositorioCaixaEmArquivo(contextoDados);
             var telaCaixa = new TelaCaixa(repositorioCaixa);
             var caixa = new Caixa("Etiqueta Teste", CorCaixa.Vermelha, 2);
@@ -33,28 +35,33 @@ namespace Clube_da_Leitura
 
             var repositorioRevista = new RepositorioRevistaEmArquivo(contextoDados);
             var telaRevista = new TelaRevista(repositorioCaixa, telaCaixa, repositorioRevista);
+            #region REVISTA Inserindo via parametro
             //var revista = new Revista("Pequeno Principe", 2, 2025, caixa, Revista.StatusDisponveis.Emprestada);
             //var revista2 = new Revista("Teste2", 3, 1999, caixa2, Revista.StatusDisponveis.Disponivel);
             //repositorioRevista.InserirRegistro(revista);
             //repositorioRevista.InserirRegistro(revista2);
-
+            #endregion
             var repositorioEmprestimo = new RepositorioEmprestimoEmArquivo(contextoDados);
+            #region EMPRESTIMO Inserindo via parametro
             //var emprestimo = new Emprestimo(amigo, revista);
             //var emprestimo2 = new Emprestimo(amigo2, revista2);
             //repositorioEmprestimo.InserirRegistro(emprestimo);
             //repositorioEmprestimo.InserirRegistro(emprestimo2);
             //repositorioEmprestimo.InserirRegistro(emprestimo2);
-
+            #endregion
             var repositorioMulta = new RepositorioMulta();
 
             var repositorioReserva = new RepositorioReservaEmArquivo(contextoDados);
+            #region RESERVA Inserindo via parametro
             //var reserva = new Reserva(amigo, revista);
             //repositorioReserva.InserirRegistro(reserva);
+            #endregion
             var telaEmprestimo = new TelaEmprestimo(
                 repositorioEmprestimo, repositorioAmigo, repositorioRevista,
                 repositorioCaixa, telaAmigo, telaRevista, telaCaixa, repositorioMulta);
-
+            #region MULTA telaMulta
             //var telaMulta = new TelaMulta(repositorioMulta, repositorioAmigo, repositorioEmprestimo, telaAmigo, telaEmprestimo, emprestimo);
+            #endregion
             var telaReserva = new TelaReserva(repositorioEmprestimo, repositorioReserva, repositorioAmigo, repositorioRevista,
                 repositorioMulta, telaAmigo, telaRevista);
 
