@@ -7,12 +7,13 @@ using System.Text.Json.Serialization;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Clube_da_Leitura.ModuloAmigo;
+using Clube_da_Leitura.Compartilhado;
 
 namespace Clube_da_Leitura.ModuloEmprestimo
 {
-    public class RepositorioEmprestimoEmArquivo : RepositorioBase<Emprestimo>, IRepositorioEmprestimo
+    public class RepositorioEmprestimoEmArquivo : RepositorioBaseEmArquivo<Emprestimo>, IRepositorioEmprestimo
     {
-        public RepositorioEmprestimoEmArquivo() : base(@"C:\temp\emprestimos.json")
+        public RepositorioEmprestimoEmArquivo(ClubeLeituraContextoDeDados contextoDeDados) : base(contextoDeDados)
         {
         }
         public List<Emprestimo> SelecionarTodosAbertos()
@@ -25,5 +26,9 @@ namespace Clube_da_Leitura.ModuloEmprestimo
             return SelecionarTodos().Where(e => e.situacao == SituacaoEmprestimo.Fechado).ToList();
         }
 
+        protected override List<Emprestimo> ObterRegistros()
+        {
+            return contexto.Emprestimos;
+        }
     }
 }
