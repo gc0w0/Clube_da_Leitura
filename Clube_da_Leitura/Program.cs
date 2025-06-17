@@ -5,24 +5,34 @@ using Clube_da_Leitura.ModuloEmprestimo;
 using Clube_da_Leitura.ModuloMultas;
 using Clube_da_Leitura.ModuloReservas;
 using Clube_da_Leitura.ModuloRevista;
-using static Clube_da_Leitura.ModuloCaixa.Caixa;
+using Microsoft.Data.SqlClient;
+using Microsoft.Extensions.Configuration;
 
 namespace Clube_da_Leitura
 {
     internal class Program
     {      
         static void Main(string[] args)
-        {                        
+        {
             ClubeLeituraContextoDeDados contextoDeDados = new ClubeLeituraContextoDeDados(carregarDoArquivo: true);
+            
+            var builder = new ConfigurationBuilder()
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
 
-            var repositorioAmigo = new RepositorioAmigoEmBancoDeDados();
+            IConfiguration configuration = builder.Build();
+
+            string connectionString = configuration.GetConnectionString("SqlServer");            
+
+            var repositorioAmigo = new RepositorioAmigoEmBancoDeDados(new SqlConnection(connectionString));
+            
             var telaAmigo = new TelaAmigo(repositorioAmigo);
             #region AMIGO inserindo via parametro
-            //var amigo = new Amigo("Markswell", "Gabriel", "49984327736");
-            //var amigo2 = new Amigo("Gregory", "Gabriel", "11111111111");
+            var amigo = new Amigo("Markswell", "Gabriel", "49984327736");
+            var amigo2 = new Amigo("Gregory", "Gabriel", "11111111111");
 
-            //repositorioAmigo.InserirRegistro(amigo);
-            //repositorioAmigo.InserirRegistro(amigo2);
+            repositorioAmigo.InserirRegistro(amigo);
+            repositorioAmigo.InserirRegistro(amigo2);
             #endregion
             var repositorioCaixa = new RepositorioCaixaEmBancoDeDados();
             var telaCaixa = new TelaCaixa(repositorioCaixa);
@@ -55,15 +65,15 @@ namespace Clube_da_Leitura
             //repositorioReserva.InserirRegistro(reserva);
             #endregion
             var telaEmprestimo = new TelaEmprestimo(
-                repositorioEmprestimo,  repositorioAmigo,  repositorioRevista,  
-                repositorioCaixa,  telaAmigo,  telaRevista,  telaCaixa, repositorioMulta);
+                repositorioEmprestimo, repositorioAmigo, repositorioRevista,
+                repositorioCaixa, telaAmigo, telaRevista, telaCaixa, repositorioMulta);
             #region MULTA tela multa
             //var telaMulta = new TelaMulta(repositorioMulta, repositorioAmigo, repositorioEmprestimo, telaAmigo, telaEmprestimo, emprestimo);
             #endregion
-            var telaReserva = new TelaReserva(repositorioEmprestimo, repositorioReserva, repositorioAmigo, repositorioRevista, 
+            var telaReserva = new TelaReserva(repositorioEmprestimo, repositorioReserva, repositorioAmigo, repositorioRevista,
                 repositorioMulta, telaAmigo, telaRevista);
 
-           
+
             var telaPrincipal = new TelaPrincipal();
 
             while (true)
@@ -124,7 +134,7 @@ namespace Clube_da_Leitura
                 telaEmprestimo.VisualizarRegistros(mostrarCabecalho: true);
 
         }
-        
+
         private static void GerenciarRevistas(TelaRevista telaRevista, TelaPrincipal telaPrincipal)
         {
             telaRevista.ExibirOpcoesMenu();

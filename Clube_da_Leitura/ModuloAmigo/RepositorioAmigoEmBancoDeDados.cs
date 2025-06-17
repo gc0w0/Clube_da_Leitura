@@ -1,39 +1,74 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using Clube_da_Leitura.Compartilhado;
 using Microsoft.Data.SqlClient;
+using Microsoft.Win32;
+using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Data.Common;
+using System.Linq;
 
 namespace Clube_da_Leitura.ModuloAmigo
 {
-    public class RepositorioAmigoEmBancoDeDados : IRepositorioAmigo
+    public abstract class RepositorioBaseEmBancoDeDados
     {
-        private readonly string connectionString =
-            @"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=ClubeLeituraDataBase;Integrated Security=True;";
+        private IDbConnection dbConnection;
+        protected abstract string SqlInserir { get; }
+
+        protected abstract Dictionary<string, object> ObterParametros(Amigo amigo);
 
         public void InserirRegistro(Amigo registro)
         {
-            using SqlConnection conn = new SqlConnection(connectionString);
-            conn.Open();
+            dbConnection.Open();
+            
+            IDbCommand comandoInserir = dbConnection.CreateCommand();
 
-            string sql = @"INSERT INTO TBAmigos (Nome, NomeResponsavel, Telefone)
-               VALUES (@Nome, @Responsavel, @Telefone)";
+            comandoInserir.CommandText = SqlInserir;
 
-            SqlCommand cmd = new SqlCommand(sql, conn);
-            cmd.Parameters.AddWithValue("@Nome", registro.nome);
-            cmd.Parameters.AddWithValue("@Responsavel", registro.nomeReponsavel);
-            cmd.Parameters.AddWithValue("@Telefone", registro.telefone);
-            cmd.ExecuteNonQuery();
+            var parametros = ObterParametros(registro);
+
+            foreach (var p in parametros)
+            {
+                comandoInserir.AddParametro(p.Key, p.Value);    
+            }            
+
+            comandoInserir.ExecuteNonQuery();
         }
+
+    }
+
+    public class RepositorioAmigoEmBancoDeDados : RepositorioBaseEmBancoDeDados, IRepositorioAmigo
+    {
+
+        private IDbConnection dbConnection;
+
+        protected override string SqlInserir =>          
+                    @"INSERT INTO TBAmigos (Nome, NomeResponsavel, Telefone)
+                        VALUES (@Nome, @Responsavel, @Telefone)";
+
+        protected override Dictionary<string, object> ObterParametros(Amigo amigo)
+        {
+            return new Dictionary<string, object>
+            {
+                { "@Nome", amigo.nome},
+                { "@Responsavel", amigo.nomeReponsavel},
+                { "@Telefone", amigo.telefone},
+            };                    
+        }
+
+        public RepositorioAmigoEmBancoDeDados(IDbConnection dbConnection)
+        {
+            this.dbConnection = dbConnection;
+        }       
+       
 
         public bool EditarRegistro(int id, Amigo registroAtualizado)
         {
-            using SqlConnection conn = new SqlConnection(connectionString);
-            conn.Open();
+            dbConnection.Open();
 
             string sql = @"UPDATE TBAmigos SET Nome = @Nome, NomeResponsavel = @Responsavel, Telefone = @Telefone
                            WHERE Id = @Id";
 
-            SqlCommand cmd = new SqlCommand(sql, conn);
+            SqlCommand cmd = new SqlCommand(sql, dbConnection as SqlConnection);
             cmd.Parameters.AddWithValue("@Id", id);
             cmd.Parameters.AddWithValue("@Nome", registroAtualizado.nome);
             cmd.Parameters.AddWithValue("@Responsavel", registroAtualizado.nomeReponsavel);
@@ -44,10 +79,9 @@ namespace Clube_da_Leitura.ModuloAmigo
 
         public bool ExcluirRegistro(int id)
         {
-            using SqlConnection conn = new SqlConnection(connectionString);
-            conn.Open();
+            dbConnection.Open();
 
-            SqlCommand cmd = new SqlCommand("DELETE FROM TBAmigos WHERE Id = @Id", conn);
+            SqlCommand cmd = new SqlCommand("DELETE FROM TBAmigos WHERE Id = @Id", dbConnection as SqlConnection);
             cmd.Parameters.AddWithValue("@Id", id);
 
             return cmd.ExecuteNonQuery() > 0;
@@ -55,10 +89,9 @@ namespace Clube_da_Leitura.ModuloAmigo
 
         public Amigo SelecionarPorId(int id)
         {
-            using SqlConnection conn = new SqlConnection(connectionString);
-            conn.Open();
+            dbConnection.Open();
 
-            SqlCommand cmd = new SqlCommand("SELECT * FROM TBAmigos WHERE Id = @Id", conn);
+            SqlCommand cmd = new SqlCommand("SELECT * FROM TBAmigos WHERE Id = @Id", dbConnection as SqlConnection);
             cmd.Parameters.AddWithValue("@Id", id);
 
             using var reader = cmd.ExecuteReader();
@@ -79,10 +112,9 @@ namespace Clube_da_Leitura.ModuloAmigo
         {
             var lista = new List<Amigo>();
 
-            using SqlConnection conn = new SqlConnection(connectionString);
-            conn.Open();
+            dbConnection.Open();
 
-            SqlCommand cmd = new SqlCommand("SELECT * FROM TBAmigos", conn);
+            SqlCommand cmd = new SqlCommand("SELECT * FROM TBAmigos", dbConnection as SqlConnection);
             using var reader = cmd.ExecuteReader();
 
             while (reader.Read())
@@ -117,5 +149,7 @@ namespace Clube_da_Leitura.ModuloAmigo
         {
             return SelecionarTodos().Any(validacao);
         }
+
+        
     }
 }
