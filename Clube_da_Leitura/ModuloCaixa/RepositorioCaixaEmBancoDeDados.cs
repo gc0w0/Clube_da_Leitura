@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Clube_da_Leitura.ModuloAmigo;
 using Microsoft.Data.SqlClient;
+using Microsoft.Data.Sqlite;
 using static Clube_da_Leitura.ModuloCaixa.Caixa;
 namespace Clube_da_Leitura.ModuloCaixa
 {
@@ -14,6 +15,8 @@ namespace Clube_da_Leitura.ModuloCaixa
             @"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=ClubeLeituraDataBase;Integrated Security=True;";
         public void InserirRegistro(Caixa registro)
         {
+            using SqliteConnection con = new SqliteConnection(connectionString);
+            con.Open();
             using SqlConnection conn = new SqlConnection(connectionString);
             conn.Open();
 
