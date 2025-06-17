@@ -14,8 +14,8 @@ namespace Clube_da_Leitura
         static void Main(string[] args)
         {                        
             ClubeLeituraContextoDeDados contextoDeDados = new ClubeLeituraContextoDeDados(carregarDoArquivo: true);
-            
-            var repositorioAmigo = new RepositorioAmigoEmArquivo(contextoDeDados);
+
+            var repositorioAmigo = new RepositorioAmigoEmBancoDeDados();
             var telaAmigo = new TelaAmigo(repositorioAmigo);
             #region AMIGO inserindo via parametro
             //var amigo = new Amigo("Markswell", "Gabriel", "49984327736");
@@ -24,7 +24,7 @@ namespace Clube_da_Leitura
             //repositorioAmigo.InserirRegistro(amigo);
             //repositorioAmigo.InserirRegistro(amigo2);
             #endregion
-            var repositorioCaixa = new RepositorioCaixaEmArquivo(contextoDeDados);
+            var repositorioCaixa = new RepositorioCaixaEmBancoDeDados();
             var telaCaixa = new TelaCaixa(repositorioCaixa);
             #region CAIXA inserindo via parametro
             //var caixa = new Caixa("Etiqueta Teste", CorCaixa.Vermelha, 2);

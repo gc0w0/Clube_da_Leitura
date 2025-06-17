@@ -1,0 +1,53 @@
+﻿CREATE TABLE TBAmigos (
+    Id INT PRIMARY KEY,
+    Nome VARCHAR(100) NOT NULL,
+    NomeResponsavel VARCHAR(100) NOT NULL,
+    Telefone VARCHAR(15) NOT NULL
+);
+
+CREATE TABLE TBCaixas (
+    Id INT PRIMARY KEY,
+    Etiqueta VARCHAR(50) NOT NULL,
+    Cor INT NOT NULL,
+    Dias INT NOT NULL
+);
+
+CREATE TABLE TBRevistas (
+    Id INT PRIMARY KEY,
+    Titulo VARCHAR(100) NOT NULL,
+    NumeroEdicao INT,
+    AnoPublicacao INT,
+    Status INT,
+    CaixaId INT NOT NULL,
+    FOREIGN KEY (CaixaId) REFERENCES TBCaixas(Id)
+);
+
+CREATE TABLE TBEmprestimos (
+    Id INT PRIMARY KEY,
+    AmigoId INT NOT NULL,
+    RevistaId INT NOT NULL,
+    DataEmprestimo DATE NOT NULL,
+    DataDevolucao DATE,
+    DataPrevistaDevolucao DATETIME,
+    Situacao INT,
+    FOREIGN KEY (AmigoId) REFERENCES TBAmigos(Id),
+    FOREIGN KEY (RevistaId) REFERENCES TBRevistas(Id)
+);
+
+CREATE TABLE TBMultas (
+    Id INT PRIMARY KEY,
+    EmprestimoId INT NOT NULL,
+    Valor DECIMAL(10,2),
+    Situacao INT,
+    FOREIGN KEY (EmprestimoId) REFERENCES TBEmprestimos(Id)
+);
+
+CREATE TABLE TBReservas (
+    Id INT PRIMARY KEY,
+    AmigoId INT NOT NULL,
+    RevistaId INT NOT NULL,
+    DataReserva DATETIME NOT NULL,
+    Situacao INT,
+    FOREIGN KEY (AmigoId) REFERENCES TBAmigos(Id),
+    FOREIGN KEY (RevistaId) REFERENCES TBRevistas(Id)
+);
