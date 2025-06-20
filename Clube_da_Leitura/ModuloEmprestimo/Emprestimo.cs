@@ -16,7 +16,7 @@ namespace Clube_da_Leitura.ModuloEmprestimo
     {
         public Amigo amigo;
         public Revista revista;
-        public DateTime dataEmprestimo, dataDevolucao, dataPrevistaDevolucao;
+        public DateTime? dataEmprestimo, dataDevolucao, dataPrevistaDevolucao;
         public SituacaoEmprestimo situacao;//Aberto / Concluido / Atrasado
         public List<Multa> multa = new List<Multa>();
         public RepositorioMulta repositorioMulta;
@@ -71,7 +71,7 @@ namespace Clube_da_Leitura.ModuloEmprestimo
 
         public void RegistrarDevolucao(DateTime dataDevolucao)
         {
-            int diasDeAtraso = (int)(dataDevolucao - dataPrevistaDevolucao).TotalDays;
+            int diasDeAtraso = (int)((dataDevolucao - dataPrevistaDevolucao)?.TotalDays ?? 0);
 
             if (diasDeAtraso > 0)
             {

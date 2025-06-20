@@ -146,27 +146,28 @@ namespace Clube_da_Leitura.ModuloMultas
                 if (e == null || e.situacao != SituacaoEmprestimo.Aberto)
                     continue;
 
-                if (DateTime.Now.Date > e.dataPrevistaDevolucao.Date)
+                if (e.dataPrevistaDevolucao != null && DateTime.Now.Date > e.dataPrevistaDevolucao.Value.Date)
                 {
-                    int diasAtraso = (DateTime.Now.Date - e.dataPrevistaDevolucao.Date).Days;
-                    int valorMulta = diasAtraso * 2; 
-                    var multaExistente = e.multa?.FirstOrDefault(m => m.situacao == SituacaoMulta.Pendente);
+                    int diasAtraso = (DateTime.Now - e.dataPrevistaDevolucao.Value).Days;
+                    int valorMulta = diasAtraso * 2;
+
+                    var multaExistente = e.multa.FirstOrDefault(m => m.situacao == SituacaoMulta.Pendente);
 
                     if (multaExistente != null)
                     {
                         multaExistente.valorMulta = valorMulta;
-                        Console.WriteLine($"Multa atualizada para {e.amigo.nome} - R$ {valorMulta} ({diasAtraso} dias de atraso)");
+                        Console.WriteLine($"Multa atualizada para {e.amigo.nome} – R$ {valorMulta} ({diasAtraso} dias de atraso)");
                     }
                     else
                     {
                         var novaMulta = new Multa(e.amigo, e.revista, e, SituacaoMulta.Pendente, valorMulta);
                         repositorioMulta.InserirRegistro(novaMulta);
                         e.situacao = SituacaoEmprestimo.Atrasado;
-
-                        Console.WriteLine($"Multa criada para {e.amigo.nome} - R$ {valorMulta} ({diasAtraso} dias de atraso)");
+                        Console.WriteLine($"Multa criada para {e.amigo.nome} – R$ {valorMulta} ({diasAtraso} dias de atraso)");
                     }
                 }
             }
+
 
             Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine("\nMultas processadas com sucesso!");

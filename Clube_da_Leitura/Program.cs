@@ -31,21 +31,21 @@ namespace Clube_da_Leitura
 
             var telaAmigo = new TelaAmigo(repositorioAmigo);
             #region AMIGO inserindo via parametro
-            var amigo = new Amigo("parametro", "sqlserver", "66666666666");
+            //var amigo = new Amigo("parametro", "sqlserver", "66666666666");
             //var amigo2 = new Amigo("Gregory", "Gabriel", "11111111111");
 
-            repositorioAmigo.InserirRegistro(amigo);
+            //repositorioAmigo.InserirRegistro(amigo);
             //repositorioAmigo.InserirRegistro(amigo2);
             #endregion
             var repositorioCaixa = new RepositorioCaixaEmBancoDeDados(new SqlConnection(connectionString));
             var telaCaixa = new TelaCaixa(repositorioCaixa);
             #region CAIXA inserindo via parametro
-            //var caixa = new Caixa("Etiqueta Teste", CorCaixa.Vermelha, 2);
+            //var caixa = new Caixa("Etiqueta Teste", Caixa.CorCaixa.Vermelha, 2);
             //var caixa2 = new Caixa("Caixa 2", CorCaixa.Amarela, 1);
             //repositorioCaixa.InserirRegistro(caixa);
             //repositorioCaixa.InserirRegistro(caixa2);
             #endregion
-            var repositorioRevista = new RepositorioRevistaEmArquivo(contextoDeDados);
+            var repositorioRevista = new RepositorioRevistaEmBancoDeDados(new SqlConnection(connectionString));
             var telaRevista = new TelaRevista(repositorioCaixa, telaCaixa, repositorioRevista);
             #region REVISTA inserindo via parametro
             //var revista = new Revista("Pequeno Principe", 2, 2025, caixa, Revista.StatusDisponveis.Emprestada);
@@ -53,7 +53,7 @@ namespace Clube_da_Leitura
             //repositorioRevista.InserirRegistro(revista);
             //repositorioRevista.InserirRegistro(revista2);
             #endregion
-            var repositorioEmprestimo = new RepositorioEmprestimoEmArquivo(contextoDeDados);
+            var repositorioEmprestimo = new RepositorioEmprestimoEmBancoDeDados(new SqlConnection(connectionString));
             #region EMPRESTIMO inserindo via parametro
             //var emprestimo = new Emprestimo(amigo, revista);
             //var emprestimo2 = new Emprestimo(amigo2, revista2);
@@ -62,7 +62,7 @@ namespace Clube_da_Leitura
             //repositorioEmprestimo.InserirRegistro(emprestimo2);
             #endregion
             var repositorioMulta = new RepositorioMulta();
-            var repositorioReserva = new RepositorioReservaEmArquivo(contextoDeDados);
+            var repositorioReserva = new RepositorioReservaEmBancoDeDados(new SqlConnection(connectionString));
             #region RESERVA inserindo via parametro
             //var reserva = new Reserva(amigo, revista);
             //repositorioReserva.InserirRegistro(reserva);

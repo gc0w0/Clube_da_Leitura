@@ -1,51 +1,84 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Data;
+using Clube_da_Leitura.Compartilhado;
 
 namespace Clube_da_Leitura.ModuloEmprestimo
 {
-    public class RepositorioEmprestimoEmBancoDeDados : IRepositorioEmprestimo
+    public class RepositorioEmprestimoEmBancoDeDados : RepositorioBaseEmBancoDeDados<Emprestimo>, IRepositorioEmprestimo
     {
-        public bool EditarRegistro(int id, Emprestimo registroAtualizado)
+        private IDbConnection dbConnection;
+
+        protected override string SqlInserir =>
+            @"INSERT INTO TBEmprestimos 
+              (AmigoId, RevistaId, DataEmprestimo, DataDevolucao, DataPrevistaDevolucao, Situacao) 
+              VALUES 
+              (@AmigoId, @RevistaId, @DataEmprestimo, @DataDevolucao, @DataPrevistaDevolucao, @Situacao)";
+
+        protected override string SqlEditar =>
+            @"UPDATE TBEmprestimos SET 
+              AmigoId = @AmigoId,
+              RevistaId = @RevistaId,
+              DataEmprestimo = @DataEmprestimo,
+              DataDevolucao = @DataDevolucao,
+              DataPrevistaDevolucao = @DataPrevistaDevolucao,
+              Situacao = @Situacao
+              WHERE Id = @Id";
+
+        protected override string SqlSelecionarPorId =>
+            @"SELECT * FROM TBEmprestimos WHERE Id = @Id";
+
+        protected override string SqlExcluir =>
+            @"DELETE FROM TBEmprestimos WHERE Id = @Id";
+
+        protected override string SqlSelecionarTodos =>
+            @"SELECT * FROM TBEmprestimos";
+
+        public RepositorioEmprestimoEmBancoDeDados(IDbConnection dbConnection) : base(dbConnection)
         {
-            throw new NotImplementedException();
+            this.dbConnection = dbConnection;
         }
 
-        public bool ExcluirRegistro(int id)
+        protected override Dictionary<string, object> ObterParametros(Emprestimo emprestimo)
         {
-            throw new NotImplementedException();
+            return new Dictionary<string, object>
+            {
+                { "@AmigoId", emprestimo.amigo.id },
+                { "@RevistaId", emprestimo.revista.id },
+                { "@DataEmprestimo", emprestimo.dataEmprestimo },
+                { "@DataDevolucao", emprestimo.dataDevolucao.HasValue ? emprestimo.dataDevolucao : DBNull.Value },
+                { "@DataPrevistaDevolucao", emprestimo.dataPrevistaDevolucao.HasValue ? emprestimo.dataPrevistaDevolucao : DBNull.Value },
+                { "@Situacao", (int)emprestimo.situacao }
+            };
         }
 
-        public void InserirRegistro(Emprestimo registro)
+        protected override Emprestimo ConverterRegistro(IDataReader reader)
         {
-            throw new NotImplementedException();
-        }
-
-        public Emprestimo SelecionarPorId(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public List<Emprestimo> SelecionarTodos()
-        {
-            throw new NotImplementedException();
+            return new Emprestimo
+            {
+                id = (int)reader["Id"],
+                amigo = new ModuloAmigo.Amigo { id = (int)reader["AmigoId"] }, // Será necessário buscar os dados completos depois, se quiser exibir
+                revista = new ModuloRevista.Revista { id = (int)reader["RevistaId"] },
+                dataEmprestimo = Convert.ToDateTime(reader["DataEmprestimo"]),
+                dataDevolucao = reader["DataDevolucao"] == DBNull.Value ? null : Convert.ToDateTime(reader["DataDevolucao"]),
+                dataPrevistaDevolucao = reader["DataPrevistaDevolucao"] == DBNull.Value ? null : Convert.ToDateTime(reader["DataPrevistaDevolucao"]),
+                situacao = (SituacaoEmprestimo)(int)reader["Situacao"]
+            };
         }
 
         public List<Emprestimo> SelecionarTodosAbertos()
         {
-            throw new NotImplementedException();
+            return SelecionarTodos().Where(e => e.situacao == SituacaoEmprestimo.Aberto).ToList();
         }
 
         public List<Emprestimo> SelecionarTodosFechados()
         {
-            throw new NotImplementedException();
+            return SelecionarTodos().Where(e => e.situacao == SituacaoEmprestimo.Fechado).ToList();
         }
 
         public bool Validacoes(Func<Emprestimo, bool> validacao)
         {
-            throw new NotImplementedException();
+            return SelecionarTodos().Any(validacao);
         }
     }
 }
