@@ -37,7 +37,7 @@ namespace Clube_da_Leitura
             repositorioAmigo.InserirRegistro(amigo);
             //repositorioAmigo.InserirRegistro(amigo2);
             #endregion
-            var repositorioCaixa = new RepositorioCaixaEmBancoDeDados();
+            var repositorioCaixa = new RepositorioCaixaEmBancoDeDados(new SqlConnection(connectionString));
             var telaCaixa = new TelaCaixa(repositorioCaixa);
             #region CAIXA inserindo via parametro
             //var caixa = new Caixa("Etiqueta Teste", CorCaixa.Vermelha, 2);
