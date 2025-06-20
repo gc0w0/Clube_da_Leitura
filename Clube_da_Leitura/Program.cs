@@ -8,6 +8,7 @@ using Clube_da_Leitura.ModuloRevista;
 using Microsoft.Data.SqlClient;
 using Microsoft.Data.Sqlite;
 using Microsoft.Extensions.Configuration;
+using System.Data;
 namespace Clube_da_Leitura
 {
     internal class Program
@@ -24,86 +25,95 @@ namespace Clube_da_Leitura
 
             string connectionString = configuration.GetConnectionString("SqlServer");
 
+            string tipoBancoDados = configuration.GetSection("BancoDeDados").Value;
 
-            SqliteConnection sqliteConnection = new SqliteConnection();
+            IDbConnection dbConnection = null;
 
-            var repositorioAmigo = new RepositorioAmigoEmBancoDeDados(new SqlConnection(connectionString));
+            if (tipoBancoDados == "SqlServer")
+                dbConnection = new SqlConnection(connectionString);            
 
-            var telaAmigo = new TelaAmigo(repositorioAmigo);
-            #region AMIGO inserindo via parametro
-            //var amigo = new Amigo("parametro", "sqlserver", "66666666666");
-            //var amigo2 = new Amigo("Gregory", "Gabriel", "11111111111");
+            else if (tipoBancoDados == "SqLite")
+                dbConnection = new SqliteConnection();
 
-            //repositorioAmigo.InserirRegistro(amigo);
-            //repositorioAmigo.InserirRegistro(amigo2);
-            #endregion
-            var repositorioCaixa = new RepositorioCaixaEmBancoDeDados(new SqlConnection(connectionString));
-            var telaCaixa = new TelaCaixa(repositorioCaixa);
-            #region CAIXA inserindo via parametro
+            string providerName = dbConnection.GetType().Name;
+
+            var repositorioAmigo = new RepositorioAmigoEmBancoDeDados(dbConnection);                        
+
+            //    var telaAmigo = new TelaAmigo(repositorioAmigo);
+            //#region AMIGO inserindo via parametro
+            ////var amigo = new Amigo("parametro", "sqlserver", "66666666666");
+            ////var amigo2 = new Amigo("Gregory", "Gabriel", "11111111111");
+
+            ////repositorioAmigo.InserirRegistro(amigo);
+            ////repositorioAmigo.InserirRegistro(amigo2);
+            //#endregion
+            //var repositorioCaixa = new RepositorioCaixaEmBancoDeDados(new SqlConnection(connectionString));
+            //var telaCaixa = new TelaCaixa(repositorioCaixa);
+            //#region CAIXA inserindo via parametro
             //var caixa = new Caixa("Etiqueta Teste", Caixa.CorCaixa.Vermelha, 2);
-            //var caixa2 = new Caixa("Caixa 2", CorCaixa.Amarela, 1);
+            ////var caixa2 = new Caixa("Caixa 2", CorCaixa.Amarela, 1);
             //repositorioCaixa.InserirRegistro(caixa);
-            //repositorioCaixa.InserirRegistro(caixa2);
-            #endregion
-            var repositorioRevista = new RepositorioRevistaEmBancoDeDados(new SqlConnection(connectionString));
-            var telaRevista = new TelaRevista(repositorioCaixa, telaCaixa, repositorioRevista);
-            #region REVISTA inserindo via parametro
+            ////repositorioCaixa.InserirRegistro(caixa2);
+            //#endregion
+            //var repositorioRevista = new RepositorioRevistaEmBancoDeDados(new SqlConnection(connectionString));
+            //var telaRevista = new TelaRevista(repositorioCaixa, telaCaixa, repositorioRevista);
+            //#region REVISTA inserindo via parametro
             //var revista = new Revista("Pequeno Principe", 2, 2025, caixa, Revista.StatusDisponveis.Emprestada);
-            //var revista2 = new Revista("Teste2", 3, 1999, caixa2, Revista.StatusDisponveis.Disponivel);
+            ////var revista2 = new Revista("Teste2", 3, 1999, caixa2, Revista.StatusDisponveis.Disponivel);
             //repositorioRevista.InserirRegistro(revista);
-            //repositorioRevista.InserirRegistro(revista2);
-            #endregion
-            var repositorioEmprestimo = new RepositorioEmprestimoEmBancoDeDados(new SqlConnection(connectionString));
-            #region EMPRESTIMO inserindo via parametro
-            //var emprestimo = new Emprestimo(amigo, revista);
-            //var emprestimo2 = new Emprestimo(amigo2, revista2);
-            //repositorioEmprestimo.InserirRegistro(emprestimo);
-            //repositorioEmprestimo.InserirRegistro(emprestimo2);
-            //repositorioEmprestimo.InserirRegistro(emprestimo2);
-            #endregion
-            var repositorioMulta = new RepositorioMulta();
-            var repositorioReserva = new RepositorioReservaEmBancoDeDados(new SqlConnection(connectionString));
-            #region RESERVA inserindo via parametro
-            //var reserva = new Reserva(amigo, revista);
-            //repositorioReserva.InserirRegistro(reserva);
-            #endregion
-            var telaEmprestimo = new TelaEmprestimo(
-                repositorioEmprestimo, repositorioAmigo, repositorioRevista,
-                repositorioCaixa, telaAmigo, telaRevista, telaCaixa, repositorioMulta);
-            #region MULTA tela multa
-            //var telaMulta = new TelaMulta(repositorioMulta, repositorioAmigo, repositorioEmprestimo, telaAmigo, telaEmprestimo, emprestimo);
-            #endregion
-            var telaReserva = new TelaReserva(repositorioEmprestimo, repositorioReserva, repositorioAmigo, repositorioRevista,
-                repositorioMulta, telaAmigo, telaRevista);
+            ////repositorioRevista.InserirRegistro(revista2);
+            //#endregion
+            //var repositorioEmprestimo = new RepositorioEmprestimoEmBancoDeDados(new SqlConnection(connectionString));
+            //#region EMPRESTIMO inserindo via parametro
+            ////var emprestimo = new Emprestimo(amigo, revista);
+            ////var emprestimo2 = new Emprestimo(amigo2, revista2);
+            ////repositorioEmprestimo.InserirRegistro(emprestimo);
+            ////repositorioEmprestimo.InserirRegistro(emprestimo2);
+            ////repositorioEmprestimo.InserirRegistro(emprestimo2);
+            //#endregion
+            //var repositorioMulta = new RepositorioMulta();
+            //var repositorioReserva = new RepositorioReservaEmBancoDeDados(new SqlConnection(connectionString));
+            //#region RESERVA inserindo via parametro
+            ////var reserva = new Reserva(amigo, revista);
+            ////repositorioReserva.InserirRegistro(reserva);
+            //#endregion
+            //var telaEmprestimo = new TelaEmprestimo(
+            //    repositorioEmprestimo, repositorioAmigo, repositorioRevista,
+            //    repositorioCaixa, telaAmigo, telaRevista, telaCaixa, repositorioMulta);
+            //#region MULTA tela multa
+            ////var telaMulta = new TelaMulta(repositorioMulta, repositorioAmigo, repositorioEmprestimo, telaAmigo, telaEmprestimo, emprestimo);
+            //#endregion
+            //var telaReserva = new TelaReserva(repositorioEmprestimo, repositorioReserva, repositorioAmigo, repositorioRevista,
+            //    repositorioMulta, telaAmigo, telaRevista);
 
 
-            var telaPrincipal = new TelaPrincipal();
+            //var telaPrincipal = new TelaPrincipal();
 
-            while (true)
-            {
-                telaPrincipal.ExibirOpcoesMenu();
+            //while (true)
+            //{
+            //    telaPrincipal.ExibirOpcoesMenu();
 
-                if (telaPrincipal.opcaoEscolhida == "1")
-                    GerenciarAmigos(telaAmigo, telaPrincipal);
+            //    if (telaPrincipal.opcaoEscolhida == "1")
+            //        GerenciarAmigos(telaAmigo, telaPrincipal);
 
-                else if (telaPrincipal.opcaoEscolhida == "2")
-                    GerenciarCaixas(telaCaixa, telaPrincipal);
+            //    else if (telaPrincipal.opcaoEscolhida == "2")
+            //        GerenciarCaixas(telaCaixa, telaPrincipal);
 
-                else if (telaPrincipal.opcaoEscolhida == "3")
-                    GerenciarRevistas(telaRevista, telaPrincipal);
+            //    else if (telaPrincipal.opcaoEscolhida == "3")
+            //        GerenciarRevistas(telaRevista, telaPrincipal);
 
-                else if (telaPrincipal.opcaoEscolhida == "4")
-                    GerenciarEmprestimos(telaEmprestimo, telaPrincipal);
+            //    else if (telaPrincipal.opcaoEscolhida == "4")
+            //        GerenciarEmprestimos(telaEmprestimo, telaPrincipal);
 
-                else if (telaPrincipal.opcaoEscolhida == "5")
-                    GerenciarReservar(telaReserva, telaPrincipal);
+            //    else if (telaPrincipal.opcaoEscolhida == "5")
+            //        GerenciarReservar(telaReserva, telaPrincipal);
 
-                else if (telaPrincipal.opcaoEscolhida == "S")
-                {
-                    Console.WriteLine("Saindo do sistema...");
-                    break;
-                }
-            }
+            //    else if (telaPrincipal.opcaoEscolhida == "S")
+            //    {
+            //        Console.WriteLine("Saindo do sistema...");
+            //        break;
+            //    }
+            //}
         }
 
         private static void GerenciarReservar(TelaReserva telaReserva, TelaPrincipal telaPrincipal)

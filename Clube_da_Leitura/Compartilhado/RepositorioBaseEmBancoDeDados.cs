@@ -5,6 +5,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.Common;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -24,37 +25,42 @@ namespace Clube_da_Leitura.Compartilhado
 
         public RepositorioBaseEmBancoDeDados(IDbConnection dbConnection)
         {
-            this.dbConnection = dbConnection;
+            this.dbConnection = dbConnection;            
         }
+
         public void InserirRegistro(T registro)
-        {
-            dbConnection.Close();
+        {            
             dbConnection.Open();
             IDbCommand comandoInserir = dbConnection.CreateCommand();
-            comandoInserir.CommandText = SqlInserir;
+            comandoInserir.CommandText = SqlInserir + "; select scope_identity()";
             var parametros = ObterParametros(registro);
             foreach (var p in parametros)
             {
                 comandoInserir.AddParametro(p.Key, p.Value);
             }
 
-            comandoInserir.ExecuteNonQuery();
+            registro.id = Convert.ToInt32( comandoInserir.ExecuteScalar() );
+
+            dbConnection.Close();
         }
 
         public bool EditarRegistro(int id, T registroAtualizado)
         {
-            dbConnection.Close();
-            dbConnection.Open();
-            IDbCommand comandoInserir = dbConnection.CreateCommand();
-            comandoInserir.CommandText = SqlEditar;
-            comandoInserir.AddParametro("@Id", id);
-            var parametros = ObterParametros(registroAtualizado);
-            foreach (var p in parametros)
+            using (var dbConnection = this.dbConnection)
             {
-                comandoInserir.AddParametro(p.Key, p.Value);
-            }
+                dbConnection.Open();
 
-            return comandoInserir.ExecuteNonQuery() > 0;
+                IDbCommand comandoInserir = dbConnection.CreateCommand();
+                comandoInserir.CommandText = SqlEditar;
+                comandoInserir.AddParametro("@Id", id);
+                var parametros = ObterParametros(registroAtualizado);
+                foreach (var p in parametros)
+                {
+                    comandoInserir.AddParametro(p.Key, p.Value);
+                }
+
+                return comandoInserir.ExecuteNonQuery() > 0;
+            }
         }
 
         public T SelecionarPorId(int id)

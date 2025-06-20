@@ -7,7 +7,7 @@ using Clube_da_Leitura.Compartilhado;
 using Microsoft.Data.SqlClient;
 using Microsoft.Win32;
 namespace Clube_da_Leitura.ModuloAmigo;
-public class RepositorioAmigoEmBancoDeDados : RepositorioBaseEmBancoDeDados<Amigo> ,IRepositorioAmigo
+public class RepositorioAmigoEmBancoDeDados : RepositorioBaseEmBancoDeDados<Amigo> , IRepositorioAmigo, IDisposable
 {
     private IDbConnection dbConnection;
       
@@ -59,5 +59,9 @@ public class RepositorioAmigoEmBancoDeDados : RepositorioBaseEmBancoDeDados<Amig
     {
         return SelecionarTodos().Any(validacao);
     }
-    
+
+    public void Dispose()
+    {
+        
+    }
 }
