@@ -6,7 +6,7 @@ using Clube_da_Leitura.Compartilhado;
 
 namespace Clube_da_Leitura.ModuloReservas
 {
-    public class RepositorioReservaEmBancoDeDados : RepositorioBaseEmBancoDeDados<Reserva>, IRepositorioReserva
+    public class RepositorioReservaEmBancoDeDados : RepositorioBaseEmBancoDeDados<Reserva>, IRepositorioReserva, IDisposable
     {
         private IDbConnection dbConnection;
 
@@ -29,7 +29,12 @@ namespace Clube_da_Leitura.ModuloReservas
             @"DELETE FROM TBReservas WHERE Id = @Id";
 
         protected override string SqlSelecionarTodos =>
-            @"SELECT * FROM TBReservas";
+            @"SELECT R.Id, R.DataReserva, R.Situacao,
+             A.Id AS AmigoId, A.Nome AS AmigoNome, A.NomeResponsavel, A.Telefone,
+             V.Id AS RevistaId, V.Titulo, V.NumeroEdicao, V.AnoPublicacao, V.Status
+      FROM TBReservas R
+      JOIN TBAmigos A ON R.AmigoId = A.Id
+      JOIN TBRevistas V ON R.RevistaId = V.Id";
 
         public RepositorioReservaEmBancoDeDados(IDbConnection dbConnection) : base(dbConnection)
         {
@@ -52,12 +57,28 @@ namespace Clube_da_Leitura.ModuloReservas
             return new Reserva
             {
                 id = (int)reader["Id"],
-                amigo = new ModuloAmigo.Amigo { id = (int)reader["AmigoId"] },
-                revista = new ModuloRevista.Revista { id = (int)reader["RevistaId"] },
                 dataReserva = Convert.ToDateTime(reader["DataReserva"]),
-                situacao = (SituacaoReserva)(int)reader["Situacao"]
+                situacao = (SituacaoReserva)(int)reader["Situacao"],
+
+                amigo = new ModuloAmigo.Amigo
+                {
+                    id = (int)reader["AmigoId"],
+                    nome = (string)reader["AmigoNome"],
+                    nomeReponsavel = (string)reader["NomeResponsavel"],
+                    telefone = (string)reader["Telefone"]
+                },
+
+                revista = new ModuloRevista.Revista
+                {
+                    id = (int)reader["RevistaId"],
+                    titulo = (string)reader["Titulo"],
+                    numeroEdicao = reader["NumeroEdicao"] != DBNull.Value ? (int)reader["NumeroEdicao"] : 0,
+                    anoPublicacao = reader["AnoPublicacao"] != DBNull.Value ? (int)reader["AnoPublicacao"] : 0,
+                    status = (ModuloRevista.Revista.StatusDisponveis)(int)reader["Status"]
+                }
             };
         }
+
 
         public List<Reserva> SelecionarTodosAbertos()
         {
@@ -69,6 +90,11 @@ namespace Clube_da_Leitura.ModuloReservas
         public bool Validacoes(Func<Reserva, bool> validacao)
         {
             return SelecionarTodos().Any(validacao);
+        }
+
+        public void Dispose()
+        {
+           
         }
     }
 }

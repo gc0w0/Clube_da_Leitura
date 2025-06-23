@@ -5,7 +5,7 @@ using Clube_da_Leitura.Compartilhado;
 
 namespace Clube_da_Leitura.ModuloEmprestimo
 {
-    public class RepositorioEmprestimoEmBancoDeDados : RepositorioBaseEmBancoDeDados<Emprestimo>, IRepositorioEmprestimo
+    public class RepositorioEmprestimoEmBancoDeDados : RepositorioBaseEmBancoDeDados<Emprestimo>, IRepositorioEmprestimo ,IDisposable
     {
         private IDbConnection dbConnection;
 
@@ -79,6 +79,11 @@ namespace Clube_da_Leitura.ModuloEmprestimo
         public bool Validacoes(Func<Emprestimo, bool> validacao)
         {
             return SelecionarTodos().Any(validacao);
+        }
+
+        public void Dispose()
+        {
+            dbConnection.Dispose();
         }
     }
 }

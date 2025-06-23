@@ -1,5 +1,6 @@
 ﻿using Clube_da_Leitura.ModuloAmigo;
 using Microsoft.Data.SqlClient;
+using Microsoft.Data.Sqlite;
 using Microsoft.Win32;
 using System;
 using System.Collections;
@@ -11,9 +12,10 @@ using System.Threading.Tasks;
 
 namespace Clube_da_Leitura.Compartilhado
 {
-    public abstract class RepositorioBaseEmBancoDeDados<T> : IRepositorio<T> where T : EntidadeBase<T>
+    public abstract class RepositorioBaseEmBancoDeDados<T> : IRepositorio<T> where T : EntidadeBase<T> 
     {
         private IDbConnection dbConnection;
+        private bool bancoSQLite => dbConnection is SqliteConnection;
         protected abstract string SqlInserir { get; }
         protected abstract string SqlEditar { get; }
         protected abstract string SqlSelecionarPorId { get; }
@@ -28,17 +30,22 @@ namespace Clube_da_Leitura.Compartilhado
         }
         public void InserirRegistro(T registro)
         {
-            dbConnection.Close();
-            dbConnection.Open();
-            IDbCommand comandoInserir = dbConnection.CreateCommand();
-            comandoInserir.CommandText = SqlInserir;
-            var parametros = ObterParametros(registro);
-            foreach (var p in parametros)
+            using (var dbconnection = this.dbConnection)
             {
-                comandoInserir.AddParametro(p.Key, p.Value);
-            }
+                dbConnection.Open();
+                IDbCommand comandoInserir = dbConnection.CreateCommand();
+                if (bancoSQLite)
+                    comandoInserir.CommandText += "; SELECT last_insert_rowid();";
+                else
+                    comandoInserir.CommandText += "; SELECT SCOPE_IDENTITY();";
+                var parametros = ObterParametros(registro);
+                foreach (var p in parametros)
+                {
+                    comandoInserir.AddParametro(p.Key, p.Value);
+                }
 
-            comandoInserir.ExecuteNonQuery();
+                registro.id = Convert.ToInt32(comandoInserir.ExecuteScalar());
+            }
         }
 
         public bool EditarRegistro(int id, T registroAtualizado)

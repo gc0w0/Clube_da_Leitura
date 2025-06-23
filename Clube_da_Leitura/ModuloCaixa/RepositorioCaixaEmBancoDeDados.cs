@@ -5,7 +5,7 @@ using Clube_da_Leitura.Compartilhado;
 
 namespace Clube_da_Leitura.ModuloCaixa
 {
-    public class RepositorioCaixaEmBancoDeDados : RepositorioBaseEmBancoDeDados<Caixa>, IRepositorioCaixa
+    public class RepositorioCaixaEmBancoDeDados : RepositorioBaseEmBancoDeDados<Caixa>, IRepositorioCaixa, IDisposable
     {
         private IDbConnection dbConnection;
 
@@ -53,6 +53,10 @@ namespace Clube_da_Leitura.ModuloCaixa
         public bool Validacoes(Func<Caixa, bool> validacao)
         {
             return SelecionarTodos().Any(validacao);
+        }
+        public void Dispose()
+        {
+            dbConnection.Close();
         }
     }
 }

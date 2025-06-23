@@ -1,16 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Clube_da_Leitura.Compartilhado;
+using Clube_da_Leitura.ModuloEmprestimo;
 using System.Data;
-using System.Data.Common;
-using System.Linq;
-using Clube_da_Leitura.Compartilhado;
-using Microsoft.Data.SqlClient;
-using Microsoft.Win32;
 namespace Clube_da_Leitura.ModuloAmigo;
-public class RepositorioAmigoEmBancoDeDados : RepositorioBaseEmBancoDeDados<Amigo> ,IRepositorioAmigo
+public class RepositorioAmigoEmBancoDeDados : RepositorioBaseEmBancoDeDados<Amigo>, IRepositorioAmigo, IDisposable
 {
     private IDbConnection dbConnection;
-      
+
     protected override string SqlInserir => @"INSERT INTO TBAmigos (Nome, NomeResponsavel, Telefone)
                VALUES (@Nome, @Responsavel, @Telefone)";
 
@@ -21,12 +16,20 @@ public class RepositorioAmigoEmBancoDeDados : RepositorioBaseEmBancoDeDados<Amig
 
     protected override string SqlExcluir => @"DELETE FROM TBAmigos WHERE Id = @Id";
 
-    protected override string SqlSelecionarTodos => "SELECT * FROM TBAmigos";
+    protected override string SqlSelecionarTodos => @"SELECT 
+    A.Id,
+    A.Nome,
+    A.NomeResponsavel,
+    A.Telefone,
+    COUNT(E.Id) AS QuantidadeEmprestimos
+    FROM TBAmigos A
+    LEFT JOIN TBEmprestimos E ON E.AmigoId = A.Id
+    GROUP BY A.Id, A.Nome, A.NomeResponsavel, A.Telefone";
 
     public RepositorioAmigoEmBancoDeDados(IDbConnection dbConnection) : base(dbConnection)
     {
         this.dbConnection = dbConnection;
-        
+
     }
 
     protected override Dictionary<string, object> ObterParametros(Amigo amigo)
@@ -46,9 +49,12 @@ public class RepositorioAmigoEmBancoDeDados : RepositorioBaseEmBancoDeDados<Amig
             id = (int)reader["Id"],
             nome = (string)reader["Nome"],
             nomeReponsavel = (string)reader["NomeResponsavel"],
-            telefone = (string)reader["Telefone"]
+            telefone = (string)reader["Telefone"],
+            emprestimos = Enumerable.Repeat(new Emprestimo(),
+                            reader["QuantidadeEmprestimos"] != DBNull.Value ? Convert.ToInt32(reader["QuantidadeEmprestimos"]) : 0).ToList()
         };
     }
+
 
     public List<Amigo> SelecionarPorFiltro2(Predicate<Amigo> condicao)
     {
@@ -59,5 +65,8 @@ public class RepositorioAmigoEmBancoDeDados : RepositorioBaseEmBancoDeDados<Amig
     {
         return SelecionarTodos().Any(validacao);
     }
-    
+    public void Dispose()
+    {
+        dbConnection.Dispose();
+    }
 }

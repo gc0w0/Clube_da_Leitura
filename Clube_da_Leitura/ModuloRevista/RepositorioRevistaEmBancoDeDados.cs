@@ -6,7 +6,7 @@ using static Clube_da_Leitura.ModuloRevista.Revista;
 
 namespace Clube_da_Leitura.ModuloRevista
 {
-    public class RepositorioRevistaEmBancoDeDados : RepositorioBaseEmBancoDeDados<Revista>, IRepositorioRevista
+    public class RepositorioRevistaEmBancoDeDados : RepositorioBaseEmBancoDeDados<Revista>, IRepositorioRevista, IDisposable
     {
         private IDbConnection dbConnection;
 
@@ -30,7 +30,10 @@ namespace Clube_da_Leitura.ModuloRevista
             @"DELETE FROM TBRevistas WHERE Id = @Id";
 
         protected override string SqlSelecionarTodos =>
-            @"SELECT * FROM TBRevistas";
+            @"SELECT R.Id, R.Titulo, R.NumeroEdicao, R.AnoPublicacao, R.Status, R.CaixaId,
+             C.Etiqueta, C.Cor, C.Dias
+      FROM TBRevistas R
+      INNER JOIN TBCaixas C ON R.CaixaId = C.Id";
 
         public RepositorioRevistaEmBancoDeDados(IDbConnection dbConnection) : base(dbConnection)
         {
@@ -57,14 +60,25 @@ namespace Clube_da_Leitura.ModuloRevista
                 titulo = (string)reader["Titulo"],
                 numeroEdicao = reader["NumeroEdicao"] != DBNull.Value ? (int)reader["NumeroEdicao"] : 0,
                 anoPublicacao = reader["AnoPublicacao"] != DBNull.Value ? (int)reader["AnoPublicacao"] : 0,
-                status = (StatusDisponveis)(int)reader["Status"],
-                caixa = new ModuloCaixa.Caixa { id = (int)reader["CaixaId"] }
+                status = (Revista.StatusDisponveis)(int)reader["Status"],
+                caixa = new ModuloCaixa.Caixa
+                {
+                    id = (int)reader["CaixaId"],
+                    etiqueta = (string)reader["Etiqueta"],
+                    cor = (ModuloCaixa.Caixa.CorCaixa)(int)reader["Cor"],
+                    dias = (int)reader["Dias"]
+                }
             };
         }
 
         public bool Validacoes(Func<Revista, bool> validacao)
         {
             return SelecionarTodos().Any(validacao);
+        }
+
+        public void Dispose()
+        {
+            dbConnection.Dispose();
         }
     }
 }
