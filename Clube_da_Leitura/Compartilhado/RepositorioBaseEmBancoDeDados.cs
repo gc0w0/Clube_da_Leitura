@@ -34,6 +34,7 @@ namespace Clube_da_Leitura.Compartilhado
             {
                 dbConnection.Open();
                 IDbCommand comandoInserir = dbConnection.CreateCommand();
+                comandoInserir.CommandText = SqlInserir;
                 if (bancoSQLite)
                     comandoInserir.CommandText += "; SELECT last_insert_rowid();";
                 else

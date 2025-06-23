@@ -9,12 +9,14 @@ using Microsoft.Data.SqlClient;
 using Microsoft.Data.Sqlite;
 using Microsoft.Extensions.Configuration;
 using System.Data;
+using SQLitePCL;
 namespace Clube_da_Leitura
 {
     internal class Program
     {
         static void Main(string[] args)
         {
+            Batteries.Init();   
             ClubeLeituraContextoDeDados contextoDeDados = new ClubeLeituraContextoDeDados(carregarDoArquivo: true);
 
             var builder = new ConfigurationBuilder()
@@ -26,9 +28,9 @@ namespace Clube_da_Leitura
             string tipoBancoDeDados = configuration["BancoDeDados"];
             string connectionString = configuration.GetConnectionString(tipoBancoDeDados);
             IDbConnection dbConnection = null;
+
             if (tipoBancoDeDados == "SqlServer")
                 dbConnection = new SqlConnection(connectionString);
-            
             else if (tipoBancoDeDados == "SqLite")
                 dbConnection = new SqliteConnection(connectionString);
 
@@ -36,41 +38,41 @@ namespace Clube_da_Leitura
 
             var telaAmigo = new TelaAmigo(repositorioAmigo);
             #region AMIGO inserindo via parametro
-            //var amigo = new Amigo("parametro", "sqlserver", "66666666666");
+            var amigo = new Amigo("parametro", "sssssqlite", "66666666666");
             //var amigo2 = new Amigo("Gregory", "Gabriel", "11111111111");
 
-            //repositorioAmigo.InserirRegistro(amigo);
+            repositorioAmigo.InserirRegistro(amigo);
             //repositorioAmigo.InserirRegistro(amigo2);
             #endregion
-            using var repositorioCaixa = new RepositorioCaixaEmBancoDeDados(new SqlConnection(connectionString));
+            using var repositorioCaixa = new RepositorioCaixaEmBancoDeDados(dbConnection);
             var telaCaixa = new TelaCaixa(repositorioCaixa);
             #region CAIXA inserindo via parametro
-            //var caixa = new Caixa("Etiqueta SQL", Caixa.CorCaixa.Amarela, 7);
+            var caixa = new Caixa("Etiqueta SqLite", Caixa.CorCaixa.Amarela, 7);
             //var caixa2 = new Caixa("Caixa 2", CorCaixa.Amarela, 1);
-            //repositorioCaixa.InserirRegistro(caixa);
+            repositorioCaixa.InserirRegistro(caixa);
             //repositorioCaixa.InserirRegistro(caixa2);
             #endregion
-            using var repositorioRevista = new RepositorioRevistaEmBancoDeDados(new SqlConnection(connectionString));
+            using var repositorioRevista = new RepositorioRevistaEmBancoDeDados(dbConnection);
             var telaRevista = new TelaRevista(repositorioCaixa, telaCaixa, repositorioRevista);
             #region REVISTA inserindo via parametro
-            //var revista = new Revista("Revista SQL ", 2, 2025, caixa, Revista.StatusDisponveis.Disponivel);
+            var revista = new Revista("Revista SqLite ", 2, 2025, caixa, Revista.StatusDisponveis.Disponivel);
             //var revista2 = new Revista("Teste2", 3, 1999, caixa2, Revista.StatusDisponveis.Disponivel);
-            //repositorioRevista.InserirRegistro(revista);
+            repositorioRevista.InserirRegistro(revista);
             //repositorioRevista.InserirRegistro(revista2);
             #endregion
-            using var repositorioEmprestimo = new RepositorioEmprestimoEmBancoDeDados(new SqlConnection(connectionString));
+            using var repositorioEmprestimo = new RepositorioEmprestimoEmBancoDeDados(dbConnection);
             #region EMPRESTIMO inserindo via parametro
-            //var emprestimo = new Emprestimo(amigo, revista);
+            var emprestimo = new Emprestimo(amigo, revista);
             //var emprestimo2 = new Emprestimo(amigo2, revista2);
-            //repositorioEmprestimo.InserirRegistro(emprestimo);
+            repositorioEmprestimo.InserirRegistro(emprestimo);
             //repositorioEmprestimo.InserirRegistro(emprestimo2);
             //repositorioEmprestimo.InserirRegistro(emprestimo2);
             #endregion
             var repositorioMulta = new RepositorioMulta();
-            using var repositorioReserva = new RepositorioReservaEmBancoDeDados(new SqlConnection(connectionString));
+            using var repositorioReserva = new RepositorioReservaEmBancoDeDados(dbConnection);
             #region RESERVA inserindo via parametro
-            //var reserva = new Reserva(amigo, revista);
-            //repositorioReserva.InserirRegistro(reserva);
+            var reserva = new Reserva(amigo, revista);
+            repositorioReserva.InserirRegistro(reserva);
             #endregion
             var telaEmprestimo = new TelaEmprestimo(
                 repositorioEmprestimo, repositorioAmigo, repositorioRevista,
