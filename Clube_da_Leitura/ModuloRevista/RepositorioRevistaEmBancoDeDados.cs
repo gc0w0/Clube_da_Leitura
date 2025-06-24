@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Clube_da_Leitura.Compartilhado;
 using System.Data;
-using Clube_da_Leitura.Compartilhado;
-using static Clube_da_Leitura.ModuloRevista.Revista;
 
 namespace Clube_da_Leitura.ModuloRevista
 {
@@ -56,17 +53,17 @@ namespace Clube_da_Leitura.ModuloRevista
         {
             return new Revista
             {
-                id = (int)reader["Id"],
+                id = ConvertToInt(reader["Id"]),
                 titulo = (string)reader["Titulo"],
-                numeroEdicao = reader["NumeroEdicao"] != DBNull.Value ? (int)reader["NumeroEdicao"] : 0,
-                anoPublicacao = reader["AnoPublicacao"] != DBNull.Value ? (int)reader["AnoPublicacao"] : 0,
-                status = (Revista.StatusDisponveis)(int)reader["Status"],
+                numeroEdicao = ConvertToInt(reader["NumeroEdicao"]),
+                anoPublicacao = ConvertToInt(reader["AnoPublicacao"]),
+                status = (Revista.StatusDisponveis)ConvertToInt(reader["Status"]),
                 caixa = new ModuloCaixa.Caixa
                 {
-                    id = (int)reader["CaixaId"],
+                    id = ConvertToInt(reader["CaixaId"]),
                     etiqueta = (string)reader["Etiqueta"],
-                    cor = (ModuloCaixa.Caixa.CorCaixa)(int)reader["Cor"],
-                    dias = (int)reader["Dias"]
+                    cor = (ModuloCaixa.Caixa.CorCaixa)ConvertToInt(reader["Cor"]),
+                    dias = ConvertToInt(reader["Dias"])
                 }
             };
         }

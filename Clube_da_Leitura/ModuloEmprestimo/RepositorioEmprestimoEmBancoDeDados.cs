@@ -56,13 +56,13 @@ namespace Clube_da_Leitura.ModuloEmprestimo
         {
             return new Emprestimo
             {
-                id = (int)reader["Id"],
-                amigo = new ModuloAmigo.Amigo { id = (int)reader["AmigoId"] }, // Será necessário buscar os dados completos depois, se quiser exibir
-                revista = new ModuloRevista.Revista { id = (int)reader["RevistaId"] },
+                id = ConvertToInt(reader["Id"]),
+                amigo = new ModuloAmigo.Amigo { id = ConvertToInt(reader["AmigoId"]) }, // Será necessário buscar os dados completos depois, se quiser exibir
+                revista = new ModuloRevista.Revista { id = ConvertToInt(reader["RevistaId"]) },
                 dataEmprestimo = Convert.ToDateTime(reader["DataEmprestimo"]),
                 dataDevolucao = reader["DataDevolucao"] == DBNull.Value ? null : Convert.ToDateTime(reader["DataDevolucao"]),
                 dataPrevistaDevolucao = reader["DataPrevistaDevolucao"] == DBNull.Value ? null : Convert.ToDateTime(reader["DataPrevistaDevolucao"]),
-                situacao = (SituacaoEmprestimo)(int)reader["Situacao"]
+                situacao = (SituacaoEmprestimo)ConvertToInt(reader["Situacao"])
             };
         }
 

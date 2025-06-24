@@ -6,7 +6,7 @@ using Clube_da_Leitura.Compartilhado;
 
 namespace Clube_da_Leitura.ModuloReservas
 {
-    public class RepositorioReservaEmBancoDeDados : RepositorioBaseEmBancoDeDados<Reserva>, IRepositorioReserva, IDisposable
+    public class RepositorioReservaEmBancoDeDados : RepositorioBaseEmBancoDeDados<Reserva>, IRepositorioReserva
     {
         private IDbConnection dbConnection;
 
@@ -56,13 +56,13 @@ namespace Clube_da_Leitura.ModuloReservas
         {
             return new Reserva
             {
-                id = (int)reader["Id"],
+                id = ConvertToInt(reader["Id"]),
                 dataReserva = Convert.ToDateTime(reader["DataReserva"]),
-                situacao = (SituacaoReserva)(int)reader["Situacao"],
+                situacao = (SituacaoReserva)ConvertToInt(reader["Situacao"]),
 
                 amigo = new ModuloAmigo.Amigo
                 {
-                    id = (int)reader["AmigoId"],
+                    id = ConvertToInt(reader["AmigoId"]),
                     nome = (string)reader["AmigoNome"],
                     nomeReponsavel = (string)reader["NomeResponsavel"],
                     telefone = (string)reader["Telefone"]
@@ -70,11 +70,11 @@ namespace Clube_da_Leitura.ModuloReservas
 
                 revista = new ModuloRevista.Revista
                 {
-                    id = (int)reader["RevistaId"],
+                    id = ConvertToInt(reader["RevistaId"]),
                     titulo = (string)reader["Titulo"],
-                    numeroEdicao = reader["NumeroEdicao"] != DBNull.Value ? (int)reader["NumeroEdicao"] : 0,
-                    anoPublicacao = reader["AnoPublicacao"] != DBNull.Value ? (int)reader["AnoPublicacao"] : 0,
-                    status = (ModuloRevista.Revista.StatusDisponveis)(int)reader["Status"]
+                    numeroEdicao = ConvertToInt(reader["NumeroEdicao"]),
+                    anoPublicacao = ConvertToInt(reader["AnoPublicacao"]),
+                    status = (ModuloRevista.Revista.StatusDisponveis)ConvertToInt(reader["Status"])
                 }
             };
         }
@@ -92,9 +92,6 @@ namespace Clube_da_Leitura.ModuloReservas
             return SelecionarTodos().Any(validacao);
         }
 
-        public void Dispose()
-        {
-           
-        }
+        
     }
 }

@@ -46,12 +46,11 @@ public class RepositorioAmigoEmBancoDeDados : RepositorioBaseEmBancoDeDados<Amig
     {
         return new Amigo
         {
-            id = (int)reader["Id"],
+            id = ConvertToInt(reader["Id"]),
             nome = (string)reader["Nome"],
             nomeReponsavel = (string)reader["NomeResponsavel"],
             telefone = (string)reader["Telefone"],
-            emprestimos = Enumerable.Repeat(new Emprestimo(),
-                            reader["QuantidadeEmprestimos"] != DBNull.Value ? Convert.ToInt32(reader["QuantidadeEmprestimos"]) : 0).ToList()
+            emprestimos = Enumerable.Repeat(new Emprestimo(), ConvertToInt(reader["QuantidadeEmprestimos"])).ToList()
         };
     }
 

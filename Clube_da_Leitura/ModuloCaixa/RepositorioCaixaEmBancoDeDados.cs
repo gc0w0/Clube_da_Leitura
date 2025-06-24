@@ -43,10 +43,10 @@ namespace Clube_da_Leitura.ModuloCaixa
         {
             return new Caixa
             {
-                id = (int)reader["Id"],
+                id = ConvertToInt(reader["Id"]),
                 etiqueta = (string)reader["Etiqueta"],
-                cor = (Caixa.CorCaixa)(int)reader["Cor"],
-                dias = (int)reader["Dias"]
+                cor = (Caixa.CorCaixa)ConvertToInt(reader["Cor"]),
+                dias = ConvertToInt(reader["Dias"])
             };
         }
 
