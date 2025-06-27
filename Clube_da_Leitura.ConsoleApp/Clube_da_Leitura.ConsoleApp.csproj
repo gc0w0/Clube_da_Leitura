@@ -8,6 +8,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.Data.SqlClient" Version="6.0.2" />
+    <PackageReference Include="Microsoft.Extensions.Configuration" Version="9.0.6" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="9.0.6" />
+    <PackageReference Include="SQLitePCLRaw.bundle_e_sqlite3" Version="2.1.11" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Clube_da_Leitura.Infra.Database\Clube_da_Leitura.Infra.Database.csproj" />
     <ProjectReference Include="..\Clube_da_Leitura.Infra\Clube_da_Leitura.Infra.Arquivos.csproj" />
     <ProjectReference Include="..\Clube_da_Leitura\Clube_da_Leitura.Dominio.csproj" />

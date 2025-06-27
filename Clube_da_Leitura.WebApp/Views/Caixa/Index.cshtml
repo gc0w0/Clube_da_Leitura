@@ -1,0 +1,16 @@
+﻿@using Clube_da_Leitura.ModuloCaixa
+
+@model List<Caixa>;
+
+@{
+    var Caixas = Model;
+
+    int x = 9 + 6;
+}
+
+<h1>Olá Gabriel, seja bem vindo ao mundo web</h1>
+
+@foreach (Caixa caixa in Caixas)
+{    
+    <h1>@caixa.etiqueta</h1>
+}
