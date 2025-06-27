@@ -65,7 +65,7 @@ namespace Clube_da_Leitura.ModuloReservas
             }
 
             repositorio.InserirRegistro(registro);
-
+            repositorioRevista.EditarRegistro(registro.revista.id, registro.revista);
             Console.WriteLine("Registro inserido com sucesso \n");
             Console.ReadKey();
         }

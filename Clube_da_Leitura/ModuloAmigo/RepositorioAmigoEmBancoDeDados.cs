@@ -1,5 +1,7 @@
 ﻿using Clube_da_Leitura.Compartilhado;
 using Clube_da_Leitura.ModuloEmprestimo;
+using Clube_da_Leitura.ModuloMultas;
+using Microsoft.Data.SqlClient;
 using System.Data;
 namespace Clube_da_Leitura.ModuloAmigo;
 public class RepositorioAmigoEmBancoDeDados : RepositorioBaseEmBancoDeDados<Amigo>, IRepositorioAmigo, IDisposable
@@ -53,7 +55,49 @@ public class RepositorioAmigoEmBancoDeDados : RepositorioBaseEmBancoDeDados<Amig
             emprestimos = Enumerable.Repeat(new Emprestimo(), SafeInt(reader, "QuantidadeEmprestimos")).ToList()
         };
     }
+    public override List<Amigo> SelecionarTodos()
+    {
+        var amigos = base.SelecionarTodos();
 
+        foreach (var amigo in amigos)
+            amigo.multas = SelecionarMultasDoAmigo(amigo.id);
+
+        return amigos;
+    }
+
+    private List<Multa> SelecionarMultasDoAmigo(int idAmigo)
+    {
+        var multas = new List<Multa>();
+
+        using (var conexao = dbConnection)
+        {
+            conexao.Open();
+
+            using var comando = conexao.CreateCommand();
+            comando.CommandText = @"
+            SELECT M.Id, M.Valor, M.Situacao
+            FROM TBMultas M
+            JOIN TBEmprestimos E ON M.EmprestimoId = E.Id
+            WHERE E.AmigoId = @id AND M.Situacao = 1";
+
+            comando.AddParametro("@id", idAmigo);
+
+            using var leitor = comando.ExecuteReader();
+            while (leitor.Read())
+            {
+                var multa = new Multa
+                {
+                    id = Convert.ToInt32(leitor["Id"]),
+                    valorMulta = Convert.ToSingle(leitor["Valor"]),
+                    situacao = (SituacaoMulta)Convert.ToInt32(leitor["Situacao"])
+                };
+
+                multas.Add(multa);
+            }
+        }
+
+        return multas;
+    }
 
     public List<Amigo> SelecionarPorFiltro2(Predicate<Amigo> condicao)
     {

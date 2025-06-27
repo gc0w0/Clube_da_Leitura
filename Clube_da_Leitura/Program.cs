@@ -37,8 +37,8 @@ namespace Clube_da_Leitura
             var repositorioRevista = new RepositorioRevistaEmBancoDeDados(dbConnection);
             var repositorioEmprestimo = new RepositorioEmprestimoEmBancoDeDados(dbConnection);
             var repositorioReserva = new RepositorioReservaEmBancoDeDados(dbConnection);
-
-            var telaAmigo = new TelaAmigo(repositorioAmigo);
+            var repositorioMulta = new RepositorioMultaEmBancoDeDados(dbConnection);
+            var telaAmigo = new TelaAmigo(repositorioAmigo, repositorioMulta);
             #region AMIGO inserindo via parametro
             //var amigo = new Amigo("Rech", "sqqlite", "66666666226");
             //var amigo2 = new Amigo("Gregory", "Gabriel", "11111111111");
@@ -67,7 +67,6 @@ namespace Clube_da_Leitura
             //repositorioEmprestimo.InserirRegistro(emprestimo2);
             //repositorioEmprestimo.InserirRegistro(emprestimo2);
             #endregion
-            var repositorioMulta = new RepositorioMultaEmBancoDeDados(dbConnection);
             #region RESERVA inserindo via parametro
             //var reserva = new Reserva(amigo, revista);
             //repositorioReserva.InserirRegistro(reserva);

@@ -89,6 +89,7 @@ namespace Clube_da_Leitura.ModuloEmprestimo
                     repositorioMulta.InserirRegistro(multaPaga); // salva no banco
                     Console.ForegroundColor = ConsoleColor.Green;
                     Console.WriteLine("Multa paga com sucesso.");
+                    this.amigo.multas.Remove(multaPaga);
                     Console.ResetColor();
                 }
                 else

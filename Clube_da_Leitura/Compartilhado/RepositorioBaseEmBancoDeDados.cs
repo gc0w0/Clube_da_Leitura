@@ -107,7 +107,7 @@ namespace Clube_da_Leitura.Compartilhado
             finally { dbConnection.Close(); }
         }
 
-        public List<T> SelecionarTodos()
+        public virtual List<T> SelecionarTodos()
         {
             try
             {

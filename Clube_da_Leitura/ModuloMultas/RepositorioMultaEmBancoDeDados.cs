@@ -17,7 +17,7 @@ namespace Clube_da_Leitura.ModuloMultas
           VALUES (@EmprestimoId, @Valor, @Situacao)";
 
         protected override string SqlEditar => throw new NotImplementedException();
-        protected override string SqlExcluir => throw new NotImplementedException();
+        protected override string SqlExcluir => @"DELETE FROM TBMultas WHERE Id = @Id";
         protected override string SqlSelecionarPorId => throw new NotImplementedException();
         protected override string SqlSelecionarTodos => throw new NotImplementedException();
 

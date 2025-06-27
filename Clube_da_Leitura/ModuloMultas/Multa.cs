@@ -30,9 +30,6 @@ namespace Clube_da_Leitura.ModuloMultas
             this.emprestimo = emprestimo;
             this.situacao = situacao;
             this.valorMulta = valorMulta;
-
-            amigo.multas.Add(this);
-            emprestimo.multa.Add(this);
         }
 
         public Multa(int diasDeAtraso)

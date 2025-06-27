@@ -4,6 +4,7 @@ using Clube_da_Leitura.ModuloCaixa;
 using Clube_da_Leitura.ModuloMultas;
 using Clube_da_Leitura.ModuloRevista;
 using Gestao_de_Equipamentos.Compartilhado;
+using static Clube_da_Leitura.ModuloRevista.Revista;
 namespace Clube_da_Leitura.ModuloEmprestimo;
 
 public class TelaEmprestimo : TelaBase<Emprestimo>
@@ -182,7 +183,8 @@ public class TelaEmprestimo : TelaBase<Emprestimo>
             Console.ReadKey();
             return ObterDados();
         }
-
+        revistaSelecionada.status = Revista.StatusDisponveis.Emprestada;
+        repositorioRevista.EditarRegistro(revistaSelecionada.id, revistaSelecionada);
         return new Emprestimo(amigoSelecionado, revistaSelecionada);
     }
 
@@ -282,6 +284,9 @@ public class TelaEmprestimo : TelaBase<Emprestimo>
         emprestimoSelecionado.RegistrarDevolucao(datadevolucao, repositorioMulta);
 
         emprestimoSelecionado.situacao = SituacaoEmprestimo.Fechado;
+        emprestimoSelecionado.revista.status = StatusDisponveis.Disponivel;
+        repositorioRevista.EditarRegistro(revistaSelecionada.id, revistaSelecionada);
+        repositorioEmprestimo.EditarRegistro(emprestimoSelecionado.id, emprestimoSelecionado);
         Console.WriteLine("Devolução da revista {0} registrada com sucesso", revistaSelecionada.titulo);
         Console.ReadKey();
 

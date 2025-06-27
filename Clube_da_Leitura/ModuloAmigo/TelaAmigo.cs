@@ -10,13 +10,16 @@ public class TelaAmigo : TelaBase<Amigo>
 {
     private const string formatoColunasTabela = "{0, -10} | {1, -20} | {2, -20} | {3, -15} | {4, -12} | {5, -5} | {6, -10}";
     IRepositorioAmigo repositorioAmigo;
+    RepositorioMultaEmBancoDeDados repositorioMulta;
 
 
-    public TelaAmigo(IRepositorioAmigo repositorioAmigo)
+
+    public TelaAmigo(IRepositorioAmigo repositorioAmigo, RepositorioMultaEmBancoDeDados repositorioMulta)
     {
         modulo = "Amigos";
         this.repositorio = repositorioAmigo;
         this.repositorioAmigo = repositorioAmigo;
+        this.repositorioMulta = repositorioMulta;
     }
     public override void CadastrarRegistro()
     {
@@ -107,11 +110,12 @@ public class TelaAmigo : TelaBase<Amigo>
         .Where(m => m.situacao == SituacaoMulta.Pendente)
         .Sum(m => m.valorMulta);
 
+        int emprestimosPendentes = a.emprestimos.Count(e => e.situacao == SituacaoEmprestimo.Aberto || e.situacao == SituacaoEmprestimo.Atrasado);
         string valorFormatado = valorMultasPendentes.ToString("C", new CultureInfo("pt-BR"));
 
         Console.WriteLine(formatoColunasTabela,
             a.id, a.nome, a.nomeReponsavel, a.telefone,
-            a.emprestimos.Count, a.multas.Count, valorFormatado);
+            emprestimosPendentes, a.multas.Count, valorFormatado);
     }
 
     public override Amigo ObterDados()
@@ -152,7 +156,7 @@ public class TelaAmigo : TelaBase<Amigo>
         Console.Write("\nDigite o ID do amigo que deseja quitar multa: ");
         int id = Convert.ToInt32(Console.ReadLine());
 
-        Amigo amigo = repositorio.SelecionarPorId(id);
+        Amigo amigo = repositorioAmigo.SelecionarTodos().FirstOrDefault(a => a.id == id);
 
         if (amigo == null)
         {
@@ -179,8 +183,10 @@ public class TelaAmigo : TelaBase<Amigo>
         if (resposta == "S")
         {
             foreach (var multa in multasPendentes)
+            {
                 multa.situacao = SituacaoMulta.Quitada;
-
+                repositorioMulta.ExcluirRegistro(multa.id);
+            }
             Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine("Multas quitadas com sucesso!");
             Console.ResetColor();

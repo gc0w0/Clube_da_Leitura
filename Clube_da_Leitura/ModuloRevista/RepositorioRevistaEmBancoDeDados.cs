@@ -21,7 +21,11 @@ namespace Clube_da_Leitura.ModuloRevista
               WHERE Id = @Id";
 
         protected override string SqlSelecionarPorId =>
-            @"SELECT * FROM TBRevistas WHERE Id = @Id";
+            @"SELECT R.Id, R.Titulo, R.NumeroEdicao, R.AnoPublicacao, R.Status, R.CaixaId,
+       C.Etiqueta, C.Cor, C.Dias
+FROM TBRevistas R
+JOIN TBCaixas C ON R.CaixaId = C.Id
+WHERE R.Id = @Id";
 
         protected override string SqlExcluir =>
             @"DELETE FROM TBRevistas WHERE Id = @Id";
