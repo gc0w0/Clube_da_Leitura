@@ -81,7 +81,7 @@ public class RepositorioAmigoEmBancoDeDados : RepositorioBaseEmBancoDeDados<Amig
             WHERE E.AmigoId = @id AND M.Situacao = 1";
 
             comando.AddParametro("@id", idAmigo);
-
+              
             using var leitor = comando.ExecuteReader();
             while (leitor.Read())
             {
