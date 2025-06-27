@@ -1,11 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Clube_da_Leitura.Compartilhado;
+using Clube_da_Leitura.ModuloRevista;
 using System.Data;
-using Clube_da_Leitura.Compartilhado;
 
 namespace Clube_da_Leitura.ModuloEmprestimo
 {
-    public class RepositorioEmprestimoEmBancoDeDados : RepositorioBaseEmBancoDeDados<Emprestimo>, IRepositorioEmprestimo ,IDisposable
+    public class RepositorioEmprestimoEmBancoDeDados : RepositorioBaseEmBancoDeDados<Emprestimo>, IRepositorioEmprestimo, IDisposable
     {
         private IDbConnection dbConnection;
 
@@ -32,7 +31,13 @@ namespace Clube_da_Leitura.ModuloEmprestimo
             @"DELETE FROM TBEmprestimos WHERE Id = @Id";
 
         protected override string SqlSelecionarTodos =>
-            @"SELECT * FROM TBEmprestimos";
+            @"SELECT 
+        E.Id,E.DataEmprestimo,E.DataDevolucao,E.DataPrevistaDevolucao,E.Situacao,A.Id AS AmigoId,A.Nome AS NomeAmigo,A.NomeResponsavel,
+        A.Telefone,R.Id AS RevistaId,R.Titulo AS TituloRevista,R.NumeroEdicao,R.AnoPublicacao,R.Status
+        FROM TBEmprestimos E
+        JOIN TBAmigos A ON A.Id = E.AmigoId
+        JOIN TBRevistas R ON R.Id = E.RevistaId
+";
 
         public RepositorioEmprestimoEmBancoDeDados(IDbConnection dbConnection) : base(dbConnection)
         {
@@ -57,12 +62,27 @@ namespace Clube_da_Leitura.ModuloEmprestimo
             return new Emprestimo
             {
                 id = ConvertToInt(reader["Id"]),
-                amigo = new ModuloAmigo.Amigo { id = ConvertToInt(reader["AmigoId"]) }, // Será necessário buscar os dados completos depois, se quiser exibir
-                revista = new ModuloRevista.Revista { id = ConvertToInt(reader["RevistaId"]) },
                 dataEmprestimo = Convert.ToDateTime(reader["DataEmprestimo"]),
                 dataDevolucao = reader["DataDevolucao"] == DBNull.Value ? null : Convert.ToDateTime(reader["DataDevolucao"]),
                 dataPrevistaDevolucao = reader["DataPrevistaDevolucao"] == DBNull.Value ? null : Convert.ToDateTime(reader["DataPrevistaDevolucao"]),
-                situacao = (SituacaoEmprestimo)ConvertToInt(reader["Situacao"])
+                situacao = (SituacaoEmprestimo)ConvertToInt(reader["Situacao"]),
+
+                amigo = new ModuloAmigo.Amigo
+                {
+                    id = ConvertToInt(reader["AmigoId"]),
+                    nome = HasColumn(reader, "NomeAmigo") ? (string)reader["NomeAmigo"] : null,
+                    nomeReponsavel = HasColumn(reader, "NomeResponsavel") ? (string)reader["NomeResponsavel"] : null,
+                    telefone = HasColumn(reader, "Telefone") ? (string)reader["Telefone"] : null
+                },
+
+                revista = new ModuloRevista.Revista
+                {
+                    id = ConvertToInt(reader["RevistaId"]),
+                    titulo = HasColumn(reader, "TituloRevista") ? (string)reader["TituloRevista"] : null,
+                    numeroEdicao = HasColumn(reader, "NumeroEdicao") ? ConvertToInt(reader["NumeroEdicao"]) : 0,
+                    anoPublicacao = HasColumn(reader, "AnoPublicacao") ? ConvertToInt(reader["AnoPublicacao"]) : 0,
+                    status = HasColumn(reader, "Status") ? (Revista.StatusDisponveis)ConvertToInt(reader["Status"]) : 0
+                }
             };
         }
 

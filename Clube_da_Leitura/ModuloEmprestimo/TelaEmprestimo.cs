@@ -15,14 +15,14 @@ public class TelaEmprestimo : TelaBase<Emprestimo>
     private IRepositorioCaixa repositorioCaixa;
 
     private IRepositorioEmprestimo repositorioEmprestimo;
-    private RepositorioMulta repositorioMulta;
+    private RepositorioMultaEmBancoDeDados repositorioMulta;
     private TelaAmigo telaAmigo;
     private TelaRevista telaRevista;
     private TelaCaixa telaCaixa;
     private TelaMulta telaMulta;
     public TelaEmprestimo(IRepositorioEmprestimo repositorioEmprestimo, IRepositorioAmigo repositorioAmigo,
         IRepositorioRevista repositorioRevista, IRepositorioCaixa repositorioCaixa, TelaAmigo telaAmigo,
-        TelaRevista telaRevista, TelaCaixa telaCaixa, RepositorioMulta repositorioMulta)
+        TelaRevista telaRevista, TelaCaixa telaCaixa, RepositorioMultaEmBancoDeDados repositorioMulta)
     {
         this.repositorioAmigo = repositorioAmigo;
         this.repositorioRevista = repositorioRevista;
@@ -279,7 +279,7 @@ public class TelaEmprestimo : TelaBase<Emprestimo>
 
         Console.Write("Digite a data de devolução: ");
         DateTime datadevolucao = Convert.ToDateTime(Console.ReadLine());
-        emprestimoSelecionado.RegistrarDevolucao(datadevolucao);
+        emprestimoSelecionado.RegistrarDevolucao(datadevolucao, repositorioMulta);
 
         emprestimoSelecionado.situacao = SituacaoEmprestimo.Fechado;
         Console.WriteLine("Devolução da revista {0} registrada com sucesso", revistaSelecionada.titulo);

@@ -30,28 +30,15 @@ namespace Clube_da_Leitura.ModuloMultas
             this.emprestimo = emprestimo;
             this.situacao = situacao;
             this.valorMulta = valorMulta;
-            RegistrarMulta();
+
             amigo.multas.Add(this);
             emprestimo.multa.Add(this);
-
         }
 
         public Multa(int diasDeAtraso)
         {
             valorMulta = diasDeAtraso * 2;
 
-        }
-
-        public void RegistrarMulta()
-        {
-            this.valorMulta = 2.0f;
-            this.situacao = SituacaoMulta.Quitada;
-
-            if (DateTime.Now > emprestimo.dataPrevistaDevolucao)
-            {
-                valorMulta = +2.0f;
-                situacao = SituacaoMulta.Pendente;
-            }
         }
 
         public override void AtualizarInformacoes(Multa multaAtualizada)

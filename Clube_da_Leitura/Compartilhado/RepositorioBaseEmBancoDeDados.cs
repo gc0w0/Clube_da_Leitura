@@ -129,7 +129,19 @@ namespace Clube_da_Leitura.Compartilhado
         {
             return SelecionarTodos().Any(validacao);
         }
-
+        protected bool HasColumn(IDataReader reader, string columnName)
+        {
+            for (int i = 0; i < reader.FieldCount; i++)
+            {
+                if (reader.GetName(i).Equals(columnName, StringComparison.OrdinalIgnoreCase))
+                    return true;
+            }
+            return false;
+        }
+        protected int SafeInt(IDataReader reader, string columnName)
+        {
+            return HasColumn(reader, columnName) ? ConvertToInt(reader[columnName]) : 0;
+        }
         public void Dispose()
         {
             dbConnection.Dispose();

@@ -27,10 +27,9 @@ namespace Clube_da_Leitura.ModuloRevista
             @"DELETE FROM TBRevistas WHERE Id = @Id";
 
         protected override string SqlSelecionarTodos =>
-            @"SELECT R.Id, R.Titulo, R.NumeroEdicao, R.AnoPublicacao, R.Status, R.CaixaId,
-             C.Etiqueta, C.Cor, C.Dias
-      FROM TBRevistas R
-      INNER JOIN TBCaixas C ON R.CaixaId = C.Id";
+            @"SELECT R.Id,R.Titulo,R.NumeroEdicao,R.AnoPublicacao,R.Status,R.CaixaId,C.Etiqueta,C.Cor,C.Dias
+        FROM TBRevistas R
+        JOIN TBCaixas C ON R.CaixaId = C.Id";
 
         public RepositorioRevistaEmBancoDeDados(IDbConnection dbConnection) : base(dbConnection)
         {
@@ -61,9 +60,9 @@ namespace Clube_da_Leitura.ModuloRevista
                 caixa = new ModuloCaixa.Caixa
                 {
                     id = ConvertToInt(reader["CaixaId"]),
-                    etiqueta = (string)reader["Etiqueta"],
-                    cor = (ModuloCaixa.Caixa.CorCaixa)ConvertToInt(reader["Cor"]),
-                    dias = ConvertToInt(reader["Dias"])
+                    etiqueta = HasColumn(reader, "Etiqueta") ? (string)reader["Etiqueta"] : null,
+                    cor = HasColumn(reader, "Cor") ? (ModuloCaixa.Caixa.CorCaixa)ConvertToInt(reader["Cor"]) : 0,
+                    dias = HasColumn(reader, "Dias") ? ConvertToInt(reader["Dias"]) : 0
                 }
             };
         }

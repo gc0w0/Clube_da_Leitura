@@ -28,7 +28,7 @@ namespace Clube_da_Leitura
             string tipoBancoDeDados = configuration["BancoDeDados"];
             string connectionString = configuration.GetConnectionString(tipoBancoDeDados);
 
-            using IDbConnection dbConnection = tipoBancoDeDados == "SqlServer"
+            IDbConnection dbConnection = tipoBancoDeDados == "SqlServer"
                  ? new SqlConnection(connectionString)
                  : new SqliteConnection(connectionString);
 
@@ -40,38 +40,37 @@ namespace Clube_da_Leitura
 
             var telaAmigo = new TelaAmigo(repositorioAmigo);
             #region AMIGO inserindo via parametro
-            var amigo = new Amigo("test545", "sqqlite", "66666666226");
+            //var amigo = new Amigo("Rech", "sqqlite", "66666666226");
             //var amigo2 = new Amigo("Gregory", "Gabriel", "11111111111");
 
-            repositorioAmigo.InserirRegistro(amigo);
-            repositorioAmigo.InserirRegistro(amigo);
+            //repositorioAmigo.InserirRegistro(amigo);
             //repositorioAmigo.InserirRegistro(amigo2);
             #endregion
             var telaCaixa = new TelaCaixa(repositorioCaixa);
             #region CAIXA inserindo via parametro
-            var caixa = new Caixa("Etiqueta SQL", Caixa.CorCaixa.Amarela, 7);
+            //var caixa = new Caixa("Etiqueta SQL", Caixa.CorCaixa.Amarela, 7);
             //var caixa2 = new Caixa("Caixa 2", CorCaixa.Amarela, 1);
-            repositorioCaixa.InserirRegistro(caixa);
+            //repositorioCaixa.InserirRegistro(caixa);
             //repositorioCaixa.InserirRegistro(caixa2);
             #endregion
             var telaRevista = new TelaRevista(repositorioCaixa, telaCaixa, repositorioRevista);
             #region REVISTA inserindo via parametro
-            var revista = new Revista("Revista SQL ", 2, 2025, caixa, Revista.StatusDisponveis.Disponivel);
+            //var revista = new Revista("Revista SQL ", 2, 2025, caixa, Revista.StatusDisponveis.Disponivel);
             //var revista2 = new Revista("Teste2", 3, 1999, caixa2, Revista.StatusDisponveis.Disponivel);
-            repositorioRevista.InserirRegistro(revista);
+            //repositorioRevista.InserirRegistro(revista);
             //repositorioRevista.InserirRegistro(revista2);
             #endregion
             #region EMPRESTIMO inserindo via parametro
-            var emprestimo = new Emprestimo(amigo, revista);
+            //var emprestimo = new Emprestimo(amigo, revista);
             //var emprestimo2 = new Emprestimo(amigo2, revista2);
-            repositorioEmprestimo.InserirRegistro(emprestimo);
+            //repositorioEmprestimo.InserirRegistro(emprestimo);
             //repositorioEmprestimo.InserirRegistro(emprestimo2);
             //repositorioEmprestimo.InserirRegistro(emprestimo2);
             #endregion
-            var repositorioMulta = new RepositorioMulta();
+            var repositorioMulta = new RepositorioMultaEmBancoDeDados(dbConnection);
             #region RESERVA inserindo via parametro
-            var reserva = new Reserva(amigo, revista);
-            repositorioReserva.InserirRegistro(reserva);
+            //var reserva = new Reserva(amigo, revista);
+            //repositorioReserva.InserirRegistro(reserva);
             #endregion
             var telaEmprestimo = new TelaEmprestimo(
                 repositorioEmprestimo, repositorioAmigo, repositorioRevista,

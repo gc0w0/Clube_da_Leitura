@@ -50,7 +50,7 @@ public class RepositorioAmigoEmBancoDeDados : RepositorioBaseEmBancoDeDados<Amig
             nome = (string)reader["Nome"],
             nomeReponsavel = (string)reader["NomeResponsavel"],
             telefone = (string)reader["Telefone"],
-            emprestimos = Enumerable.Repeat(new Emprestimo(), ConvertToInt(reader["QuantidadeEmprestimos"])).ToList()
+            emprestimos = Enumerable.Repeat(new Emprestimo(), SafeInt(reader, "QuantidadeEmprestimos")).ToList()
         };
     }
 

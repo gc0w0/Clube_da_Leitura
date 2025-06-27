@@ -39,12 +39,12 @@ namespace Clube_da_Leitura.ModuloEmprestimo
         {
             this.situacao = SituacaoEmprestimo.Aberto;
 
-            //this.dataEmprestimo = DateTime.Now; //TODO alterando pra 2 dias antes pra testar 
-            this.dataEmprestimo = new DateTime(2025, 06, 01); // para teste
+            this.dataEmprestimo = DateTime.Now; //TODO alterando pra 2 dias antes pra testar 
+            //this.dataEmprestimo = new DateTime(2025, 06, 01); // para teste
 
 
             int diasEmprestimo = revista.caixa.dias;
-            dataPrevistaDevolucao = DateTime.Now.AddDays(diasEmprestimo - 5);
+            dataPrevistaDevolucao = DateTime.Now.AddDays(diasEmprestimo);
 
             //dataDevolucao = DateTime.Now.AddDays(-1);
         }
@@ -69,7 +69,7 @@ namespace Clube_da_Leitura.ModuloEmprestimo
             return resultadoValidacao;
         }
 
-        public void RegistrarDevolucao(DateTime dataDevolucao)
+        public void RegistrarDevolucao(DateTime dataDevolucao, RepositorioMultaEmBancoDeDados repositorioMulta)
         {
             int diasDeAtraso = (int)((dataDevolucao - dataPrevistaDevolucao)?.TotalDays ?? 0);
 
@@ -85,21 +85,16 @@ namespace Clube_da_Leitura.ModuloEmprestimo
 
                 if (resposta == "S")
                 {
-                    Multa multaPaga = new Multa(diasDeAtraso);
-                    multaPaga.situacao = SituacaoMulta.Quitada;
-                    this.amigo.multas.Add(multaPaga);
-                    this.amigo.multas.Remove(multaPaga);
+                    Multa multaPaga = new Multa(this.amigo, this.revista, this, SituacaoMulta.Quitada, valorMulta);
+                    repositorioMulta.InserirRegistro(multaPaga); // salva no banco
                     Console.ForegroundColor = ConsoleColor.Green;
                     Console.WriteLine("Multa paga com sucesso.");
                     Console.ResetColor();
-
                 }
                 else
                 {
-                    Multa multaPendente = new Multa(diasDeAtraso);
-                    multaPendente.situacao = SituacaoMulta.Pendente;
-                    this.amigo.multas.Add(multaPendente);
-
+                    Multa multaPendente = new Multa(this.amigo, this.revista, this, SituacaoMulta.Pendente, valorMulta);
+                    repositorioMulta.InserirRegistro(multaPendente); // salva no banco
                     Console.ForegroundColor = ConsoleColor.Red;
                     Console.WriteLine("Multa pendente registrada.");
                     Console.ResetColor();
