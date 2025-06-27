@@ -19,7 +19,7 @@ namespace Clube_da_Leitura.ModuloAmigo
 
         public Amigo()
         {
-            
+
         }
         public Amigo(string nome, string nomeResponsavel, string telefone)
         {

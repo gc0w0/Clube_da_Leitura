@@ -1,7 +1,13 @@
-﻿namespace Clube_da_Leitura.ModuloMultas;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-public enum SituacaoMulta
+namespace Clube_da_Leitura.Dominio.ModuloMultas
 {
-    Pendente = 1,
-    Quitada =2
+    public enum SituacaoMulta
+    {
+        Pendente, Quitada
+    }
 }

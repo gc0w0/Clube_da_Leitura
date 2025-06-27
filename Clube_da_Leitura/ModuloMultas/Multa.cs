@@ -1,13 +1,8 @@
 ﻿using Clube_da_Leitura.Compartilhado;
+using Clube_da_Leitura.Dominio.ModuloMultas;
 using Clube_da_Leitura.ModuloAmigo;
 using Clube_da_Leitura.ModuloEmprestimo;
 using Clube_da_Leitura.ModuloRevista;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Clube_da_Leitura.ModuloMultas
 {
@@ -21,7 +16,7 @@ namespace Clube_da_Leitura.ModuloMultas
 
         public Multa()
         {
-            
+
         }
         public Multa(Amigo amigo, Revista revista, Emprestimo emprestimo, SituacaoMulta situacao, float valorMulta)
         {

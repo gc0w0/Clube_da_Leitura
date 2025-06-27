@@ -1,8 +1,15 @@
-﻿namespace Clube_da_Leitura.ModuloEmprestimo;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-public enum SituacaoEmprestimo
+namespace Clube_da_Leitura.Dominio.ModuloEmprestimo
 {
-    Aberto = 1,
-    Fechado = 2,
-    Atrasado =3
+    public enum SituacaoEmprestimo
+    {
+        Aberto,
+        Fechado, 
+        Atrasado
+    }
 }

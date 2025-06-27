@@ -1,0 +1,22 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net9.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Clube_da_Leitura.Infra.Database\Clube_da_Leitura.Infra.Database.csproj" />
+    <ProjectReference Include="..\Clube_da_Leitura.Infra\Clube_da_Leitura.Infra.Arquivos.csproj" />
+    <ProjectReference Include="..\Clube_da_Leitura\Clube_da_Leitura.Dominio.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="appsettings.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+</Project>
