@@ -50,7 +50,7 @@ WHERE R.Id = @Id";
                 { "@NumeroEdicao", revista.numeroEdicao },
                 { "@AnoPublicacao", revista.anoPublicacao },
                 { "@Status", (int)revista.status },
-                { "@CaixaId", revista.caixa.id }
+                { "@CaixaId", revista.caixa.Id }
             };
         }
 
@@ -58,14 +58,14 @@ WHERE R.Id = @Id";
         {
             return new Revista
             {
-                id = ConvertToInt(reader["Id"]),
+                Id = ConvertToInt(reader["Id"]),
                 titulo = (string)reader["Titulo"],
                 numeroEdicao = ConvertToInt(reader["NumeroEdicao"]),
                 anoPublicacao = ConvertToInt(reader["AnoPublicacao"]),
                 status = (Revista.StatusDisponveis)ConvertToInt(reader["Status"]),
                 caixa = new Caixa
                 {
-                    id = ConvertToInt(reader["CaixaId"]),
+                    Id = ConvertToInt(reader["CaixaId"]),
                     etiqueta = HasColumn(reader, "Etiqueta") ? (string)reader["Etiqueta"] : null,
                     cor = HasColumn(reader, "Cor") ? (Caixa.CorCaixa)ConvertToInt(reader["Cor"]) : 0,
                     dias = HasColumn(reader, "Dias") ? ConvertToInt(reader["Dias"]) : 0

@@ -37,7 +37,7 @@ namespace Clube_da_Leitura.ModuloReservas
 
         public override void MostrarInformacoes()
         {
-            Console.WriteLine($"ID de Registro: {id} | Amigo: {amigo.nome} | Revista: {revista.titulo} | Status: {situacao} | Data da Reserva {dataReserva}");
+            Console.WriteLine($"ID de Registro: {Id} | Amigo: {amigo.Nome} | Revista: {revista.titulo} | Status: {situacao} | Data da Reserva {dataReserva}");
         }
 
         public override string Validar()

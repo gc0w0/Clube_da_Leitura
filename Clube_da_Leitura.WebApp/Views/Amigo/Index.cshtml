@@ -1,12 +1,43 @@
-﻿@using Clube_da_Leitura.ModuloAmigo
-@model List<Amigo>;
+﻿@using Clube_da_Leitura.ModuloAmigo;
+
+@model List<Amigo>
+
+
 @{
-	var Amigos = Model;
+
+    ViewData["Title"] = "Index";
+
+    List<Amigo> outrosAmigos = Model;
 }
 
-<h1>Bem vindo a sessão de Amigos</h1>
 
-@foreach(Amigo amigo in Amigos)
-{
-	<h1>@amigo.nome</h1>
-}
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Nome</th>
+            <th>Nome do Responsável</th>
+            <th>Telefone</th>
+            <th>Ações</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var amigo in outrosAmigos)
+        {
+            <tr>
+                <td>@amigo.Nome</td>
+                <td>@amigo.NomeReponsavel</td>
+                <td>@amigo.Telefone</td>
+                <td>
+                    <a class="btn btn-primary" asp-action="Edit" asp-route-id="@amigo.Id"> Editar </a>
+                    <a class="btn btn-primary" asp-action="Details" asp-route-id="@amigo.Id"> Visualizar </a>
+                    <a class="btn btn-primary" asp-action="Delete" asp-route-id="@amigo.Id"> Excluir </a>                  
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

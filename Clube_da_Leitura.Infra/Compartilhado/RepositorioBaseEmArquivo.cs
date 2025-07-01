@@ -14,7 +14,7 @@ public abstract class RepositorioBaseEmArquivo<T> : IRepositorio<T> where T : En
     public void InserirRegistro(T registro)
     {
         List<T> registros = ObterRegistros();
-        registro.id = registros.Count + 1;
+        registro.Id = registros.Count + 1;
         registros.Add(registro);
         contexto.SalvarEmArquivo();
     }
@@ -35,7 +35,7 @@ public abstract class RepositorioBaseEmArquivo<T> : IRepositorio<T> where T : En
     public T SelecionarPorId(int id)
     {
         List<T> registros = ObterRegistros();
-        return registros.FirstOrDefault(r => r.id == id);
+        return registros.FirstOrDefault(r => r.Id == id);
     }
 
     public bool ExcluirRegistro(int id)

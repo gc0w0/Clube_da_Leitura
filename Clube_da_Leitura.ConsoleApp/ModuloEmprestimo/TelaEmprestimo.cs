@@ -121,7 +121,7 @@ public class TelaEmprestimo : TelaBase<Emprestimo>
 
     public override void ExibirLinhaTabela(Emprestimo e)
     {
-        Console.WriteLine(formatoColunasTabela, e.id, e.dataEmprestimo, e.dataPrevistaDevolucao, e.situacao);
+        Console.WriteLine(formatoColunasTabela, e.Id, e.dataEmprestimo, e.dataPrevistaDevolucao, e.situacao);
     }
 
     public override Emprestimo ObterDados()
@@ -132,8 +132,8 @@ public class TelaEmprestimo : TelaBase<Emprestimo>
 
         Amigo amigoSelecionado = repositorioAmigo.SelecionarPorId(idAmigo);
 
-        bool jaTemEmprestimoAtivo = amigoSelecionado.emprestimos.Any(e => e.id >= 1);
-        bool temMultaVinculada = amigoSelecionado.multas.Any(e => e.id >= 1);
+        bool jaTemEmprestimoAtivo = amigoSelecionado.emprestimos.Any(e => e.Id >= 1);
+        bool temMultaVinculada = amigoSelecionado.multas.Any(e => e.Id >= 1);
 
 
 
@@ -160,8 +160,8 @@ public class TelaEmprestimo : TelaBase<Emprestimo>
         int idRevista = Convert.ToInt32(Console.ReadLine());
 
         Revista revistaSelecionada = repositorioRevista.SelecionarPorId(idRevista);
-        bool revistaEmprestada = revistaSelecionada.emprestimos.Any(e => e.id >= 1);
-        bool revistaReservada = revistaSelecionada.reserva.Any(e => e.id >= 1);
+        bool revistaEmprestada = revistaSelecionada.emprestimos.Any(e => e.Id >= 1);
+        bool revistaReservada = revistaSelecionada.reserva.Any(e => e.Id >= 1);
 
         if (revistaEmprestada)
         {
@@ -181,7 +181,7 @@ public class TelaEmprestimo : TelaBase<Emprestimo>
             return ObterDados();
         }
         revistaSelecionada.status = Revista.StatusDisponveis.Emprestada;
-        repositorioRevista.EditarRegistro(revistaSelecionada.id, revistaSelecionada);
+        repositorioRevista.EditarRegistro(revistaSelecionada.Id, revistaSelecionada);
         return new Emprestimo(amigoSelecionado, revistaSelecionada);
     }
 
@@ -282,8 +282,8 @@ public class TelaEmprestimo : TelaBase<Emprestimo>
 
         emprestimoSelecionado.situacao = SituacaoEmprestimo.Fechado;
         emprestimoSelecionado.revista.status = StatusDisponveis.Disponivel;
-        repositorioRevista.EditarRegistro(revistaSelecionada.id, revistaSelecionada);
-        repositorioEmprestimo.EditarRegistro(emprestimoSelecionado.id, emprestimoSelecionado);
+        repositorioRevista.EditarRegistro(revistaSelecionada.Id, revistaSelecionada);
+        repositorioEmprestimo.EditarRegistro(emprestimoSelecionado.Id, emprestimoSelecionado);
         Console.WriteLine("Devolução da revista {0} registrada com sucesso", revistaSelecionada.titulo);
         Console.ReadKey();
 

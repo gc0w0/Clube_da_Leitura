@@ -109,7 +109,7 @@ public class TelaAmigo : TelaBase<Amigo>
         string valorFormatado = valorMultasPendentes.ToString("C", new CultureInfo("pt-BR"));
 
         Console.WriteLine(formatoColunasTabela,
-            a.id, a.nome, a.nomeReponsavel, a.telefone,
+            a.Id, a.Nome, a.NomeReponsavel, a.Telefone,
             emprestimosPendentes, a.multas.Count, valorFormatado);
     }
 
@@ -126,7 +126,7 @@ public class TelaAmigo : TelaBase<Amigo>
 
         var repositorioAmigo = (IRepositorioAmigo)repositorio;
 
-        bool duplicado = repositorioAmigo.Validacoes(a => a.nome == novoNome || a.telefone == novoTelefone);
+        bool duplicado = repositorioAmigo.Validacoes(a => a.Nome == novoNome || a.Telefone == novoTelefone);
 
         if (duplicado)
         {
@@ -151,7 +151,7 @@ public class TelaAmigo : TelaBase<Amigo>
         Console.Write("\nDigite o ID do amigo que deseja quitar multa: ");
         int id = Convert.ToInt32(Console.ReadLine());
 
-        Amigo amigo = repositorioAmigo.SelecionarTodos().FirstOrDefault(a => a.id == id);
+        Amigo amigo = repositorioAmigo.SelecionarTodos().FirstOrDefault(a => a.Id == id);
 
         if (amigo == null)
         {
@@ -219,11 +219,11 @@ public class TelaAmigo : TelaBase<Amigo>
 
     public bool FiltrarIniciandoComLetraA(Amigo amigo)
     {
-        return amigo.nome.Contains("A");
+        return amigo.Nome.Contains("A");
     }
 
     public bool FiltrarIniciandoComLetraB(Amigo amigo)
     {
-        return amigo.nome.StartsWith("B");
+        return amigo.Nome.StartsWith("B");
     }
 }

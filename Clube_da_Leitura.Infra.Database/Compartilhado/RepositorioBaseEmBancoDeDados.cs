@@ -42,7 +42,7 @@ namespace Clube_da_Leitura.Infra.Database.Compartilhado
                 foreach (var p in parametros)
                     comandoInserir.AddParametro(p.Key, p.Value);
 
-                registro.id = Convert.ToInt32(comandoInserir.ExecuteScalar());
+                registro.Id = Convert.ToInt32(comandoInserir.ExecuteScalar());
             }
             finally
             {

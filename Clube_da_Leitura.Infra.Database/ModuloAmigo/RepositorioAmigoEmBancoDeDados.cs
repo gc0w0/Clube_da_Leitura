@@ -40,9 +40,9 @@ public class RepositorioAmigoEmBancoDeDados : RepositorioBaseEmBancoDeDados<Amig
     {
         return new Dictionary<string, object>
         {
-            {"@Nome", amigo.nome},
-            {"@Responsavel", amigo.nomeReponsavel},
-            {"@Telefone", amigo.telefone}
+            {"@Nome", amigo.Nome},
+            {"@Responsavel", amigo.NomeReponsavel},
+            {"@Telefone", amigo.Telefone}
         };
     }
 
@@ -50,10 +50,10 @@ public class RepositorioAmigoEmBancoDeDados : RepositorioBaseEmBancoDeDados<Amig
     {
         return new Amigo
         {
-            id = ConvertToInt(reader["Id"]),
-            nome = (string)reader["Nome"],
-            nomeReponsavel = (string)reader["NomeResponsavel"],
-            telefone = (string)reader["Telefone"],
+            Id = ConvertToInt(reader["Id"]),
+            Nome = (string)reader["Nome"],
+            NomeReponsavel = (string)reader["NomeResponsavel"],
+            Telefone = (string)reader["Telefone"],
             emprestimos = Enumerable.Repeat(new Emprestimo(), SafeInt(reader, "QuantidadeEmprestimos")).ToList()
         };
     }
@@ -61,8 +61,8 @@ public class RepositorioAmigoEmBancoDeDados : RepositorioBaseEmBancoDeDados<Amig
     {
         var amigos = base.SelecionarTodos();
 
-        foreach (var amigo in amigos)
-            amigo.multas = SelecionarMultasDoAmigo(amigo.id);
+        //foreach (var amigo in amigos)
+        //    amigo.multas = SelecionarMultasDoAmigo(amigo.Id);
 
         return amigos;
     }
@@ -89,7 +89,7 @@ public class RepositorioAmigoEmBancoDeDados : RepositorioBaseEmBancoDeDados<Amig
             {
                 var multa = new Multa
                 {
-                    id = Convert.ToInt32(leitor["Id"]),
+                    Id = Convert.ToInt32(leitor["Id"]),
                     valorMulta = Convert.ToSingle(leitor["Valor"]),
                     situacao = (SituacaoMulta)Convert.ToInt32(leitor["Situacao"])
                 };

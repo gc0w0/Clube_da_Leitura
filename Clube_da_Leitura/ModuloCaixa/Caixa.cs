@@ -40,7 +40,7 @@ namespace Clube_da_Leitura.ModuloCaixa
 
         public override void MostrarInformacoes()
         {
-            Console.WriteLine($"ID de registro: {id} | Etiqueta: {etiqueta} | Cor: {cor} | Dias de Emprestimo: {dias}");
+            Console.WriteLine($"ID de registro: {Id} | Etiqueta: {etiqueta} | Cor: {cor} | Dias de Emprestimo: {dias}");
         }
 
         public override string Validar()

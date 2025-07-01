@@ -61,7 +61,7 @@ namespace Clube_da_Leitura.ModuloReservas
             }
 
             repositorio.InserirRegistro(registro);
-            repositorioRevista.EditarRegistro(registro.revista.id, registro.revista);
+            repositorioRevista.EditarRegistro(registro.revista.Id, registro.revista);
             Console.WriteLine("Registro inserido com sucesso \n");
             Console.ReadKey();
         }
@@ -120,7 +120,7 @@ namespace Clube_da_Leitura.ModuloReservas
 
         public override void ExibirLinhaTabela(Reserva r)
         {
-            Console.WriteLine(formatoColunasTabela, r.id, r.amigo.nome, r.revista.titulo, r.situacao, r.dataReserva);
+            Console.WriteLine(formatoColunasTabela, r.Id, r.amigo.Nome, r.revista.titulo, r.situacao, r.dataReserva);
         }
 
         public override Reserva ObterDados()
@@ -131,7 +131,7 @@ namespace Clube_da_Leitura.ModuloReservas
 
             Amigo amigoSelecionado = repositorioAmigo.SelecionarPorId(idAmigo);
 
-            bool jaTemEmprestimoAtivo = amigoSelecionado.emprestimos.Any(e => e.id >= 1);
+            bool jaTemEmprestimoAtivo = amigoSelecionado.emprestimos.Any(e => e.Id >= 1);
             bool temMultaPendente = amigoSelecionado.multas
             .Any(m => m.situacao == SituacaoMulta.Pendente);
 

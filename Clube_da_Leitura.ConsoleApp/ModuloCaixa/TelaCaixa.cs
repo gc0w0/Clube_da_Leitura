@@ -81,7 +81,7 @@ public class TelaCaixa : TelaBase<Caixa>
 
     public override void ExibirLinhaTabela(Caixa c)
     {
-        Console.Write($"{c.id,-10} | {c.etiqueta,-20} | ");
+        Console.Write($"{c.Id,-10} | {c.etiqueta,-20} | ");
         ImprimirComCor(c.cor, c.cor.ToString().PadRight(15));
         Console.WriteLine($" | {c.dias,-15}");
     }

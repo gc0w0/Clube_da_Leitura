@@ -51,8 +51,8 @@ public class RepositorioEmprestimoEmBancoDeDados : RepositorioBaseEmBancoDeDados
     {
         return new Dictionary<string, object>
         {
-            { "@AmigoId", emprestimo.amigo.id },
-            { "@RevistaId", emprestimo.revista.id },
+            { "@AmigoId", emprestimo.amigo.Id },
+            { "@RevistaId", emprestimo.revista.Id },
             { "@DataEmprestimo", emprestimo.dataEmprestimo },
             { "@DataDevolucao", emprestimo.dataDevolucao.HasValue ? emprestimo.dataDevolucao : DBNull.Value },
             { "@DataPrevistaDevolucao", emprestimo.dataPrevistaDevolucao.HasValue ? emprestimo.dataPrevistaDevolucao : DBNull.Value },
@@ -64,7 +64,7 @@ public class RepositorioEmprestimoEmBancoDeDados : RepositorioBaseEmBancoDeDados
     {
         return new Emprestimo
         {
-            id = ConvertToInt(reader["Id"]),
+            Id = ConvertToInt(reader["Id"]),
             dataEmprestimo = Convert.ToDateTime(reader["DataEmprestimo"]),
             dataDevolucao = reader["DataDevolucao"] == DBNull.Value ? null : Convert.ToDateTime(reader["DataDevolucao"]),
             dataPrevistaDevolucao = reader["DataPrevistaDevolucao"] == DBNull.Value ? null : Convert.ToDateTime(reader["DataPrevistaDevolucao"]),
@@ -72,15 +72,15 @@ public class RepositorioEmprestimoEmBancoDeDados : RepositorioBaseEmBancoDeDados
 
             amigo = new Amigo
             {
-                id = ConvertToInt(reader["AmigoId"]),
-                nome = HasColumn(reader, "NomeAmigo") ? (string)reader["NomeAmigo"] : null,
-                nomeReponsavel = HasColumn(reader, "NomeResponsavel") ? (string)reader["NomeResponsavel"] : null,
-                telefone = HasColumn(reader, "Telefone") ? (string)reader["Telefone"] : null
+                Id = ConvertToInt(reader["AmigoId"]),
+                Nome = HasColumn(reader, "NomeAmigo") ? (string)reader["NomeAmigo"] : null,
+                NomeReponsavel = HasColumn(reader, "NomeResponsavel") ? (string)reader["NomeResponsavel"] : null,
+                Telefone = HasColumn(reader, "Telefone") ? (string)reader["Telefone"] : null
             },
 
             revista = new Revista
             {
-                id = ConvertToInt(reader["RevistaId"]),
+                Id = ConvertToInt(reader["RevistaId"]),
                 titulo = HasColumn(reader, "TituloRevista") ? (string)reader["TituloRevista"] : null,
                 numeroEdicao = HasColumn(reader, "NumeroEdicao") ? ConvertToInt(reader["NumeroEdicao"]) : 0,
                 anoPublicacao = HasColumn(reader, "AnoPublicacao") ? ConvertToInt(reader["AnoPublicacao"]) : 0,

@@ -3,7 +3,7 @@ namespace Clube_da_Leitura.Compartilhado;
 
 public abstract class EntidadeBase<T>
 {
-    public int id;
+    public int Id { get; set; }
 
     public abstract void MostrarInformacoes();
 

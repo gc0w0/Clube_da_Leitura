@@ -54,7 +54,7 @@ namespace Clube_da_Leitura.ModuloEmprestimo
 
         public override void MostrarInformacoes()
         {
-            Console.WriteLine($"ID de Registro: {id} | Data Emprestimo: {dataEmprestimo} | DataDevolução {dataPrevistaDevolucao} | Status: {situacao}");
+            Console.WriteLine($"ID de Registro: {Id} | Data Emprestimo: {dataEmprestimo} | DataDevolução {dataPrevistaDevolucao} | Status: {situacao}");
         }
 
         public override string Validar()

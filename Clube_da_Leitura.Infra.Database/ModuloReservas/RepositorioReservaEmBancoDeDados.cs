@@ -45,8 +45,8 @@ namespace Clube_da_Leitura.Infra.Database.ModuloReservas
         {
             return new Dictionary<string, object>
             {
-                { "@AmigoId", reserva.amigo.id },
-                { "@RevistaId", reserva.revista.id },
+                { "@AmigoId", reserva.amigo.Id },
+                { "@RevistaId", reserva.revista.Id },
                 { "@DataReserva", reserva.dataReserva },
                 { "@Situacao", (int)reserva.situacao }
             };
@@ -56,21 +56,21 @@ namespace Clube_da_Leitura.Infra.Database.ModuloReservas
         {
             return new Reserva
             {
-                id = ConvertToInt(reader["Id"]),
+                Id = ConvertToInt(reader["Id"]),
                 dataReserva = Convert.ToDateTime(reader["DataReserva"]),
                 situacao = (SituacaoReserva)ConvertToInt(reader["Situacao"]),
 
                 amigo = new Amigo
                 {
-                    id = ConvertToInt(reader["AmigoId"]),
-                    nome = (string)reader["AmigoNome"],
-                    nomeReponsavel = (string)reader["NomeResponsavel"],
-                    telefone = (string)reader["Telefone"]
+                    Id = ConvertToInt(reader["AmigoId"]),
+                    Nome = (string)reader["AmigoNome"],
+                    NomeReponsavel = (string)reader["NomeResponsavel"],
+                    Telefone = (string)reader["Telefone"]
                 },
 
                 revista = new Revista
                 {
-                    id = ConvertToInt(reader["RevistaId"]),
+                    Id = ConvertToInt(reader["RevistaId"]),
                     titulo = (string)reader["Titulo"],
                     numeroEdicao = ConvertToInt(reader["NumeroEdicao"]),
                     anoPublicacao = ConvertToInt(reader["AnoPublicacao"]),

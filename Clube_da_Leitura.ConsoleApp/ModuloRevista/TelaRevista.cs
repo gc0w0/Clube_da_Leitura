@@ -90,7 +90,7 @@ namespace Clube_da_Leitura.ModuloRevista
 
         public override void ExibirLinhaTabela(Revista r)
         {
-            Console.WriteLine(formatoColunasTabela, r.id, r.titulo, r.anoPublicacao, r.status, r.caixa.etiqueta, r.caixa.dias);
+            Console.WriteLine(formatoColunasTabela, r.Id, r.titulo, r.anoPublicacao, r.status, r.caixa.etiqueta, r.caixa.dias);
         }
 
         public override Revista ObterDados()

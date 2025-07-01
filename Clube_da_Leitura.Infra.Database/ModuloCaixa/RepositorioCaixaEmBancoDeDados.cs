@@ -42,7 +42,7 @@ public class RepositorioCaixaEmBancoDeDados : RepositorioBaseEmBancoDeDados<Caix
     {
         return new Caixa
         {
-            id = ConvertToInt(reader["Id"]),
+            Id = ConvertToInt(reader["Id"]),
             etiqueta = (string)reader["Etiqueta"],
             cor = (Caixa.CorCaixa)ConvertToInt(reader["Cor"]),
             dias = ConvertToInt(reader["Dias"])

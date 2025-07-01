@@ -12,7 +12,7 @@ namespace Clube_da_Leitura.ModuloAmigo
         public List<Amigo> SelecionarPorFiltro(string letra)
         {
             return SelecionarTodos()
-                .Where(a => a.nome.StartsWith(letra, StringComparison.OrdinalIgnoreCase))
+                .Where(a => a.Nome.StartsWith(letra, StringComparison.OrdinalIgnoreCase))
                 .ToList();
         }
 

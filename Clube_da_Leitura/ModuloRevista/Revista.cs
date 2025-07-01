@@ -45,7 +45,7 @@ public class Revista : EntidadeBase<Revista>
 
     public override void MostrarInformacoes()
     {
-        Console.WriteLine($"ID de Registro: {id} | Titulo: {titulo} | Ano da Publicação: {anoPublicacao} | Status: {status} | Caixa: {caixa.etiqueta}");
+        Console.WriteLine($"ID de Registro: {Id} | Titulo: {titulo} | Ano da Publicação: {anoPublicacao} | Status: {status} | Caixa: {caixa.etiqueta}");
     }
 
     public override string Validar()

@@ -26,7 +26,7 @@ namespace Clube_da_Leitura.Infra.Database.ModuloMultas
         {
             return new Dictionary<string, object>
         {
-            { "@EmprestimoId", multa.emprestimo.id },
+            { "@EmprestimoId", multa.emprestimo.Id },
             { "@Valor", multa.valorMulta },
             { "@Situacao", (int)multa.situacao }
         };
