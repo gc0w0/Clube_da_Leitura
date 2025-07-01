@@ -1,0 +1,12 @@
+﻿@using Clube_da_Leitura.ModuloAmigo
+@model List<Amigo>;
+@{
+	var Amigos = Model;
+}
+
+<h1>Bem vindo a sessão de Amigos</h1>
+
+@foreach(Amigo amigo in Amigos)
+{
+	<h1>@amigo.nome</h1>
+}

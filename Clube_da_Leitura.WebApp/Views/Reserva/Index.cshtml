@@ -1,0 +1,12 @@
+﻿@using Clube_da_Leitura.ModuloReservas
+@model List<Reserva>;
+@{
+	var Reservas = Model;
+}
+
+<h1>Bem vindo a sessão de Reservas</h1>
+
+@foreach (Reserva reserva in Reservas)
+{
+	<h1>@reserva.dataReserva</h1>
+}

@@ -1,0 +1,12 @@
+﻿@using Clube_da_Leitura.ModuloEmprestimo
+@model List<Emprestimo>;
+@{
+	var Emprestimos = Model;
+}
+
+<h1>Bem vindo a sessão de Emprestimos</h1>
+
+@foreach (Emprestimo emprestimo in Emprestimos)
+{
+	<h1>@emprestimo.dataEmprestimo</h1>
+}
