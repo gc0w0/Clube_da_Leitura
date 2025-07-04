@@ -19,6 +19,7 @@
 <table class="table">
     <thead>
         <tr>
+            <th>ID</th>
             <th>Nome</th>
             <th>Nome do Responsável</th>
             <th>Telefone</th>
@@ -29,6 +30,7 @@
         @foreach (var amigo in outrosAmigos)
         {
             <tr>
+                <td>@amigo.Id</td>
                 <td>@amigo.Nome</td>
                 <td>@amigo.NomeReponsavel</td>
                 <td>@amigo.Telefone</td>

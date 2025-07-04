@@ -61,7 +61,7 @@ namespace Clube_da_Leitura.ModuloReservas
             }
 
             repositorio.InserirRegistro(registro);
-            repositorioRevista.EditarRegistro(registro.revista.Id, registro.revista);
+            repositorioRevista.EditarRegistro(registro.Revista.Id, registro.Revista);
             Console.WriteLine("Registro inserido com sucesso \n");
             Console.ReadKey();
         }
@@ -120,7 +120,7 @@ namespace Clube_da_Leitura.ModuloReservas
 
         public override void ExibirLinhaTabela(Reserva r)
         {
-            Console.WriteLine(formatoColunasTabela, r.Id, r.amigo.Nome, r.revista.Titulo, r.situacao, r.dataReserva);
+            Console.WriteLine(formatoColunasTabela, r.Id, r.Amigo.Nome, r.Revista.Titulo, r.Situacao, r.DataReserva);
         }
 
         public override Reserva ObterDados()
@@ -164,7 +164,7 @@ namespace Clube_da_Leitura.ModuloReservas
                 .Any(e => e.Situacao == SituacaoEmprestimo.Aberto || e.Situacao == SituacaoEmprestimo.Atrasado);
 
             bool revistaReservada = revistaSelecionada.Reserva
-            .Any(r => r.situacao == SituacaoReserva.Ativa);
+            .Any(r => r.Situacao == SituacaoReserva.Ativa);
 
             if (revistaEmprestada)
             {
@@ -252,7 +252,7 @@ namespace Clube_da_Leitura.ModuloReservas
             //Emprestimo emprestimoSelecionado = repositorioEmprestimo.SelecionarPorId(idRevista);
             //emprestimoSelecionado.situacao = SituacaoEmprestimo.Fechado;
             Reserva reservaSelecionada = repositorioReserva.SelecionarPorId(idRevista);
-            reservaSelecionada.situacao = SituacaoReserva.Cancelada;
+            reservaSelecionada.Situacao = SituacaoReserva.Cancelada;
             Console.WriteLine("O Cancelamento da reserva da revista {0} registrada com sucesso", revistaSelecionada.Titulo);
             Console.ReadKey();
         }
@@ -289,7 +289,7 @@ namespace Clube_da_Leitura.ModuloReservas
             Emprestimo emprestimoSelecionado = repositorioEmprestimo.SelecionarPorId(idAmigo);
             emprestimoSelecionado.Situacao = SituacaoEmprestimo.Aberto;
             Reserva reservaSelecionada = repositorioReserva.SelecionarPorId(idAmigo);
-            reservaSelecionada.situacao = SituacaoReserva.Concluida;
+            reservaSelecionada.Situacao = SituacaoReserva.Concluida;
             Amigo amigoSelecionado = repositorioAmigo.SelecionarPorId(idAmigo);
 
             Console.WriteLine("A retirada da reserva da revista {0} registrada com sucesso", revistaSelecionada.Titulo);

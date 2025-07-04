@@ -13,6 +13,7 @@
 <table class="table">
     <thead>
         <tr>
+            <th>ID</th>
             <th>Título</th>
             <th>Numero da Edição</th>
             <th>Ano de Publicação</th>
@@ -24,6 +25,7 @@
         @foreach (var revista in Model) 
         {
             <tr>
+                <td>@revista.Id</td>
                 <td>@revista.Titulo</td>
                 <td>@revista.NumeroEdicao</td>
                 <td>@revista.AnoPublicacao</td>

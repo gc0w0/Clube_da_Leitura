@@ -45,10 +45,10 @@ namespace Clube_da_Leitura.Infra.Database.ModuloReservas
         {
             return new Dictionary<string, object>
             {
-                { "@AmigoId", reserva.amigo.Id },
-                { "@RevistaId", reserva.revista.Id },
-                { "@DataReserva", reserva.dataReserva },
-                { "@Situacao", (int)reserva.situacao }
+                { "@AmigoId", reserva.Amigo.Id },
+                { "@RevistaId", reserva.Revista.Id },
+                { "@DataReserva", reserva.DataReserva },
+                { "@Situacao", (int)reserva.Situacao }
             };
         }
 
@@ -57,10 +57,10 @@ namespace Clube_da_Leitura.Infra.Database.ModuloReservas
             return new Reserva
             {
                 Id = ConvertToInt(reader["Id"]),
-                dataReserva = Convert.ToDateTime(reader["DataReserva"]),
-                situacao = (SituacaoReserva)ConvertToInt(reader["Situacao"]),
+                DataReserva = Convert.ToDateTime(reader["DataReserva"]),
+                Situacao = (SituacaoReserva)ConvertToInt(reader["Situacao"]),
 
-                amigo = new Amigo
+                Amigo = new Amigo
                 {
                     Id = ConvertToInt(reader["AmigoId"]),
                     Nome = (string)reader["AmigoNome"],
@@ -68,7 +68,7 @@ namespace Clube_da_Leitura.Infra.Database.ModuloReservas
                     Telefone = (string)reader["Telefone"]
                 },
 
-                revista = new Revista
+                Revista = new Revista
                 {
                     Id = ConvertToInt(reader["RevistaId"]),
                     Titulo = (string)reader["Titulo"],
@@ -83,7 +83,7 @@ namespace Clube_da_Leitura.Infra.Database.ModuloReservas
         public List<Reserva> SelecionarTodosAbertos()
         {
             return SelecionarTodos()
-                .Where(r => r.situacao == SituacaoReserva.Ativa)
+                .Where(r => r.Situacao == SituacaoReserva.Ativa)
                 .ToList();
         }
 

@@ -1,4 +1,4 @@
-﻿@model Clube_da_Leitura.ModuloEmprestimo.Emprestimo
+﻿@model Clube_da_Leitura.ModuloReservas.Reserva
 
 @{
     ViewData["Title"] = "Create";
@@ -6,28 +6,27 @@
 
 <h1>Inserir</h1>
 
-<h4>Emprestimo</h4>
+<h4>Reserva</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="DataEmprestimo" class="control-label">Data do Emprestimo</label>
-                <input asp-for="DataEmprestimo" class="form-control" />
-                <span asp-validation-for="DataEmprestimo" class="text-danger"></span>
+                <label asp-for="DataReserva" class="control-label">Data da Reserva</label>
+                <input asp-for="DataReserva" class="form-control" />
+                <span asp-validation-for="DataReserva" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Revista.Id" class="control-label">ID da Revista</label>  
+                <input asp-for="Revista.Id" class="form-control" />
+                <span asp-validation-for="Revista.Id" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Amigo.Id" class="control-label">ID do Amigo</label>
                 <input asp-for="Amigo.Id" class="form-control" />
                 <span asp-validation-for="Amigo.Id" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="Revista.Id" class="control-label">ID da Revista</label>
-                <input asp-for="Revista.Id" class="form-control" />
-                <span asp-validation-for="Revista.Id" class="text-danger"></span>
-            </div>
-
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>

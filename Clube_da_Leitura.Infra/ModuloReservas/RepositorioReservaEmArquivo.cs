@@ -10,7 +10,7 @@ public class RepositorioReservaEmArquivo : RepositorioBaseEmArquivo<Reserva>, IR
     public List<Reserva> SelecionarTodosAbertos()
     {
         return SelecionarTodos()
-           .Where(r => r.situacao == SituacaoReserva.Ativa)
+           .Where(r => r.Situacao == SituacaoReserva.Ativa)
            .ToList();
     }
 

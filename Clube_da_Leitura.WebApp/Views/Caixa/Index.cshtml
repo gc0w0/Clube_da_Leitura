@@ -13,6 +13,7 @@
 <table class="table">
     <thead>
         <tr>
+            <th>ID</th>
             <th>Etiqueta</th>
             <th>Cor</th>
             <th>Dias</th>
@@ -22,6 +23,7 @@
     <tbody>
 @foreach (var caixa in Model) {
         <tr>
+            <td>@caixa.Id</td>
             <td>@caixa.Etiqueta</td>
             <td>@caixa.Cor</td>
             <td>@caixa.Dias</td>

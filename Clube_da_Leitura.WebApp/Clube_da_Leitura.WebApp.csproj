@@ -16,8 +16,4 @@
     <ProjectReference Include="..\Clube_da_Leitura\Clube_da_Leitura.Dominio.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Views\Reserva\" />
-  </ItemGroup>
-
 </Project>

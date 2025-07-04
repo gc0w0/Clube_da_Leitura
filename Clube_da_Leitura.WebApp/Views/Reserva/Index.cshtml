@@ -1,0 +1,41 @@
+﻿@using Clube_da_Leitura.ModuloReservas;
+
+@model List<Reserva>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Reservas</h1>
+
+<p>
+    <a asp-action="Create">Inserir</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Data da reserva</th>
+            <th>Situação</th>
+            <th>Amigo</th>
+            <th>Revista</th>
+            <th>Ações</th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var reservas in Model) {
+        <tr>
+            <td>@reservas.Id</td>
+            <td>@reservas.DataReserva</td>
+            <td>@reservas.Situacao</td>
+            <td>@reservas.Amigo.Nome</td>
+            <td>@reservas.Revista.Titulo</td>
+            <td>
+                    <a class="btn btn-primary" asp-action="Edit" asp-route-id="@reservas.Id"> Editar </a>
+                    <a class="btn btn-warning" asp-action="Details" asp-route-id="@reservas.Id"> Visualizar </a>
+                    <a class="btn btn-danger" asp-action="Delete" asp-route-id="@reservas.Id"> Excluir </a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
