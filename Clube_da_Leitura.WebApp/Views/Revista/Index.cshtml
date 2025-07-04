@@ -1,12 +1,39 @@
-﻿@using Clube_da_Leitura.ModuloRevista
-@model List<Revista>;
+﻿@using Clube_da_Leitura.ModuloRevista;
+@model List<Revista>
 @{
-	var Revistas = Model;
+    ViewData["Title"] = "Index";
 }
 
-<h1>Bem vindo a sessão de Revista</h1>
+<h1>Revistas</h1>
 
-@foreach (Revista revista in Revistas)
-{
-	<h1>@revista.Titulo</h1>
+<p>
+    <a asp-action="Create">Inserir</a>
+</p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Título</th>
+            <th>Numero da Edição</th>
+            <th>Ano de Publicação</th>
+            <th>Status</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var revista in Model) 
+        {
+            <tr>
+                <td>@revista.Titulo</td>
+                <td>@revista.NumeroEdicao</td>
+                <td>@revista.AnoPublicacao</td>
+                <td>@revista.status</td>
+                <td>
+                    <a class="btn btn-primary" asp-action="Edit" asp-route-id="@revista.Id"> Editar </a>
+                    <a class="btn btn-warning" asp-action="Details" asp-route-id="@revista.Id"> Visualizar </a>
+                    <a class="btn btn-danger" asp-action="Delete" asp-route-id="@revista.Id"> Excluir </a>
+                </td>
+            </tr>
 }
+    </tbody>
+</table>
