@@ -10,12 +10,12 @@ public class RepositorioEmprestimoEmArquivo : RepositorioBaseEmArquivo<Emprestim
     }
     public List<Emprestimo> SelecionarTodosAbertos()
     {
-        return SelecionarTodos().Where(e => e.situacao == SituacaoEmprestimo.Aberto).ToList();
+        return SelecionarTodos().Where(e => e.Situacao == SituacaoEmprestimo.Aberto).ToList();
     }
 
     public List<Emprestimo> SelecionarTodosFechados()
     {
-        return SelecionarTodos().Where(e => e.situacao == SituacaoEmprestimo.Fechado).ToList();
+        return SelecionarTodos().Where(e => e.Situacao == SituacaoEmprestimo.Fechado).ToList();
     }
 
     protected override List<Emprestimo> ObterRegistros()

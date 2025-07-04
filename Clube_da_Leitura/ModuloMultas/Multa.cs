@@ -41,7 +41,7 @@ namespace Clube_da_Leitura.ModuloMultas
 
         public override void MostrarInformacoes()
         {
-            Console.WriteLine($"ID de Registro: {Id} | DataDevolução {emprestimo.dataPrevistaDevolucao} | Status: {situacao} | Valor da Multa: R$:{valorMulta}");
+            Console.WriteLine($"ID de Registro: {Id} | DataDevolução {emprestimo.DataPrevistaDevolucao} | Status: {situacao} | Valor da Multa: R$:{valorMulta}");
         }
 
         public override string Validar()

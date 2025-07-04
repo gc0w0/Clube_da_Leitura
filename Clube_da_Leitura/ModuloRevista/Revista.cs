@@ -10,7 +10,7 @@ public class Revista : EntidadeBase<Revista>
     public int NumeroEdicao { get; set; }
     public int AnoPublicacao { get; set; }
     public StatusDisponveis status { get; set; }
-    public Caixa caixa { get; set; }
+    public Caixa Caixa { get; set; }
     public List<Emprestimo> Emprestimos { get; set; } = new List<Emprestimo>(); 
     public List<Reserva> Reserva { get; set; } = new List<Reserva>();
 
@@ -23,7 +23,7 @@ public class Revista : EntidadeBase<Revista>
         this.Titulo = titulo;
         this.NumeroEdicao = numeroEdicao;
         this.AnoPublicacao = anoPublicacao;
-        this.caixa = caixa;
+        this.Caixa = caixa;
         this.status = status;
         caixa.Revistas.Add(this);
     }
@@ -45,7 +45,7 @@ public class Revista : EntidadeBase<Revista>
 
     public override void MostrarInformacoes()
     {
-        Console.WriteLine($"ID de Registro: {Id} | Titulo: {Titulo} | Ano da Publicação: {AnoPublicacao} | Status: {status} | Caixa: {caixa.Etiqueta}");
+        Console.WriteLine($"ID de Registro: {Id} | Titulo: {Titulo} | Ano da Publicação: {AnoPublicacao} | Status: {status} | Caixa: {Caixa.Etiqueta}");
     }
 
     public override string Validar()

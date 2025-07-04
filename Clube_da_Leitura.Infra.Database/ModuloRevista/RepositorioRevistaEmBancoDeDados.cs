@@ -50,7 +50,7 @@ WHERE R.Id = @Id";
                 { "@NumeroEdicao", revista.NumeroEdicao },
                 { "@AnoPublicacao", revista.AnoPublicacao },
                 { "@Status", (int)revista.status },
-                { "@CaixaId", revista.caixa.Id }
+                { "@CaixaId", revista.Caixa.Id }
             };
         }
 
@@ -63,7 +63,7 @@ WHERE R.Id = @Id";
                 NumeroEdicao = ConvertToInt(reader["NumeroEdicao"]),
                 AnoPublicacao = ConvertToInt(reader["AnoPublicacao"]),
                 status = (Revista.StatusDisponveis)ConvertToInt(reader["Status"]),
-                caixa = new Caixa
+                Caixa = new Caixa
                 {
                     Id = ConvertToInt(reader["CaixaId"]),
                     Etiqueta = HasColumn(reader, "Etiqueta") ? (string)reader["Etiqueta"] : null,

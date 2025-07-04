@@ -51,12 +51,12 @@ public class RepositorioEmprestimoEmBancoDeDados : RepositorioBaseEmBancoDeDados
     {
         return new Dictionary<string, object>
         {
-            { "@AmigoId", emprestimo.amigo.Id },
-            { "@RevistaId", emprestimo.revista.Id },
-            { "@DataEmprestimo", emprestimo.dataEmprestimo },
-            { "@DataDevolucao", emprestimo.dataDevolucao.HasValue ? emprestimo.dataDevolucao : DBNull.Value },
-            { "@DataPrevistaDevolucao", emprestimo.dataPrevistaDevolucao.HasValue ? emprestimo.dataPrevistaDevolucao : DBNull.Value },
-            { "@Situacao", (int)emprestimo.situacao }
+            { "@AmigoId", emprestimo.Amigo.Id },
+            { "@RevistaId", emprestimo.Revista.Id },
+            { "@DataEmprestimo", emprestimo.DataEmprestimo },
+            { "@DataDevolucao", emprestimo.DataDevolucao.HasValue ? emprestimo.DataDevolucao : DBNull.Value },
+            { "@DataPrevistaDevolucao", emprestimo.DataPrevistaDevolucao.HasValue ? emprestimo.DataPrevistaDevolucao : DBNull.Value },
+            { "@Situacao", (int)emprestimo.Situacao }
         };
     }
 
@@ -65,12 +65,12 @@ public class RepositorioEmprestimoEmBancoDeDados : RepositorioBaseEmBancoDeDados
         return new Emprestimo
         {
             Id = ConvertToInt(reader["Id"]),
-            dataEmprestimo = Convert.ToDateTime(reader["DataEmprestimo"]),
-            dataDevolucao = reader["DataDevolucao"] == DBNull.Value ? null : Convert.ToDateTime(reader["DataDevolucao"]),
-            dataPrevistaDevolucao = reader["DataPrevistaDevolucao"] == DBNull.Value ? null : Convert.ToDateTime(reader["DataPrevistaDevolucao"]),
-            situacao = (SituacaoEmprestimo)ConvertToInt(reader["Situacao"]),
+            DataEmprestimo = Convert.ToDateTime(reader["DataEmprestimo"]),
+            DataDevolucao = reader["DataDevolucao"] == DBNull.Value ? null : Convert.ToDateTime(reader["DataDevolucao"]),
+            DataPrevistaDevolucao = reader["DataPrevistaDevolucao"] == DBNull.Value ? null : Convert.ToDateTime(reader["DataPrevistaDevolucao"]),
+            Situacao = (SituacaoEmprestimo)ConvertToInt(reader["Situacao"]),
 
-            amigo = new Amigo
+            Amigo = new Amigo
             {
                 Id = ConvertToInt(reader["AmigoId"]),
                 Nome = HasColumn(reader, "NomeAmigo") ? (string)reader["NomeAmigo"] : null,
@@ -78,7 +78,7 @@ public class RepositorioEmprestimoEmBancoDeDados : RepositorioBaseEmBancoDeDados
                 Telefone = HasColumn(reader, "Telefone") ? (string)reader["Telefone"] : null
             },
 
-            revista = new Revista
+            Revista = new Revista
             {
                 Id = ConvertToInt(reader["RevistaId"]),
                 Titulo = HasColumn(reader, "TituloRevista") ? (string)reader["TituloRevista"] : null,
@@ -91,12 +91,12 @@ public class RepositorioEmprestimoEmBancoDeDados : RepositorioBaseEmBancoDeDados
 
     public List<Emprestimo> SelecionarTodosAbertos()
     {
-        return SelecionarTodos().Where(e => e.situacao == SituacaoEmprestimo.Aberto).ToList();
+        return SelecionarTodos().Where(e => e.Situacao == SituacaoEmprestimo.Aberto).ToList();
     }
 
     public List<Emprestimo> SelecionarTodosFechados()
     {
-        return SelecionarTodos().Where(e => e.situacao == SituacaoEmprestimo.Fechado).ToList();
+        return SelecionarTodos().Where(e => e.Situacao == SituacaoEmprestimo.Fechado).ToList();
     }
 
     public bool Validacoes(Func<Emprestimo, bool> validacao)

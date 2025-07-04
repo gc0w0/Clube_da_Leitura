@@ -161,7 +161,7 @@ namespace Clube_da_Leitura.ModuloReservas
             Revista revistaSelecionada = repositorioRevista.SelecionarPorId(idRevista);
 
             bool revistaEmprestada = revistaSelecionada.Emprestimos
-                .Any(e => e.situacao == SituacaoEmprestimo.Aberto || e.situacao == SituacaoEmprestimo.Atrasado);
+                .Any(e => e.Situacao == SituacaoEmprestimo.Aberto || e.Situacao == SituacaoEmprestimo.Atrasado);
 
             bool revistaReservada = revistaSelecionada.Reserva
             .Any(r => r.situacao == SituacaoReserva.Ativa);
@@ -287,7 +287,7 @@ namespace Clube_da_Leitura.ModuloReservas
             Revista revistaSelecionada = repositorioRevista.SelecionarPorId(idAmigo);
             revistaSelecionada.status = Revista.StatusDisponveis.Emprestada;
             Emprestimo emprestimoSelecionado = repositorioEmprestimo.SelecionarPorId(idAmigo);
-            emprestimoSelecionado.situacao = SituacaoEmprestimo.Aberto;
+            emprestimoSelecionado.Situacao = SituacaoEmprestimo.Aberto;
             Reserva reservaSelecionada = repositorioReserva.SelecionarPorId(idAmigo);
             reservaSelecionada.situacao = SituacaoReserva.Concluida;
             Amigo amigoSelecionado = repositorioAmigo.SelecionarPorId(idAmigo);

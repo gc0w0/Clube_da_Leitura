@@ -121,7 +121,7 @@ public class TelaEmprestimo : TelaBase<Emprestimo>
 
     public override void ExibirLinhaTabela(Emprestimo e)
     {
-        Console.WriteLine(formatoColunasTabela, e.Id, e.dataEmprestimo, e.dataPrevistaDevolucao, e.situacao);
+        Console.WriteLine(formatoColunasTabela, e.Id, e.DataEmprestimo, e.DataPrevistaDevolucao, e.Situacao);
     }
 
     public override Emprestimo ObterDados()
@@ -280,8 +280,8 @@ public class TelaEmprestimo : TelaBase<Emprestimo>
         DateTime datadevolucao = Convert.ToDateTime(Console.ReadLine());
         //emprestimoSelecionado.RegistrarDevolucao(datadevolucao);
 
-        emprestimoSelecionado.situacao = SituacaoEmprestimo.Fechado;
-        emprestimoSelecionado.revista.status = StatusDisponveis.Disponivel;
+        emprestimoSelecionado.Situacao = SituacaoEmprestimo.Fechado;
+        emprestimoSelecionado.Revista.status = StatusDisponveis.Disponivel;
         repositorioRevista.EditarRegistro(revistaSelecionada.Id, revistaSelecionada);
         repositorioEmprestimo.EditarRegistro(emprestimoSelecionado.Id, emprestimoSelecionado);
         Console.WriteLine("Devolução da revista {0} registrada com sucesso", revistaSelecionada.Titulo);
