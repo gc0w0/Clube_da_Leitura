@@ -160,8 +160,8 @@ public class TelaEmprestimo : TelaBase<Emprestimo>
         int idRevista = Convert.ToInt32(Console.ReadLine());
 
         Revista revistaSelecionada = repositorioRevista.SelecionarPorId(idRevista);
-        bool revistaEmprestada = revistaSelecionada.emprestimos.Any(e => e.Id >= 1);
-        bool revistaReservada = revistaSelecionada.reserva.Any(e => e.Id >= 1);
+        bool revistaEmprestada = revistaSelecionada.Emprestimos.Any(e => e.Id >= 1);
+        bool revistaReservada = revistaSelecionada.Reserva.Any(e => e.Id >= 1);
 
         if (revistaEmprestada)
         {
@@ -284,7 +284,7 @@ public class TelaEmprestimo : TelaBase<Emprestimo>
         emprestimoSelecionado.revista.status = StatusDisponveis.Disponivel;
         repositorioRevista.EditarRegistro(revistaSelecionada.Id, revistaSelecionada);
         repositorioEmprestimo.EditarRegistro(emprestimoSelecionado.Id, emprestimoSelecionado);
-        Console.WriteLine("Devolução da revista {0} registrada com sucesso", revistaSelecionada.titulo);
+        Console.WriteLine("Devolução da revista {0} registrada com sucesso", revistaSelecionada.Titulo);
         Console.ReadKey();
 
     }

@@ -46,9 +46,9 @@ WHERE R.Id = @Id";
         {
             return new Dictionary<string, object>
             {
-                { "@Titulo", revista.titulo },
-                { "@NumeroEdicao", revista.numeroEdicao },
-                { "@AnoPublicacao", revista.anoPublicacao },
+                { "@Titulo", revista.Titulo },
+                { "@NumeroEdicao", revista.NumeroEdicao },
+                { "@AnoPublicacao", revista.AnoPublicacao },
                 { "@Status", (int)revista.status },
                 { "@CaixaId", revista.caixa.Id }
             };
@@ -59,16 +59,16 @@ WHERE R.Id = @Id";
             return new Revista
             {
                 Id = ConvertToInt(reader["Id"]),
-                titulo = (string)reader["Titulo"],
-                numeroEdicao = ConvertToInt(reader["NumeroEdicao"]),
-                anoPublicacao = ConvertToInt(reader["AnoPublicacao"]),
+                Titulo = (string)reader["Titulo"],
+                NumeroEdicao = ConvertToInt(reader["NumeroEdicao"]),
+                AnoPublicacao = ConvertToInt(reader["AnoPublicacao"]),
                 status = (Revista.StatusDisponveis)ConvertToInt(reader["Status"]),
                 caixa = new Caixa
                 {
                     Id = ConvertToInt(reader["CaixaId"]),
-                    etiqueta = HasColumn(reader, "Etiqueta") ? (string)reader["Etiqueta"] : null,
-                    cor = HasColumn(reader, "Cor") ? (Caixa.CorCaixa)ConvertToInt(reader["Cor"]) : 0,
-                    dias = HasColumn(reader, "Dias") ? ConvertToInt(reader["Dias"]) : 0
+                    Etiqueta = HasColumn(reader, "Etiqueta") ? (string)reader["Etiqueta"] : null,
+                    Cor = HasColumn(reader, "Cor") ? (Caixa.CorCaixa)ConvertToInt(reader["Cor"]) : 0,
+                    Dias = HasColumn(reader, "Dias") ? ConvertToInt(reader["Dias"]) : 0
                 }
             };
         }

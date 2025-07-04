@@ -81,9 +81,9 @@ public class TelaCaixa : TelaBase<Caixa>
 
     public override void ExibirLinhaTabela(Caixa c)
     {
-        Console.Write($"{c.Id,-10} | {c.etiqueta,-20} | ");
-        ImprimirComCor(c.cor, c.cor.ToString().PadRight(15));
-        Console.WriteLine($" | {c.dias,-15}");
+        Console.Write($"{c.Id,-10} | {c.Etiqueta,-20} | ");
+        ImprimirComCor(c.Cor, c.Cor.ToString().PadRight(15));
+        Console.WriteLine($" | {c.Dias,-15}");
     }
 
     //TODO Vinculando a cor a opção selecionada
@@ -150,7 +150,7 @@ public class TelaCaixa : TelaBase<Caixa>
 
         var repositorioCaixa = (IRepositorioCaixa)repositorio;
 
-        bool duplicado = repositorioCaixa.Validacoes(a => a.etiqueta == novaEtiqueta);
+        bool duplicado = repositorioCaixa.Validacoes(a => a.Etiqueta == novaEtiqueta);
         if (duplicado)
         {
             Console.ForegroundColor = ConsoleColor.Red;

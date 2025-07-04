@@ -172,7 +172,7 @@ namespace Clube_da_Leitura
             else if (telaCaixa.opcaoEscolhida == "3")
                 telaCaixa.EditarRegistro();
             else if (telaCaixa.opcaoEscolhida == "4")
-                telaCaixa.ExcluirRegistro(a => a.revistas.Count > 0); //passa por parametro a validação de registro vinculados.
+                telaCaixa.ExcluirRegistro(a => a.Revistas.Count > 0); //passa por parametro a validação de registro vinculados.
         }
 
         private static void GerenciarAmigos(TelaAmigo telaAmigo, TelaPrincipal telaPrincipal)

@@ -25,7 +25,7 @@ namespace Clube_da_Leitura.ModuloEmprestimo
             this.amigo = amigo;
             this.revista = revista;
             amigo.emprestimos.Add(this);
-            revista.emprestimos.Add(this);
+            revista.Emprestimos.Add(this);
 
             RegistrarEmprestimo();
         }
@@ -38,7 +38,7 @@ namespace Clube_da_Leitura.ModuloEmprestimo
             //this.dataEmprestimo = new DateTime(2025, 06, 01); // para teste
 
 
-            int diasEmprestimo = revista.caixa.dias;
+            int diasEmprestimo = revista.caixa.Dias;
             dataPrevistaDevolucao = DateTime.Now.AddDays(diasEmprestimo);
 
             //dataDevolucao = DateTime.Now.AddDays(-1);

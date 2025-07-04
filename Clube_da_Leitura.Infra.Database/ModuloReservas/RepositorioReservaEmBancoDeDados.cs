@@ -71,9 +71,9 @@ namespace Clube_da_Leitura.Infra.Database.ModuloReservas
                 revista = new Revista
                 {
                     Id = ConvertToInt(reader["RevistaId"]),
-                    titulo = (string)reader["Titulo"],
-                    numeroEdicao = ConvertToInt(reader["NumeroEdicao"]),
-                    anoPublicacao = ConvertToInt(reader["AnoPublicacao"]),
+                    Titulo = (string)reader["Titulo"],
+                    NumeroEdicao = ConvertToInt(reader["NumeroEdicao"]),
+                    AnoPublicacao = ConvertToInt(reader["AnoPublicacao"]),
                     status = (Revista.StatusDisponveis)ConvertToInt(reader["Status"])
                 }
             };

@@ -90,7 +90,7 @@ namespace Clube_da_Leitura.ModuloRevista
 
         public override void ExibirLinhaTabela(Revista r)
         {
-            Console.WriteLine(formatoColunasTabela, r.Id, r.titulo, r.anoPublicacao, r.status, r.caixa.etiqueta, r.caixa.dias);
+            Console.WriteLine(formatoColunasTabela, r.Id, r.Titulo, r.AnoPublicacao, r.status, r.caixa.Etiqueta, r.caixa.Dias);
         }
 
         public override Revista ObterDados()
@@ -130,8 +130,8 @@ namespace Clube_da_Leitura.ModuloRevista
 
             var repositorioRevista = (IRepositorioRevista)repositorio;
 
-            bool tituloDuplicado = repositorioRevista.Validacoes(a => a.titulo == novoTitulo);
-            bool edicaoDuplicada = repositorioRevista.Validacoes(a => a.numeroEdicao == novoAnoPublicacao);
+            bool tituloDuplicado = repositorioRevista.Validacoes(a => a.Titulo == novoTitulo);
+            bool edicaoDuplicada = repositorioRevista.Validacoes(a => a.NumeroEdicao == novoAnoPublicacao);
             if (tituloDuplicado)
             {
                 Console.ForegroundColor = ConsoleColor.Red;

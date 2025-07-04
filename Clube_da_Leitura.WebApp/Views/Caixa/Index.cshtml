@@ -1,16 +1,36 @@
-﻿@using Clube_da_Leitura.ModuloCaixa
-
+﻿@using Clube_da_Leitura.ModuloCaixa;
 @model List<Caixa>;
 
 @{
-    var Caixas = Model;
-
-    int x = 9 + 6;
+    ViewData["Title"] = "Index";
 }
 
-<h1>Olá Gabriel, seja bem vindo ao mundo web</h1>
+<h1>Caixas</h1>
 
-@foreach (Caixa caixa in Caixas)
-{    
-    <h1>@caixa.etiqueta</h1>
+<p>
+    <a asp-action="Create">Inserir</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Etiqueta</th>
+            <th>Cor</th>
+            <th>Dias</th>
+            <th>Ações</th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var caixa in Model) {
+        <tr>
+            <td>@caixa.Etiqueta</td>
+            <td>@caixa.Cor</td>
+            <td>@caixa.Dias</td>
+            <td>
+                <a class="btn btn-primary" asp-action="Edit" asp-route-id="@caixa.Id"> Editar</a>
+                <a class="btn btn-warning text-light" asp-action="Details" asp-route-id="@caixa.Id">Visualizar</a>
+                <a class="btn btn-danger" asp-action="Delete" asp-route-id="@caixa.Id"> Excluir</a>
+            </td>
+        </tr>
 }
+    </tbody>
+</table>

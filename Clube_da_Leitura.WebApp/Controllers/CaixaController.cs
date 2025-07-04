@@ -19,11 +19,23 @@ namespace Clube_da_Leitura.WebApp.Controllers
             this.repositorioCaixa = new RepositorioCaixaEmBancoDeDados(conection);
         }
 
+        [HttpGet]
         public IActionResult Index() //action, ação
         {
-            var caixas = repositorioCaixa.SelecionarTodos();
+            List<Caixa> caixas = repositorioCaixa.SelecionarTodos();
 
-            return View(caixas);
+            return View("Index", caixas);
+        }
+        [HttpGet]
+        public IActionResult Create()
+        {
+            return View();
+        }
+        [HttpPost]
+        public IActionResult Create(Caixa caixa)
+
+        {   repositorioCaixa.InserirRegistro(caixa);
+            return RedirectToAction("Index");
         }
     }
 }

@@ -81,9 +81,9 @@ public class RepositorioEmprestimoEmBancoDeDados : RepositorioBaseEmBancoDeDados
             revista = new Revista
             {
                 Id = ConvertToInt(reader["RevistaId"]),
-                titulo = HasColumn(reader, "TituloRevista") ? (string)reader["TituloRevista"] : null,
-                numeroEdicao = HasColumn(reader, "NumeroEdicao") ? ConvertToInt(reader["NumeroEdicao"]) : 0,
-                anoPublicacao = HasColumn(reader, "AnoPublicacao") ? ConvertToInt(reader["AnoPublicacao"]) : 0,
+                Titulo = HasColumn(reader, "TituloRevista") ? (string)reader["TituloRevista"] : null,
+                NumeroEdicao = HasColumn(reader, "NumeroEdicao") ? ConvertToInt(reader["NumeroEdicao"]) : 0,
+                AnoPublicacao = HasColumn(reader, "AnoPublicacao") ? ConvertToInt(reader["AnoPublicacao"]) : 0,
                 status = HasColumn(reader, "Status") ? (Revista.StatusDisponveis)ConvertToInt(reader["Status"]) : 0
             }
         };

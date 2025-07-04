@@ -120,7 +120,7 @@ namespace Clube_da_Leitura.ModuloReservas
 
         public override void ExibirLinhaTabela(Reserva r)
         {
-            Console.WriteLine(formatoColunasTabela, r.Id, r.amigo.Nome, r.revista.titulo, r.situacao, r.dataReserva);
+            Console.WriteLine(formatoColunasTabela, r.Id, r.amigo.Nome, r.revista.Titulo, r.situacao, r.dataReserva);
         }
 
         public override Reserva ObterDados()
@@ -160,10 +160,10 @@ namespace Clube_da_Leitura.ModuloReservas
 
             Revista revistaSelecionada = repositorioRevista.SelecionarPorId(idRevista);
 
-            bool revistaEmprestada = revistaSelecionada.emprestimos
+            bool revistaEmprestada = revistaSelecionada.Emprestimos
                 .Any(e => e.situacao == SituacaoEmprestimo.Aberto || e.situacao == SituacaoEmprestimo.Atrasado);
 
-            bool revistaReservada = revistaSelecionada.reserva
+            bool revistaReservada = revistaSelecionada.Reserva
             .Any(r => r.situacao == SituacaoReserva.Ativa);
 
             if (revistaEmprestada)
@@ -253,7 +253,7 @@ namespace Clube_da_Leitura.ModuloReservas
             //emprestimoSelecionado.situacao = SituacaoEmprestimo.Fechado;
             Reserva reservaSelecionada = repositorioReserva.SelecionarPorId(idRevista);
             reservaSelecionada.situacao = SituacaoReserva.Cancelada;
-            Console.WriteLine("O Cancelamento da reserva da revista {0} registrada com sucesso", revistaSelecionada.titulo);
+            Console.WriteLine("O Cancelamento da reserva da revista {0} registrada com sucesso", revistaSelecionada.Titulo);
             Console.ReadKey();
         }
 
@@ -292,7 +292,7 @@ namespace Clube_da_Leitura.ModuloReservas
             reservaSelecionada.situacao = SituacaoReserva.Concluida;
             Amigo amigoSelecionado = repositorioAmigo.SelecionarPorId(idAmigo);
 
-            Console.WriteLine("A retirada da reserva da revista {0} registrada com sucesso", revistaSelecionada.titulo);
+            Console.WriteLine("A retirada da reserva da revista {0} registrada com sucesso", revistaSelecionada.Titulo);
             Console.WriteLine("Emprestimo registrado.");
             Console.ReadKey();
 
