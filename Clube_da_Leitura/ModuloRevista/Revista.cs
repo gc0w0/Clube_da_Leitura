@@ -1,18 +1,18 @@
 ﻿using Clube_da_Leitura.Compartilhado;
 using Clube_da_Leitura.ModuloCaixa;
 using Clube_da_Leitura.ModuloEmprestimo;
-using Clube_da_Leitura.ModuloReservas;
+using Clube_da_Leitura.ModuloReserva;
 
 namespace Clube_da_Leitura.ModuloRevista;
 public class Revista : EntidadeBase<Revista>
 {
-    public string titulo; //minimo de 2 caracteres com no maximo 100
-    public int numeroEdicao;
-    public int anoPublicacao;
-    public StatusDisponveis status;
-    public Caixa caixa;
-    public List<Emprestimo> emprestimos = new List<Emprestimo>(); // em haver se precisa ou não
-    public List<Reserva> reserva = new List<Reserva>();
+    public string Titulo {  get; set; }
+    public int NumeroEdicao { get; set; }
+    public int AnoPublicacao { get; set; }
+    public StatusDisponveis Status { get; set; }
+    public Caixa Caixa { get; set; }
+    public List<Emprestimo> Emprestimos { get; set; } = new List<Emprestimo>(); 
+    public List<Reserva> Reserva { get; set; } = new List<Reserva>();
 
     public Revista()
     {
@@ -20,12 +20,12 @@ public class Revista : EntidadeBase<Revista>
     }
     public Revista(string titulo, int numeroEdicao, int anoPublicacao, Caixa caixa, StatusDisponveis status)
     {
-        this.titulo = titulo;
-        this.numeroEdicao = numeroEdicao;
-        this.anoPublicacao = anoPublicacao;
-        this.caixa = caixa;
-        this.status = status;
-        caixa.revistas.Add(this);
+        this.Titulo = titulo;
+        this.NumeroEdicao = numeroEdicao;
+        this.AnoPublicacao = anoPublicacao;
+        this.Caixa = caixa;
+        this.Status = status;
+        caixa.Revistas.Add(this);
     }
 
     public enum StatusDisponveis
@@ -37,31 +37,31 @@ public class Revista : EntidadeBase<Revista>
 
     public override void AtualizarInformacoes(Revista revistaAtualizada)
     {
-        this.titulo = revistaAtualizada.titulo;
-        this.numeroEdicao = revistaAtualizada.numeroEdicao;
-        this.anoPublicacao = revistaAtualizada.anoPublicacao;
-        this.status = revistaAtualizada.status;
+        this.Titulo = revistaAtualizada.Titulo;
+        this.NumeroEdicao = revistaAtualizada.NumeroEdicao;
+        this.AnoPublicacao = revistaAtualizada.AnoPublicacao;
+        this.Status = revistaAtualizada.Status;
     }
 
     public override void MostrarInformacoes()
     {
-        Console.WriteLine($"ID de Registro: {Id} | Titulo: {titulo} | Ano da Publicação: {anoPublicacao} | Status: {status} | Caixa: {caixa.etiqueta}");
+        Console.WriteLine($"ID de Registro: {Id} | Titulo: {Titulo} | Ano da Publicação: {AnoPublicacao} | Status: {Status} | Caixa: {Caixa.Etiqueta}");
     }
 
     public override string Validar()
     {
         string resultadoValidacao = "";
 
-        if (string.IsNullOrEmpty(titulo))
+        if (string.IsNullOrEmpty(Titulo))
             resultadoValidacao += "O campo \"titulo\" é obrigatório" + "\n";
 
-        if (titulo.Length < 2)
+        if (Titulo.Length < 2)
             resultadoValidacao += "O campo \"titulo\" precisa ter no mínimo 3 letras" + "\n";
 
-        if (numeroEdicao < 0)
+        if (NumeroEdicao < 0)
             resultadoValidacao += "O campo \"Numero da Edição\" não pode ser negativo" + "\n";
 
-        if (anoPublicacao == 0)
+        if (AnoPublicacao == 0)
             resultadoValidacao += "O campo \"Ano de Publicação\" é obrigatório" + "\n";
 
         return resultadoValidacao;

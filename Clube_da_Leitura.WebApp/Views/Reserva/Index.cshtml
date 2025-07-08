@@ -1,4 +1,4 @@
-﻿@using Clube_da_Leitura.ModuloReservas
+﻿@using Clube_da_Leitura.ModuloReserva
 @model List<Reserva>;
 @{
 	var Reservas = Model;
@@ -8,5 +8,5 @@
 
 @foreach (Reserva reserva in Reservas)
 {
-	<h1>@reserva.dataReserva</h1>
+	<h1>@reserva.DataReserva</h1>
 }

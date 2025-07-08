@@ -1,6 +1,6 @@
 ﻿using Clube_da_Leitura.Infra.Arquivos.Compartilhado;
 
-namespace Clube_da_Leitura.ModuloReservas;
+namespace Clube_da_Leitura.ModuloReserva;
 
 public class RepositorioReservaEmArquivo : RepositorioBaseEmArquivo<Reserva>, IRepositorioReserva
 {
@@ -10,7 +10,7 @@ public class RepositorioReservaEmArquivo : RepositorioBaseEmArquivo<Reserva>, IR
     public List<Reserva> SelecionarTodosAbertos()
     {
         return SelecionarTodos()
-           .Where(r => r.situacao == SituacaoReserva.Ativa)
+           .Where(r => r.Situacao == SituacaoReserva.Ativa)
            .ToList();
     }
 

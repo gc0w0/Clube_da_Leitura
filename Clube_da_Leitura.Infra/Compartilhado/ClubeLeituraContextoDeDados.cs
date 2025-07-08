@@ -1,7 +1,7 @@
 ﻿using Clube_da_Leitura.ModuloAmigo;
 using Clube_da_Leitura.ModuloCaixa;
 using Clube_da_Leitura.ModuloEmprestimo;
-using Clube_da_Leitura.ModuloReservas;
+using Clube_da_Leitura.ModuloReserva;
 using Clube_da_Leitura.ModuloRevista;
 using System.Text.Json;
 using System.Text.Json.Serialization;

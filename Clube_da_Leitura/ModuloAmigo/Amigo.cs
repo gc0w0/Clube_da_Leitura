@@ -1,7 +1,7 @@
 ﻿using Clube_da_Leitura.Compartilhado;
 using Clube_da_Leitura.ModuloEmprestimo;
 using Clube_da_Leitura.ModuloMultas;
-using Clube_da_Leitura.ModuloReservas;
+using Clube_da_Leitura.ModuloReserva;
 
 namespace Clube_da_Leitura.ModuloAmigo
 {
@@ -11,18 +11,12 @@ namespace Clube_da_Leitura.ModuloAmigo
         
         public string NomeReponsavel { get; set; }
 
-        public string Telefone { get; set; } //minimo 3 caracteres no maximo 100
+        public string Telefone { get; set; } 
 
-
-
-        //minimo 3 caracteres no maximo 100
-        //implementar Validação de caracteres (formato validado: (XX) XXXX-XXXX ou (XX) XXXXX-XXXX)
         public List<Emprestimo> emprestimos = new List<Emprestimo>();
-        //public RepositorioAmigo repositorioAmigo;
         public List<Multa> Multas { get; set; } = new List<Multa>();
         public Multa infoMulta;
         public List<Reserva> reserva = new List<Reserva>();
-        //public List<Revista> revista = new List<Revista>();
 
         public Amigo()
         {

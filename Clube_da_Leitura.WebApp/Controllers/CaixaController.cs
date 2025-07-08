@@ -1,5 +1,7 @@
-﻿using Clube_da_Leitura.Infra.Database.ModuloCaixa;
+﻿using AutoMapper;
+using Clube_da_Leitura.Infra.Database.ModuloCaixa;
 using Clube_da_Leitura.ModuloCaixa;
+using Clube_da_Leitura.WebApp.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
 using Microsoft.Data.Sqlite;
@@ -10,20 +12,75 @@ namespace Clube_da_Leitura.WebApp.Controllers
     public class CaixaController : Controller
     {
         private IRepositorioCaixa repositorioCaixa;
-
-        public CaixaController()
+        private IMapper mapper;
+        public CaixaController(IMapper mapper, IRepositorioCaixa repositorioCaixa)
         {
-            var connectionString = @"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=ClubeLeituraDataBase;Integrated Security=True;";
-            var conection = new SqlConnection(connectionString);
-                 
-            this.repositorioCaixa = new RepositorioCaixaEmBancoDeDados(conection);
+            this.repositorioCaixa = repositorioCaixa;
+            this.mapper = mapper;
         }
 
-        public IActionResult Index() //action, ação
-        {
-            var caixas = repositorioCaixa.SelecionarTodos();
+       [HttpGet]
+        public IActionResult Index()
+        {            
+            List<Caixa> caixas = repositorioCaixa.SelecionarTodos();
 
-            return View(caixas);
+            return View("Index", caixas);
+        }
+
+        [HttpGet]
+        public IActionResult Create()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult Create(CadastrarCaixaViewModel viewModel)
+        {           
+            var caixa = mapper.Map<Caixa>(viewModel);
+
+            repositorioCaixa.InserirRegistro(caixa);
+
+            return RedirectToAction("Index");
+        }
+
+
+        [HttpGet]
+        public IActionResult Edit(int id)
+        {
+            var caixa = repositorioCaixa.SelecionarPorId(id);
+
+            var viewModel = mapper.Map<EditarCaixaViewModel>(caixa);
+
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        public IActionResult Edit(int id, EditarCaixaViewModel viewModel)
+        {
+            var caixa = mapper.Map<Caixa>(viewModel);
+
+            repositorioCaixa.EditarRegistro(id, caixa);
+
+            return RedirectToAction("Index");
+        }
+
+
+        [HttpGet]
+        public IActionResult Delete(int id)
+        {
+            var caixa = repositorioCaixa.SelecionarPorId(id);
+
+            var viewModel = mapper.Map<ExcluirCaixaViewModel>(caixa);
+
+            return View(viewModel);
+        }
+
+        [HttpPost("Delete")]
+        public IActionResult DeleteConfirmado(int id)
+        {            
+            repositorioCaixa.ExcluirRegistro(id);
+
+            return RedirectToAction("Index");
         }
     }
 }

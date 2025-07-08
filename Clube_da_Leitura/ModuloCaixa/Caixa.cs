@@ -6,10 +6,10 @@ namespace Clube_da_Leitura.ModuloCaixa
 
     public class Caixa : EntidadeBase<Caixa>
     {
-        public string etiqueta; //maximo de 50 caracteres
-        public CorCaixa cor; //seleção de paleta ou hexadecimal como fazer?? windows forms? 
-        public int dias; // padrao 7
-        public List<Revista> revistas = new List<Revista>();
+        public string Etiqueta { get; set; } 
+        public CorCaixa Cor { get; set; }
+        public int Dias { get; set; }
+        public List<Revista> Revistas { get; set; } = new List<Revista>();
         public enum CorCaixa
         {
             Vermelha = 1,
@@ -26,40 +26,40 @@ namespace Clube_da_Leitura.ModuloCaixa
         }
         public Caixa(string etiqueta, CorCaixa cor, int dias)
         {
-            this.etiqueta = etiqueta;
-            this.cor = cor;
-            this.dias = dias;
+            this.Etiqueta = etiqueta;
+            this.Cor = cor;
+            this.Dias = dias;
         }
 
         public override void AtualizarInformacoes(Caixa caixaAtualizado)
         {
-            this.etiqueta = caixaAtualizado.etiqueta;
-            this.cor = caixaAtualizado.cor;
-            this.dias = caixaAtualizado.dias;
+            this.Etiqueta = caixaAtualizado.Etiqueta;
+            this.Cor = caixaAtualizado.Cor;
+            this.Dias = caixaAtualizado.Dias;
         }
 
         public override void MostrarInformacoes()
         {
-            Console.WriteLine($"ID de registro: {Id} | Etiqueta: {etiqueta} | Cor: {cor} | Dias de Emprestimo: {dias}");
+            Console.WriteLine($"ID de registro: {Id} | Etiqueta: {Etiqueta} | Cor: {Cor} | Dias de Emprestimo: {Dias}");
         }
 
         public override string Validar()
         {
             string resultadoValidacao = "";
 
-            if (string.IsNullOrEmpty(etiqueta))
+            if (string.IsNullOrEmpty(Etiqueta))
                 resultadoValidacao += "O campo \"etiqueta\" é obrigatório" + "\n";
 
-            if (etiqueta.Length > 50)
+            if (Etiqueta.Length > 50)
                 resultadoValidacao += "O campo \"etiqueta\" precisa ter no mínimo 3 letras" + "\n";
 
-            if (cor < 0)
+            if (Cor < 0)
                 resultadoValidacao += "O campo \"cor\" precisa ser informado" + "\n";
 
-            if (dias == 0)
+            if (Dias == 0)
             {
                 resultadoValidacao += "O campo \"dias\" não foi preenchido, periodo padrão de 7 dias" + "\n";
-                dias = 7; // testar
+                Dias = 7; // testar
             }
 
             return resultadoValidacao;

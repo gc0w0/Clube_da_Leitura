@@ -32,9 +32,9 @@ public class RepositorioCaixaEmBancoDeDados : RepositorioBaseEmBancoDeDados<Caix
     {
         return new Dictionary<string, object>
         {
-            {"@Etiqueta", caixa.etiqueta},
-            {"@Cor", (int)caixa.cor},
-            {"@Dias", caixa.dias}
+            {"@Etiqueta", caixa.Etiqueta},
+            {"@Cor", (int)caixa.Cor},
+            {"@Dias", caixa.Dias}
         };
     }
 
@@ -43,9 +43,9 @@ public class RepositorioCaixaEmBancoDeDados : RepositorioBaseEmBancoDeDados<Caix
         return new Caixa
         {
             Id = ConvertToInt(reader["Id"]),
-            etiqueta = (string)reader["Etiqueta"],
-            cor = (Caixa.CorCaixa)ConvertToInt(reader["Cor"]),
-            dias = ConvertToInt(reader["Dias"])
+            Etiqueta = (string)reader["Etiqueta"],
+            Cor = (Caixa.CorCaixa)ConvertToInt(reader["Cor"]),
+            Dias = ConvertToInt(reader["Dias"])
         };
     }
 

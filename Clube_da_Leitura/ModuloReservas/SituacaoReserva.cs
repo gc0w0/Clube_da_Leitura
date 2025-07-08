@@ -1,4 +1,4 @@
-﻿namespace Clube_da_Leitura.ModuloReservas
+﻿namespace Clube_da_Leitura.ModuloReserva
 {
     public enum SituacaoReserva
     {

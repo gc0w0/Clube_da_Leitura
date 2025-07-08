@@ -6,7 +6,7 @@ using Clube_da_Leitura.ModuloEmprestimo;
 using Clube_da_Leitura.ModuloMultas;
 using Clube_da_Leitura.ModuloRevista;
 
-namespace Clube_da_Leitura.ModuloReservas
+namespace Clube_da_Leitura.ModuloReserva
 {
     public class TelaReserva : TelaBase<Reserva>
     {
@@ -61,7 +61,7 @@ namespace Clube_da_Leitura.ModuloReservas
             }
 
             repositorio.InserirRegistro(registro);
-            repositorioRevista.EditarRegistro(registro.revista.Id, registro.revista);
+            repositorioRevista.EditarRegistro(registro.Revista.Id, registro.Revista);
             Console.WriteLine("Registro inserido com sucesso \n");
             Console.ReadKey();
         }
@@ -120,7 +120,7 @@ namespace Clube_da_Leitura.ModuloReservas
 
         public override void ExibirLinhaTabela(Reserva r)
         {
-            Console.WriteLine(formatoColunasTabela, r.Id, r.amigo.Nome, r.revista.titulo, r.situacao, r.dataReserva);
+            Console.WriteLine(formatoColunasTabela, r.Id, r.Amigo.Nome, r.Revista.Titulo, r.Situacao, r.DataReserva);
         }
 
         public override Reserva ObterDados()
@@ -160,11 +160,11 @@ namespace Clube_da_Leitura.ModuloReservas
 
             Revista revistaSelecionada = repositorioRevista.SelecionarPorId(idRevista);
 
-            bool revistaEmprestada = revistaSelecionada.emprestimos
-                .Any(e => e.situacao == SituacaoEmprestimo.Aberto || e.situacao == SituacaoEmprestimo.Atrasado);
+            bool revistaEmprestada = revistaSelecionada.Emprestimos
+                .Any(e => e.Situacao == SituacaoEmprestimo.Aberto || e.Situacao == SituacaoEmprestimo.Atrasado);
 
-            bool revistaReservada = revistaSelecionada.reserva
-            .Any(r => r.situacao == SituacaoReserva.Ativa);
+            bool revistaReservada = revistaSelecionada.Reserva
+            .Any(r => r.Situacao == SituacaoReserva.Ativa);
 
             if (revistaEmprestada)
             {
@@ -248,12 +248,12 @@ namespace Clube_da_Leitura.ModuloReservas
             Console.Write("Insira o ID da revista para cancelar a reserva: ");
             int idRevista = Convert.ToInt32(Console.ReadLine());
             Revista revistaSelecionada = repositorioRevista.SelecionarPorId(idRevista);
-            revistaSelecionada.status = Revista.StatusDisponveis.Disponivel;
+            revistaSelecionada.Status = Revista.StatusDisponveis.Disponivel;
             //Emprestimo emprestimoSelecionado = repositorioEmprestimo.SelecionarPorId(idRevista);
             //emprestimoSelecionado.situacao = SituacaoEmprestimo.Fechado;
             Reserva reservaSelecionada = repositorioReserva.SelecionarPorId(idRevista);
-            reservaSelecionada.situacao = SituacaoReserva.Cancelada;
-            Console.WriteLine("O Cancelamento da reserva da revista {0} registrada com sucesso", revistaSelecionada.titulo);
+            reservaSelecionada.Situacao = SituacaoReserva.Cancelada;
+            Console.WriteLine("O Cancelamento da reserva da revista {0} registrada com sucesso", revistaSelecionada.Titulo);
             Console.ReadKey();
         }
 
@@ -285,14 +285,14 @@ namespace Clube_da_Leitura.ModuloReservas
             Console.Write("Insira o ID do amigo  para retirar a revista: ");
             int idAmigo = Convert.ToInt32(Console.ReadLine());
             Revista revistaSelecionada = repositorioRevista.SelecionarPorId(idAmigo);
-            revistaSelecionada.status = Revista.StatusDisponveis.Emprestada;
+            revistaSelecionada.Status = Revista.StatusDisponveis.Emprestada;
             Emprestimo emprestimoSelecionado = repositorioEmprestimo.SelecionarPorId(idAmigo);
-            emprestimoSelecionado.situacao = SituacaoEmprestimo.Aberto;
+            emprestimoSelecionado.Situacao = SituacaoEmprestimo.Aberto;
             Reserva reservaSelecionada = repositorioReserva.SelecionarPorId(idAmigo);
-            reservaSelecionada.situacao = SituacaoReserva.Concluida;
+            reservaSelecionada.Situacao = SituacaoReserva.Concluida;
             Amigo amigoSelecionado = repositorioAmigo.SelecionarPorId(idAmigo);
 
-            Console.WriteLine("A retirada da reserva da revista {0} registrada com sucesso", revistaSelecionada.titulo);
+            Console.WriteLine("A retirada da reserva da revista {0} registrada com sucesso", revistaSelecionada.Titulo);
             Console.WriteLine("Emprestimo registrado.");
             Console.ReadKey();
 

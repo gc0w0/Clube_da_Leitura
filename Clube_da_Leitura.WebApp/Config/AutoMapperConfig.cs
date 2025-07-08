@@ -9,6 +9,11 @@ namespace Clube_da_Leitura.WebApp.Config
             services.AddAutoMapper(config =>
             {
                 config.AddProfile<AmigoProfile>();
+                config.AddProfile<CaixaProfile>();
+                config.AddProfile<EmprestimoProfile>();
+                config.AddProfile<ReservaProfile>();
+                config.AddProfile<RevistaProfile>();
+
             });
         }
     }

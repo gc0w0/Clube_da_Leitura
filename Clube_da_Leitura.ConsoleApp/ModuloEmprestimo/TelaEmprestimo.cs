@@ -121,7 +121,7 @@ public class TelaEmprestimo : TelaBase<Emprestimo>
 
     public override void ExibirLinhaTabela(Emprestimo e)
     {
-        Console.WriteLine(formatoColunasTabela, e.Id, e.dataEmprestimo, e.dataPrevistaDevolucao, e.situacao);
+        Console.WriteLine(formatoColunasTabela, e.Id, e.DataEmprestimo, e.DataPrevistaDevolucao, e.Situacao);
     }
 
     public override Emprestimo ObterDados()
@@ -160,8 +160,8 @@ public class TelaEmprestimo : TelaBase<Emprestimo>
         int idRevista = Convert.ToInt32(Console.ReadLine());
 
         Revista revistaSelecionada = repositorioRevista.SelecionarPorId(idRevista);
-        bool revistaEmprestada = revistaSelecionada.emprestimos.Any(e => e.Id >= 1);
-        bool revistaReservada = revistaSelecionada.reserva.Any(e => e.Id >= 1);
+        bool revistaEmprestada = revistaSelecionada.Emprestimos.Any(e => e.Id >= 1);
+        bool revistaReservada = revistaSelecionada.Reserva.Any(e => e.Id >= 1);
 
         if (revistaEmprestada)
         {
@@ -180,7 +180,7 @@ public class TelaEmprestimo : TelaBase<Emprestimo>
             Console.ReadKey();
             return ObterDados();
         }
-        revistaSelecionada.status = Revista.StatusDisponveis.Emprestada;
+        revistaSelecionada.Status = Revista.StatusDisponveis.Emprestada;
         repositorioRevista.EditarRegistro(revistaSelecionada.Id, revistaSelecionada);
         return new Emprestimo(amigoSelecionado, revistaSelecionada);
     }
@@ -273,18 +273,18 @@ public class TelaEmprestimo : TelaBase<Emprestimo>
         Console.Write("Insira o ID da revista para registrar a devolução: ");
         int idRevista = Convert.ToInt32(Console.ReadLine());
         Revista revistaSelecionada = repositorioRevista.SelecionarPorId(idRevista);
-        revistaSelecionada.status = Revista.StatusDisponveis.Disponivel;
+        revistaSelecionada.Status = Revista.StatusDisponveis.Disponivel;
         Emprestimo emprestimoSelecionado = repositorioEmprestimo.SelecionarPorId(idRevista);
 
         Console.Write("Digite a data de devolução: ");
         DateTime datadevolucao = Convert.ToDateTime(Console.ReadLine());
         //emprestimoSelecionado.RegistrarDevolucao(datadevolucao);
 
-        emprestimoSelecionado.situacao = SituacaoEmprestimo.Fechado;
-        emprestimoSelecionado.revista.status = StatusDisponveis.Disponivel;
+        emprestimoSelecionado.Situacao = SituacaoEmprestimo.Fechado;
+        emprestimoSelecionado.Revista.Status = StatusDisponveis.Disponivel;
         repositorioRevista.EditarRegistro(revistaSelecionada.Id, revistaSelecionada);
         repositorioEmprestimo.EditarRegistro(emprestimoSelecionado.Id, emprestimoSelecionado);
-        Console.WriteLine("Devolução da revista {0} registrada com sucesso", revistaSelecionada.titulo);
+        Console.WriteLine("Devolução da revista {0} registrada com sucesso", revistaSelecionada.Titulo);
         Console.ReadKey();
 
     }

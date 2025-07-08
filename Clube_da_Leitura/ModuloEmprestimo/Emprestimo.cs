@@ -9,11 +9,13 @@ namespace Clube_da_Leitura.ModuloEmprestimo
 
     public class Emprestimo : EntidadeBase<Emprestimo>
     {
-        public Amigo amigo;
-        public Revista revista;
-        public DateTime? dataEmprestimo, dataDevolucao, dataPrevistaDevolucao;
-        public SituacaoEmprestimo situacao;//Aberto / Concluido / Atrasado
-        public List<Multa> multa = new List<Multa>();
+        public Amigo Amigo { get; set; }
+        public Revista Revista { get; set; }
+        public DateTime? DataEmprestimo { get; set; }
+        public DateTime? DataDevolucao { get; set; }
+        public DateTime? DataPrevistaDevolucao { get; set; }
+        public SituacaoEmprestimo Situacao { get; set; }  //Aberto / Concluido / Atrasado
+        public List<Multa> Multa { get; set; } = new List<Multa>();
        
 
         public Emprestimo()
@@ -22,24 +24,24 @@ namespace Clube_da_Leitura.ModuloEmprestimo
         }
         public Emprestimo(Amigo amigo, Revista revista)
         {
-            this.amigo = amigo;
-            this.revista = revista;
+            this.Amigo = amigo;
+            this.Revista = revista;
             amigo.emprestimos.Add(this);
-            revista.emprestimos.Add(this);
+            revista.Emprestimos.Add(this);
 
             RegistrarEmprestimo();
         }
 
         private void RegistrarEmprestimo()
         {
-            this.situacao = SituacaoEmprestimo.Aberto;
+            this.Situacao = SituacaoEmprestimo.Aberto;
 
-            this.dataEmprestimo = DateTime.Now; //TODO alterando pra 2 dias antes pra testar 
+            this.DataEmprestimo = DateTime.Now; //TODO alterando pra 2 dias antes pra testar 
             //this.dataEmprestimo = new DateTime(2025, 06, 01); // para teste
 
 
-            int diasEmprestimo = revista.caixa.dias;
-            dataPrevistaDevolucao = DateTime.Now.AddDays(diasEmprestimo);
+            int diasEmprestimo = Revista.Caixa.Dias;
+            DataPrevistaDevolucao = DateTime.Now.AddDays(diasEmprestimo);
 
             //dataDevolucao = DateTime.Now.AddDays(-1);
         }
@@ -48,13 +50,13 @@ namespace Clube_da_Leitura.ModuloEmprestimo
 
         public override void AtualizarInformacoes(Emprestimo emprestimoAtualizado)
         {
-            this.dataEmprestimo = emprestimoAtualizado.dataEmprestimo;
-            this.dataPrevistaDevolucao = emprestimoAtualizado.dataPrevistaDevolucao;
+            this.DataEmprestimo = emprestimoAtualizado.DataEmprestimo;
+            this.DataPrevistaDevolucao = emprestimoAtualizado.DataPrevistaDevolucao;
         }
 
         public override void MostrarInformacoes()
         {
-            Console.WriteLine($"ID de Registro: {Id} | Data Emprestimo: {dataEmprestimo} | DataDevolução {dataPrevistaDevolucao} | Status: {situacao}");
+            Console.WriteLine($"ID de Registro: {Id} | Data Emprestimo: {DataEmprestimo} | DataDevolução {DataPrevistaDevolucao} | Status: {Situacao}");
         }
 
         public override string Validar()

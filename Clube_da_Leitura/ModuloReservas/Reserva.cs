@@ -2,14 +2,14 @@
 using Clube_da_Leitura.ModuloAmigo;
 using Clube_da_Leitura.ModuloRevista;
 
-namespace Clube_da_Leitura.ModuloReservas
+namespace Clube_da_Leitura.ModuloReserva
 {
     public class Reserva : EntidadeBase<Reserva>
     {
-        public Amigo amigo;
-        public Revista revista;
-        public DateTime dataReserva;
-        public SituacaoReserva situacao;
+        public Amigo Amigo { get; set; }
+        public Revista Revista { get; set; }
+        public DateTime DataReserva { get; set; }
+        public SituacaoReserva Situacao { get; set; }
 
         public Reserva()
         {
@@ -17,27 +17,27 @@ namespace Clube_da_Leitura.ModuloReservas
         }
         public Reserva(Amigo amigo, Revista revista)
         {
-            this.amigo = amigo;
-            this.revista = revista;
-            this.dataReserva = DateTime.Now;
+            this.Amigo = amigo;
+            this.Revista = revista;
+            this.DataReserva = DateTime.Now;
             RegistrarReserva();
         }
 
         private void RegistrarReserva()
         {
-            this.situacao = SituacaoReserva.Ativa;
-            revista.status = Revista.StatusDisponveis.Reservada;
+            this.Situacao = SituacaoReserva.Ativa;
+            Revista.Status = Revista.StatusDisponveis.Reservada;
 
         }
 
         public override void AtualizarInformacoes(Reserva reservaAtualizada)
         {
-            this.dataReserva = reservaAtualizada.dataReserva;
+            this.DataReserva = reservaAtualizada.DataReserva;
         }
 
         public override void MostrarInformacoes()
         {
-            Console.WriteLine($"ID de Registro: {Id} | Amigo: {amigo.Nome} | Revista: {revista.titulo} | Status: {situacao} | Data da Reserva {dataReserva}");
+            Console.WriteLine($"ID de Registro: {Id} | Amigo: {Amigo.Nome} | Revista: {Revista.Titulo} | Status: {Situacao} | Data da Reserva {DataReserva}");
         }
 
         public override string Validar()
