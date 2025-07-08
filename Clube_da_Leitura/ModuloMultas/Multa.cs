@@ -50,5 +50,10 @@ namespace Clube_da_Leitura.ModuloMultas
 
             return resultadoValidacao;
         }
+
+        public override string ToString()
+        {
+            return valorMulta + " - " + situacao;
+        }
     }
 }

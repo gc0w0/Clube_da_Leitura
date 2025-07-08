@@ -19,7 +19,7 @@ namespace Clube_da_Leitura.ModuloAmigo
         //implementar Validação de caracteres (formato validado: (XX) XXXX-XXXX ou (XX) XXXXX-XXXX)
         public List<Emprestimo> emprestimos = new List<Emprestimo>();
         //public RepositorioAmigo repositorioAmigo;
-        public List<Multa> multas = new List<Multa>();
+        public List<Multa> Multas { get; set; } = new List<Multa>();
         public Multa infoMulta;
         public List<Reserva> reserva = new List<Reserva>();
         //public List<Revista> revista = new List<Revista>();
@@ -46,7 +46,7 @@ namespace Clube_da_Leitura.ModuloAmigo
 
         public override void MostrarInformacoes()
         {
-            Console.WriteLine($"ID de Registro: {Id} | Nome: {Nome} | Nome Responsavel {NomeReponsavel} | Telefone: {Telefone} | Emprestimos: {emprestimos.Count} | Multas: {multas.Count}");
+            Console.WriteLine($"ID de Registro: {Id} | Nome: {Nome} | Nome Responsavel {NomeReponsavel} | Telefone: {Telefone} | Emprestimos: {emprestimos.Count} | Multas: {Multas.Count}");
         }
 
         public override string Validar()
@@ -82,7 +82,7 @@ namespace Clube_da_Leitura.ModuloAmigo
 
         public void RegistrarMulta(Multa novaMulta)
         {
-            multas.Add(novaMulta);
+            Multas.Add(novaMulta);
         }
     }
 }

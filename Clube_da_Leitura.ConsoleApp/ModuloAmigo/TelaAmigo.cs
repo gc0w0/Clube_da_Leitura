@@ -101,7 +101,7 @@ public class TelaAmigo : TelaBase<Amigo>
 
     public override void ExibirLinhaTabela(Amigo a)
     {
-        float valorMultasPendentes = a.multas
+        float valorMultasPendentes = a.Multas
         .Where(m => m.situacao == SituacaoMulta.Pendente)
         .Sum(m => m.valorMulta);
 
@@ -110,7 +110,7 @@ public class TelaAmigo : TelaBase<Amigo>
 
         Console.WriteLine(formatoColunasTabela,
             a.Id, a.Nome, a.NomeReponsavel, a.Telefone,
-            emprestimosPendentes, a.multas.Count, valorFormatado);
+            emprestimosPendentes, a.Multas.Count, valorFormatado);
     }
 
     public override Amigo ObterDados()
@@ -160,7 +160,7 @@ public class TelaAmigo : TelaBase<Amigo>
             return;
         }
 
-        var multasPendentes = amigo.multas.Where(m => m.situacao == SituacaoMulta.Pendente).ToList();
+        var multasPendentes = amigo.Multas.Where(m => m.situacao == SituacaoMulta.Pendente).ToList();
 
         if (multasPendentes.Count == 0)
         {
