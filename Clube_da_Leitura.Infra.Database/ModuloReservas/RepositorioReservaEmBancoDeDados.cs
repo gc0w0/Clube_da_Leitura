@@ -23,7 +23,13 @@ namespace Clube_da_Leitura.Infra.Database.ModuloReservas
               WHERE Id = @Id";
 
         protected override string SqlSelecionarPorId =>
-            @"SELECT * FROM TBReservas WHERE Id = @Id";
+            @"SELECT R.Id, R.DataReserva, R.Situacao,
+       A.Id AS AmigoId, A.Nome AS AmigoNome, A.NomeResponsavel, A.Telefone,
+       V.Id AS RevistaId, V.Titulo, V.NumeroEdicao, V.AnoPublicacao, V.Status
+FROM TBReservas R
+JOIN TBAmigos A ON R.AmigoId = A.Id
+JOIN TBRevistas V ON R.RevistaId = V.Id
+WHERE R.Id = @Id";
 
         protected override string SqlExcluir =>
             @"DELETE FROM TBReservas WHERE Id = @Id";

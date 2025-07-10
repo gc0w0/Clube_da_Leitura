@@ -1,12 +1,38 @@
 ﻿@using Clube_da_Leitura.ModuloEmprestimo
-@model List<Emprestimo>;
+@model List<Emprestimo>
+
 @{
-	var Emprestimos = Model;
+    ViewData["Title"] = "Index";
 }
 
-<h1>Bem vindo a sessão de Emprestimos</h1>
+<h1>Index</h1>
 
-@foreach (Emprestimo emprestimo in Emprestimos)
-{
-	<h1>@emprestimo.DataEmprestimo</h1>
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>DataEmprestimo</th>
+            <th>DataDevolucao</th>
+            <th>DataPrevistaDevolucao</th>
+            <th>Situacao</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var emprestimo in Model) {
+        <tr>
+            <td>@emprestimo.DataEmprestimo</td>
+            <td>@emprestimo.DataDevolucao</td>
+            <td>@emprestimo.DataPrevistaDevolucao</td>
+            <td>@emprestimo.Situacao</td>
+            <td>
+                <a class="btn btn-primary" asp-action="Edit" asp-route-id="@emprestimo.Id"> Editar </a>
+                <a class="btn btn-warning text-light" asp-action="Details" asp-route-id="@emprestimo.Id"> Visualizar </a>
+                <a class="btn btn-danger" asp-action="Delete" asp-route-id="@emprestimo.Id"> Excluir </a>
+            </td>
+        </tr>
 }
+    </tbody>
+</table>

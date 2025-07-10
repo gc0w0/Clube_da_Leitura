@@ -46,5 +46,10 @@ namespace Clube_da_Leitura.ModuloReserva
 
             return resultadoValidacao;
         }
+
+        public override string ToString()
+        {
+            return DataReserva + "-" + Situacao;
+        }
     }
 }

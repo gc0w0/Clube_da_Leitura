@@ -14,8 +14,8 @@ namespace Clube_da_Leitura.WebApp.Profiles
             CreateMap<EditarAmigoViewModel, Amigo>();
 
             CreateMap<Amigo, ExcluirAmigoViewModel>()
-                .ForMember(dest => dest.Multas, opt => opt.MapFrom(src => src.Multas.Select(x => x.ToString())));                
-
+                .ForMember(dest => dest.Multas, opt => opt.MapFrom(src => src.Multas.Select(x => x.ToString())))           
+                .ForMember(dest => dest.Reservas, opt => opt.MapFrom(src => src.Reservas.Select(x => x.ToString())));
             CreateMap<Amigo, EditarAmigoViewModel>();
 
         }

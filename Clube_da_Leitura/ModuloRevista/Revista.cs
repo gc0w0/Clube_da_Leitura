@@ -66,4 +66,9 @@ public class Revista : EntidadeBase<Revista>
 
         return resultadoValidacao;
     }
+
+    public override string ToString()
+    {
+        return Titulo + " - " + Caixa + " - " + Status;
+    }
 }

@@ -16,7 +16,7 @@ namespace Clube_da_Leitura.ModuloAmigo
         public List<Emprestimo> emprestimos = new List<Emprestimo>();
         public List<Multa> Multas { get; set; } = new List<Multa>();
         public Multa infoMulta;
-        public List<Reserva> reserva = new List<Reserva>();
+        public List<Reserva> Reservas { get; set; } = new List<Reserva>();
 
         public Amigo()
         {

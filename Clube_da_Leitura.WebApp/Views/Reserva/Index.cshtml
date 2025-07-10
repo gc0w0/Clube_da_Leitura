@@ -1,12 +1,40 @@
 ﻿@using Clube_da_Leitura.ModuloReserva
-@model List<Reserva>;
+@model List<Reserva>
+
 @{
-	var Reservas = Model;
+    ViewData["Title"] = "Index";
 }
 
-<h1>Bem vindo a sessão de Reservas</h1>
+<h1>Index</h1>
 
-@foreach (Reserva reserva in Reservas)
-{
-	<h1>@reserva.DataReserva</h1>
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Revista</th>
+            <th>Amigo</th>
+            <th>Data da Reserva</th>
+            <th>Situação</th>
+            <th>Ações</th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var reserva in Model) {
+        <tr>
+            <td>@reserva.Id</td>
+            <td>@reserva.Revista.Titulo</td>
+            <td>@reserva.Amigo.Nome</td>
+            <td>@reserva.DataReserva</td>
+            <td>@reserva.Situacao</td>
+            <td>
+                    <a class="btn btn-primary" asp-action="Edit" asp-route-id="@reserva.Id"> Editar </a>
+                    <a class="btn btn-warning text-light" asp-action="Details" asp-route-id="@reserva.Id"> Visualizar </a>
+                    <a class="btn btn-danger" asp-action="Delete" asp-route-id="@reserva.Id"> Excluir </a>
+            </td>
+        </tr>
 }
+    </tbody>
+</table>

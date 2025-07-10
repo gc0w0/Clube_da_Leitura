@@ -51,7 +51,7 @@ namespace Clube_da_Leitura.WebApp.Models
         public DateTime? DataDevolucao { get; set; }
         public DateTime? DataPrevistaDevolucao { get; set; }
         public SituacaoEmprestimo Situacao { get; set; }  //Aberto / Concluido / Atrasado
-        public List<Multa> Multa { get; set; } = new List<Multa>();
+        public List<string> Multa { get; set; } 
     }
 
     public class ExcluirEmprestimoViewModel : VisualizacaoEmprestimoViewModel

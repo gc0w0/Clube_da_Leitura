@@ -1,4 +1,4 @@
-﻿@model Clube_da_Leitura.WebApp.Models.ExcluirCaixaViewModel
+﻿@model Clube_da_Leitura.WebApp.Models.ExcluirReservaViewModel
 
 @{
     ViewData["Title"] = "Delete";
@@ -7,28 +7,21 @@
 <h1>Delete</h1>
 
 <h3>Are you sure you want to delete this?</h3>
-
 <div>
-    <h4>ExcluirCaixaViewModel</h4>
+    <h4>Excluir Reserva</h4>
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Etiqueta)
+            @Html.DisplayNameFor(model => model.DataReserva)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Etiqueta)
+            @Html.DisplayFor(model => model.DataReserva)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Cor)
+            @Html.DisplayNameFor(model => model.Situacao)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Cor)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Dias)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Dias)
+            @Html.DisplayFor(model => model.Situacao)
         </dd>
     </dl>
     

@@ -53,7 +53,6 @@ namespace Clube_da_Leitura.WebApp.Models
     public class ListarReservaViewModel
     {
         public string Amigo { get; set; }
-
         public string DataReserva { get; set; }
         public string Situacao { get; set; }
     }
