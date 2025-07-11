@@ -1,6 +1,5 @@
-﻿@using Clube_da_Leitura.ModuloRevista
+﻿@using Clube_da_Leitura.ModuloRevista;
 @model List<Revista>
-
 @{
     ViewData["Title"] = "Index";
 }
@@ -10,31 +9,32 @@
 <p>
     <a asp-action="Create">Inserir</a>
 </p>
+
 <table class="table">
     <thead>
         <tr>
-            <th>Id</th>
-            <th>Titulo</th>
-            <th>Numero de Edição</th>
-            <th>Ano da Publicação</th>
+            <th>Título</th>
+            <th>Numero da Edição</th>
+            <th>Ano de Publicação</th>
             <th>Status</th>
-            <th></th>
+            <th>Caixa</th>
         </tr>
     </thead>
     <tbody>
-@foreach (var revista in Model) {
-        <tr>
-            <td>@revista.Id</td>
-            <td>@revista.Titulo</td>
-            <td>@revista.NumeroEdicao</td>
-            <td>@revista.AnoPublicacao</td>
-            <td>@revista.Status</td>
-            <td>
+        @foreach (var revista in Model)
+        {
+            <tr>
+                <td>@revista.Titulo</td>
+                <td>@revista.NumeroEdicao</td>
+                <td>@revista.AnoPublicacao</td>
+                <td>@revista.Status</td>
+                <td>ID @revista.Caixa.Id @revista.Caixa.Etiqueta </td>
+                <td>
                     <a class="btn btn-primary" asp-action="Edit" asp-route-id="@revista.Id"> Editar </a>
-                    <a class="btn btn-warning text-light" asp-action="Details" asp-route-id="@revista.Id"> Visualizar </a>
+                    <a class="btn btn-warning" asp-action="Details" asp-route-id="@revista.Id"> Visualizar </a>
                     <a class="btn btn-danger" asp-action="Delete" asp-route-id="@revista.Id"> Excluir </a>
-            </td>
-        </tr>
-}
+                </td>
+            </tr>
+        }
     </tbody>
 </table>

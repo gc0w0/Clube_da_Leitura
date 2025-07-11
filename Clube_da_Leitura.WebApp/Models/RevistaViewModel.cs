@@ -1,6 +1,6 @@
-﻿
-using Clube_da_Leitura.ModuloCaixa;
+﻿using Clube_da_Leitura.ModuloCaixa;
 using Clube_da_Leitura.ModuloRevista;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System.ComponentModel.DataAnnotations;
 using static Clube_da_Leitura.ModuloRevista.Revista;
 
@@ -21,7 +21,11 @@ namespace Clube_da_Leitura.WebApp.Models
         public StatusDisponveis Status { get; set; }
 
         [Required(ErrorMessage = "O campo é obrigatório")]
-        public Caixa Caixa { get; set; }
+        public Caixa Caixa { get; set; } //ver se precisa disso ou somente o asp-select-itens
+
+        [Required(ErrorMessage = "O campo é obrigatório")]
+        public int CaixaId { get; set; }
+        public List<SelectListItem> ? CaixasDisponiveis { get; set; }
 
     }
 
@@ -31,6 +35,20 @@ namespace Clube_da_Leitura.WebApp.Models
         //{
         //    return new Revista(Nome, NomeResponsavel, Telefone);            
         //}
+
+        public CadastrarRevistaViewModel()
+        {
+            CaixasDisponiveis = new List<SelectListItem>();
+        }
+
+        public CadastrarRevistaViewModel(List<Caixa> caixas) : this()
+        {
+            foreach (var caixa in caixas)
+            {
+                var selectViewModel = new SelectListItem(caixa.Etiqueta, caixa.Id.ToString());
+                CaixasDisponiveis?.Add(selectViewModel);
+            }
+        }
     }
 
     public class EditarRevistaViewModel : FormularioRevistaViewModel
@@ -47,7 +65,9 @@ namespace Clube_da_Leitura.WebApp.Models
         public StatusDisponveis Status { get; set; }
         public Caixa Caixa { get; set; }
         public List<string> Emprestimos { get; set; } 
-        public List<string> Reserva { get; set; } 
+        public List<string> Reserva { get; set; }
+        public Guid? CaixaId { get; set; }
+        public List<SelectListItem>? CaixasDisponiveis { get; set; }
     }
 
     public class ExcluirRevistaViewModel : VisualizacaoRevistaViewModel

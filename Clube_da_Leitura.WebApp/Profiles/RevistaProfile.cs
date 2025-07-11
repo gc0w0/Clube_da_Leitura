@@ -14,7 +14,8 @@ namespace Clube_da_Leitura.WebApp.Profiles
             CreateMap<EditarRevistaViewModel, Revista>();
 
             CreateMap<Revista, ExcluirRevistaViewModel>()
-                .ForMember(dest => dest.Emprestimos, opt => opt.MapFrom(src => src.Emprestimos.Select(x => x.ToString())));                
+                .ForMember(dest => dest.Emprestimos, opt => opt.MapFrom(src => src.Emprestimos.Select(x => x.ToString())))
+                .ForMember(dest => dest.Caixa, opt => opt.Ignore());
 
             CreateMap<Revista, EditarRevistaViewModel>();
 
