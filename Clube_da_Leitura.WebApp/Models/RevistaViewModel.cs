@@ -21,9 +21,6 @@ namespace Clube_da_Leitura.WebApp.Models
         public StatusDisponveis Status { get; set; }
 
         [Required(ErrorMessage = "O campo é obrigatório")]
-        public Caixa Caixa { get; set; } //ver se precisa disso ou somente o asp-select-itens
-
-        [Required(ErrorMessage = "O campo é obrigatório")]
         public int CaixaId { get; set; }
         public List<SelectListItem> ? CaixasDisponiveis { get; set; }
 
@@ -31,11 +28,7 @@ namespace Clube_da_Leitura.WebApp.Models
 
     public class CadastrarRevistaViewModel : FormularioRevistaViewModel
     {
-        //public Revista ParaEntidade()
-        //{
-        //    return new Revista(Nome, NomeResponsavel, Telefone);            
-        //}
-
+      
         public CadastrarRevistaViewModel()
         {
             CaixasDisponiveis = new List<SelectListItem>();

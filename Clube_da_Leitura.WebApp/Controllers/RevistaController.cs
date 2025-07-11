@@ -44,7 +44,7 @@ namespace Clube_da_Leitura.WebApp.Controllers
         [HttpPost]
         public IActionResult Create(CadastrarRevistaViewModel viewModel)
         {
-            if (!ModelState.IsValid)
+            if (ModelState.IsValid == false)
             {
                 viewModel.CaixasDisponiveis = repositorioCaixa
                     .SelecionarTodos()
