@@ -9,11 +9,11 @@ namespace Clube_da_Leitura.ModuloAmigo
     {
         public string Nome { get; set; }
         
-        public string NomeReponsavel { get; set; }
+        public string NomeResponsavel { get; set; }
 
         public string Telefone { get; set; } 
 
-        public List<Emprestimo> emprestimos = new List<Emprestimo>();
+        public List<Emprestimo> Emprestimos { get; set; } = new List<Emprestimo>();
         public List<Multa> Multas { get; set; } = new List<Multa>();
         public Multa infoMulta;
         public List<Reserva> Reservas { get; set; } = new List<Reserva>();
@@ -25,22 +25,22 @@ namespace Clube_da_Leitura.ModuloAmigo
         public Amigo(string nome, string nomeResponsavel, string telefone)
         {
             this.Nome = nome;
-            this.NomeReponsavel = nomeResponsavel;
+            this.NomeResponsavel = nomeResponsavel;
             this.Telefone = telefone;
         }
 
         public override void AtualizarInformacoes(Amigo amigoAtualizado)
         {
             this.Nome = amigoAtualizado.Nome;
-            this.NomeReponsavel = amigoAtualizado.NomeReponsavel;
+            this.NomeResponsavel = amigoAtualizado.NomeResponsavel;
             this.Telefone = amigoAtualizado.Telefone;
-            this.emprestimos = amigoAtualizado.emprestimos;
+            this.Emprestimos = amigoAtualizado.Emprestimos;
             this.infoMulta = amigoAtualizado.infoMulta;
         }
 
         public override void MostrarInformacoes()
         {
-            Console.WriteLine($"ID de Registro: {Id} | Nome: {Nome} | Nome Responsavel {NomeReponsavel} | Telefone: {Telefone} | Emprestimos: {emprestimos.Count} | Multas: {Multas.Count}");
+            Console.WriteLine($"ID de Registro: {Id} | Nome: {Nome} | Nome Responsavel {NomeResponsavel} | Telefone: {Telefone} | Emprestimos: {Emprestimos.Count} | Multas: {Multas.Count}");
         }
 
         public override string Validar()
@@ -56,13 +56,13 @@ namespace Clube_da_Leitura.ModuloAmigo
             if (Nome.Length > 100)
                 resultadoValidacao += "O campo \"nome\" pode ter no maximo 100 letras" + "\n";
 
-            if (string.IsNullOrEmpty(NomeReponsavel))
+            if (string.IsNullOrEmpty(NomeResponsavel))
                 resultadoValidacao += "O campo \"Nome de Responsavel\" é obrigatório" + "\n";
 
-            if (NomeReponsavel.Length < 3)
+            if (NomeResponsavel.Length < 3)
                 resultadoValidacao += "O campo \"Nome de Responsavel\" precisa ter no mínimo 3 letras" + "\n";
 
-            if (NomeReponsavel.Length > 100)
+            if (NomeResponsavel.Length > 100)
                 resultadoValidacao += "O campo \"Nome de Responsavel\" pode ter no maximo 100 letras" + "\n";
 
             if (Telefone.Length < 10)

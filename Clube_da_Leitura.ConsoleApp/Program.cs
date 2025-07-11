@@ -188,7 +188,7 @@ namespace Clube_da_Leitura
             else if (telaAmigo.opcaoEscolhida == "4")
                 //TODO Verificar os Emprestimos de Amigo.
                 //TODO Feito para que possa validar relacionamentos em qualqeur lugar.
-                telaAmigo.ExcluirRegistro(a => a.emprestimos.Count > 0); //passa por parametro a validação registro vinculados.
+                telaAmigo.ExcluirRegistro(a => a.Emprestimos.Count > 0); //passa por parametro a validação registro vinculados.
             else if (telaAmigo.opcaoEscolhida == "5")
                 telaAmigo.QuitarMulta();
             else if (telaAmigo.opcaoEscolhida == "6")

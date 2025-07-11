@@ -131,7 +131,7 @@ namespace Clube_da_Leitura.ModuloReserva
 
             Amigo amigoSelecionado = repositorioAmigo.SelecionarPorId(idAmigo);
 
-            bool jaTemEmprestimoAtivo = amigoSelecionado.emprestimos.Any(e => e.Id >= 1);
+            bool jaTemEmprestimoAtivo = amigoSelecionado.Emprestimos.Any(e => e.Id >= 1);
             bool temMultaPendente = amigoSelecionado.Multas
             .Any(m => m.situacao == SituacaoMulta.Pendente);
 

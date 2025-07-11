@@ -24,7 +24,7 @@ namespace Clube_da_Leitura.WebApp.Config
                 return new SqlConnection(connectionString);
             });
 
-            services.AddTransient<IRepositorioAmigo, RepositorioAmigoEmBancoDeDados>();
+            services.AddTransient<IRepositorioAmigo, RepositorioAmigoComDapper>();
             services.AddTransient<IRepositorioCaixa, RepositorioCaixaEmBancoDeDados>();
             services.AddTransient<IRepositorioEmprestimo, RepositorioEmprestimoEmBancoDeDados>();
             services.AddTransient<IRepositorioReserva, RepositorioReservaEmBancoDeDados>();

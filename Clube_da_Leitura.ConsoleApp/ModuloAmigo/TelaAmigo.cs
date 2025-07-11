@@ -105,11 +105,11 @@ public class TelaAmigo : TelaBase<Amigo>
         .Where(m => m.situacao == SituacaoMulta.Pendente)
         .Sum(m => m.valorMulta);
 
-        int emprestimosPendentes = a.emprestimos.Count(e => e.Situacao == SituacaoEmprestimo.Aberto || e.Situacao == SituacaoEmprestimo.Atrasado);
+        int emprestimosPendentes = a.Emprestimos.Count(e => e.Situacao == SituacaoEmprestimo.Aberto || e.Situacao == SituacaoEmprestimo.Atrasado);
         string valorFormatado = valorMultasPendentes.ToString("C", new CultureInfo("pt-BR"));
 
         Console.WriteLine(formatoColunasTabela,
-            a.Id, a.Nome, a.NomeReponsavel, a.Telefone,
+            a.Id, a.Nome, a.NomeResponsavel, a.Telefone,
             emprestimosPendentes, a.Multas.Count, valorFormatado);
     }
 

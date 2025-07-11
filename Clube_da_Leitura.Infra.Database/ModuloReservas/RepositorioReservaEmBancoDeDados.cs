@@ -70,7 +70,7 @@ WHERE R.Id = @Id";
                 {
                     Id = ConvertToInt(reader["AmigoId"]),
                     Nome = (string)reader["AmigoNome"],
-                    NomeReponsavel = (string)reader["NomeResponsavel"],
+                    NomeResponsavel = (string)reader["NomeResponsavel"],
                     Telefone = (string)reader["Telefone"]
                 },
 

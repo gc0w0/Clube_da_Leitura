@@ -26,7 +26,7 @@ namespace Clube_da_Leitura.ModuloEmprestimo
         {
             this.Amigo = amigo;
             this.Revista = revista;
-            amigo.emprestimos.Add(this);
+            amigo.Emprestimos.Add(this);
             revista.Emprestimos.Add(this);
 
             RegistrarEmprestimo();

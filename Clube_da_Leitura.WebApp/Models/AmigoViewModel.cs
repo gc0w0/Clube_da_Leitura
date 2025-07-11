@@ -35,7 +35,7 @@ namespace Clube_da_Leitura.WebApp.Models
     {
         public string Nome { get; set; }
 
-        public string NomeReponsavel { get; set; }
+        public string NomeResponsavel { get; set; }
 
         public string Telefone { get; set; }
 

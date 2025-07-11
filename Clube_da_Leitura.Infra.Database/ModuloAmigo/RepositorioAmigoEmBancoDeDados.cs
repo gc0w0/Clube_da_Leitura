@@ -11,9 +11,9 @@ public class RepositorioAmigoEmBancoDeDados : RepositorioBaseEmBancoDeDados<Amig
     private IDbConnection dbConnection;
 
     protected override string SqlInserir => @"INSERT INTO TBAmigos (Nome, NomeResponsavel, Telefone)
-               VALUES (@Nome, @Responsavel, @Telefone)";
+               VALUES (@Nome, @NomeResponsavel, @Telefone)";
 
-    protected override string SqlEditar => @"UPDATE TBAmigos SET Nome = @Nome, NomeResponsavel = @Responsavel, Telefone = @Telefone
+    protected override string SqlEditar => @"UPDATE TBAmigos SET Nome = @Nome, @NomeResponsavel, Telefone = @Telefone
                            WHERE Id = @Id";
 
     protected override string SqlSelecionarPorId => @"SELECT * FROM TBAmigos WHERE Id = @Id";
@@ -41,7 +41,7 @@ public class RepositorioAmigoEmBancoDeDados : RepositorioBaseEmBancoDeDados<Amig
         return new Dictionary<string, object>
         {
             {"@Nome", amigo.Nome},
-            {"@Responsavel", amigo.NomeReponsavel},
+            {"@NomeResponsavel", amigo.NomeResponsavel},
             {"@Telefone", amigo.Telefone}
         };
     }
@@ -52,9 +52,9 @@ public class RepositorioAmigoEmBancoDeDados : RepositorioBaseEmBancoDeDados<Amig
         {
             Id = ConvertToInt(reader["Id"]),
             Nome = (string)reader["Nome"],
-            NomeReponsavel = (string)reader["NomeResponsavel"],
+            NomeResponsavel = (string)reader["NomeResponsavel"],
             Telefone = (string)reader["Telefone"],
-            emprestimos = Enumerable.Repeat(new Emprestimo(), SafeInt(reader, "QuantidadeEmprestimos")).ToList()
+            Emprestimos = Enumerable.Repeat(new Emprestimo(), SafeInt(reader, "QuantidadeEmprestimos")).ToList()
         };
     }
     public override List<Amigo> SelecionarTodos()

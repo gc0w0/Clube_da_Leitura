@@ -74,7 +74,7 @@ public class RepositorioEmprestimoEmBancoDeDados : RepositorioBaseEmBancoDeDados
             {
                 Id = ConvertToInt(reader["AmigoId"]),
                 Nome = HasColumn(reader, "NomeAmigo") ? (string)reader["NomeAmigo"] : null,
-                NomeReponsavel = HasColumn(reader, "NomeResponsavel") ? (string)reader["NomeResponsavel"] : null,
+                NomeResponsavel = HasColumn(reader, "NomeResponsavel") ? (string)reader["NomeResponsavel"] : null,
                 Telefone = HasColumn(reader, "Telefone") ? (string)reader["Telefone"] : null
             },
 
