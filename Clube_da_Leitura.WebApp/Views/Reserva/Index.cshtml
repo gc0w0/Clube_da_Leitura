@@ -13,7 +13,6 @@
 <table class="table">
     <thead>
         <tr>
-            <th>Id</th>
             <th>Revista</th>
             <th>Amigo</th>
             <th>Data da Reserva</th>
@@ -24,10 +23,9 @@
     <tbody>
 @foreach (var reserva in Model) {
         <tr>
-            <td>@reserva.Id</td>
             <td>@reserva.Revista.Titulo</td>
             <td>@reserva.Amigo.Nome</td>
-            <td>@reserva.DataReserva</td>
+            <td>@(reserva.DataReserva.ToString("dd/MM/yyyy"))</td>
             <td>@reserva.Situacao</td>
             <td>
                     <a class="btn btn-primary" asp-action="Edit" asp-route-id="@reserva.Id"> Editar </a>

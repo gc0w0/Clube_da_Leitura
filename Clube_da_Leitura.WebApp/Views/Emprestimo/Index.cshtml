@@ -5,27 +5,31 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<h1>Emprestimos</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create">Cadastrar emprestimo</a>
 </p>
 <table class="table">
     <thead>
         <tr>
-            <th>DataEmprestimo</th>
-            <th>DataDevolucao</th>
-            <th>DataPrevistaDevolucao</th>
-            <th>Situacao</th>
-            <th></th>
+            <th>Amigo</th>
+            <th>Revista</th>
+            <th>Data do emprestimo</th>
+            <th>Data de devolução</th>
+            <th>Data prevista de devolução</th>
+            <th>Situação</th>
+            <th>Ações</th>
         </tr>
     </thead>
     <tbody>
 @foreach (var emprestimo in Model) {
         <tr>
-            <td>@emprestimo.DataEmprestimo</td>
-            <td>@emprestimo.DataDevolucao</td>
-            <td>@emprestimo.DataPrevistaDevolucao</td>
+            <td>@emprestimo.Amigo.Nome</td>
+            <td>@emprestimo.Revista.Titulo</td>
+            <td>@(emprestimo.DataEmprestimo.HasValue ? emprestimo.DataEmprestimo.Value.ToString("dd/MM/yyyy") : "Data não informada")</td>
+            <td>@(emprestimo.DataDevolucao.HasValue ? emprestimo.DataDevolucao.Value.ToString("dd/MM/yyyy") : "Ainda não devolvido")</td>
+            <td>@(emprestimo.DataPrevistaDevolucao.HasValue ? emprestimo.DataPrevistaDevolucao.Value.ToString("dd/MM/yyyy") : "Data não informada")</td>
             <td>@emprestimo.Situacao</td>
             <td>
                 <a class="btn btn-primary" asp-action="Edit" asp-route-id="@emprestimo.Id"> Editar </a>

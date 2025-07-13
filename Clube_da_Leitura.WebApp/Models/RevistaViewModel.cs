@@ -1,5 +1,4 @@
 ﻿using Clube_da_Leitura.ModuloCaixa;
-using Clube_da_Leitura.ModuloRevista;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.ComponentModel.DataAnnotations;
 using static Clube_da_Leitura.ModuloRevista.Revista;

@@ -37,7 +37,6 @@ namespace Clube_da_Leitura.WebApp.Controllers
             var caixas = repositorioCaixa.SelecionarTodos(); 
             var viewModel = new CadastrarRevistaViewModel(caixas);
 
-
             return View(viewModel);
         }
 

@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
 using Clube_da_Leitura.ModuloAmigo;
 using Clube_da_Leitura.ModuloRevista;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Clube_da_Leitura.WebApp.Controllers
 {
@@ -27,8 +28,6 @@ namespace Clube_da_Leitura.WebApp.Controllers
         public IActionResult Index()
         {
             List<Reserva> reservas = repositorioReserva.SelecionarTodos();
-            List<Amigo> amigos = repositorioAmigo.SelecionarTodos();
-            List<Revista> revistas = repositorioRevista.SelecionarTodos();
 
             return View("Index", reservas);
         }
@@ -36,13 +35,34 @@ namespace Clube_da_Leitura.WebApp.Controllers
         [HttpGet]
         public IActionResult Create()
         {
-            return View();
+            var amigos = repositorioAmigo.SelecionarTodos();
+            var revistas = repositorioRevista.SelecionarTodos();
+            var viewModel = new CadastrarReservaViewModel(amigos, revistas);
+            return View(viewModel);
         }
 
         [HttpPost]
         public IActionResult Create(CadastrarReservaViewModel viewModel)
         {
+            if (ModelState.IsValid == false)
+            {
+                viewModel.RevistasDisponiveis = repositorioRevista
+                    .SelecionarTodos()
+                    .Select(r => new SelectListItem(r.Titulo, r.Id.ToString()))
+                    .ToList();
+                viewModel.AmigosDisponiveis = repositorioAmigo
+                    .SelecionarTodos()
+                    .Select(a => new SelectListItem(a.Nome, a.Id.ToString()))
+                    .ToList();
+
+                return View(viewModel);
+            }
+            var amigo = repositorioAmigo.SelecionarPorId(viewModel.AmigoId);
+            var revista = repositorioRevista.SelecionarPorId(viewModel.RevistaId);
+
             var reserva = mapper.Map<Reserva>(viewModel);
+            reserva.Amigo = amigo;
+            reserva.Revista = revista;
 
             repositorioReserva.InserirRegistro(reserva);
 
