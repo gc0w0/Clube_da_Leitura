@@ -25,7 +25,7 @@ namespace Clube_da_Leitura.WebApp.Config
             });
 
             services.AddTransient<IRepositorioAmigo, RepositorioAmigoComDapper>();
-            services.AddTransient<IRepositorioCaixa, RepositorioCaixaEmBancoDeDados>();
+            services.AddTransient<IRepositorioCaixa, RepositorioCaixaComDapper>();
             services.AddTransient<IRepositorioEmprestimo, RepositorioEmprestimoEmBancoDeDados>();
             services.AddTransient<IRepositorioReserva, RepositorioReservaEmBancoDeDados>();
             services.AddTransient<IRepositorioRevista, RepositorioRevistaEmBancoDeDados>();

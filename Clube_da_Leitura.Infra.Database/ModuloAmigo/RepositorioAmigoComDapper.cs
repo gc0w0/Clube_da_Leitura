@@ -12,7 +12,7 @@ public class RepositorioAmigoComDapper : IRepositorioAmigo, IDisposable
 {
     private IDbConnection dbConnection;
 
-    public RepositorioAmigoComDapper(IDbConnection dbConnection = null)
+    public RepositorioAmigoComDapper(IDbConnection dbConnection)
     {
         this.dbConnection = dbConnection;
     }
