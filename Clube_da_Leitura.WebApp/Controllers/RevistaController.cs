@@ -19,8 +19,8 @@ namespace Clube_da_Leitura.WebApp.Controllers
         public RevistaController(IMapper mapper, IRepositorioRevista repositorioRevista, IRepositorioCaixa repositorioCaixa)
         {
             this.repositorioRevista = repositorioRevista;
-            this.mapper = mapper;
             this.repositorioCaixa = repositorioCaixa;
+            this.mapper = mapper;
         }
 
         [HttpGet]
@@ -63,9 +63,6 @@ namespace Clube_da_Leitura.WebApp.Controllers
             return RedirectToAction("Index");
         }
 
-
-
-
         [HttpGet]
         public IActionResult Edit(int id)
         {
@@ -73,18 +70,37 @@ namespace Clube_da_Leitura.WebApp.Controllers
 
             var viewModel = mapper.Map<EditarRevistaViewModel>(revista);
 
+            viewModel.CaixasDisponiveis = repositorioCaixa
+                .SelecionarTodos()
+                .Select(c => new SelectListItem(c.Etiqueta, c.Id.ToString()))
+                .ToList();
+
             return View(viewModel);
         }
 
         [HttpPost]
         public IActionResult Edit(int id, EditarRevistaViewModel viewModel)
         {
+            if (!ModelState.IsValid)
+            {
+                viewModel.CaixasDisponiveis = repositorioCaixa
+                    .SelecionarTodos()
+                    .Select(c => new SelectListItem(c.Etiqueta, c.Id.ToString()))
+                    .ToList();
+
+                return View(viewModel);
+            }
+
             var revista = mapper.Map<Revista>(viewModel);
+
+            var caixa = repositorioCaixa.SelecionarPorId(viewModel.CaixaId);
+            revista.Caixa = caixa;
 
             repositorioRevista.EditarRegistro(id, revista);
 
             return RedirectToAction("Index");
         }
+
 
 
         [HttpGet]

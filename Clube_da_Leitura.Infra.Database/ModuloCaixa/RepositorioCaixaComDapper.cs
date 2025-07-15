@@ -21,14 +21,14 @@ public class RepositorioCaixaComDapper : IRepositorioCaixa, IDisposable
     protected  string SqlEditar =>
         @"UPDATE TBCaixas SET Etiqueta = @Etiqueta, Cor = @Cor, Dias = @Dias WHERE Id = @Id";
 
-    protected  string SqlSelecionarPorId =>
-        @"SELECT Etiqueta, Cor, Dias FROM TBCaixas WHERE Id = @Id";
+    protected string SqlSelecionarPorId =>
+        @"SELECT Id, Etiqueta, Cor, Dias FROM TBCaixas WHERE Id = @Id";
 
     protected  string SqlExcluir =>
         @"DELETE FROM TBCaixas WHERE Id = @Id";
 
-    protected  string SqlSelecionarTodos =>
-        @"SELECT Etiqueta, Cor, Dias FROM TBCaixas";
+    protected string SqlSelecionarTodos =>
+        @"SELECT Id, Etiqueta, Cor, Dias FROM TBCaixas";
 
 
     public void InserirRegistro(Caixa registro)
@@ -44,7 +44,8 @@ public class RepositorioCaixaComDapper : IRepositorioCaixa, IDisposable
 
     public Caixa SelecionarPorId(int id)
     {
-        return this.dbConnection.QueryFirst<Caixa>(SqlSelecionarPorId, new { Id = id });
+        return this.dbConnection.QueryFirstOrDefault<Caixa>(SqlSelecionarPorId, new { Id = id });
+
     }
 
     public bool ExcluirRegistro(int id)

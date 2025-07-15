@@ -77,13 +77,40 @@ namespace Clube_da_Leitura.WebApp.Controllers
 
             var viewModel = mapper.Map<EditarReservaViewModel>(reserva);
 
+                viewModel.RevistasDisponiveis = repositorioRevista
+                    .SelecionarTodos()
+                    .Select(r => new SelectListItem(r.Titulo, r.Id.ToString()))
+                    .ToList();
+                viewModel.AmigosDisponiveis = repositorioAmigo
+                    .SelecionarTodos()
+                    .Select(a => new SelectListItem(a.Nome, a.Id.ToString()))
+                    .ToList();
+
             return View(viewModel);
         }
 
         [HttpPost]
         public IActionResult Edit(int id, EditarReservaViewModel viewModel)
         {
+            if (ModelState.IsValid == false)
+            {
+                viewModel.RevistasDisponiveis = repositorioRevista
+                    .SelecionarTodos()
+                    .Select(r => new SelectListItem(r.Titulo, r.Id.ToString()))
+                    .ToList();
+                viewModel.AmigosDisponiveis = repositorioAmigo
+                    .SelecionarTodos()
+                    .Select(a => new SelectListItem(a.Nome, a.Id.ToString()))
+                    .ToList();
+
+                return View(viewModel);
+            }
             var reserva = mapper.Map<Reserva>(viewModel);
+            var amigo = repositorioAmigo.SelecionarPorId(viewModel.AmigoId);
+            var revista = repositorioRevista.SelecionarPorId(viewModel.RevistaId);
+
+            reserva.Amigo = amigo;
+            reserva.Revista = revista;
 
             repositorioReserva.EditarRegistro(id, reserva);
 

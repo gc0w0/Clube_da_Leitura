@@ -58,7 +58,7 @@ namespace Clube_da_Leitura.WebApp.Models
         public Caixa Caixa { get; set; }
         public List<string> Emprestimos { get; set; } 
         public List<string> Reserva { get; set; }
-        public Guid? CaixaId { get; set; }
+        public int CaixaId { get; set; }
         public List<SelectListItem>? CaixasDisponiveis { get; set; }
     }
 

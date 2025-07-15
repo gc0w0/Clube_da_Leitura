@@ -16,14 +16,14 @@
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="AmigoId" class="control-label">Caixa: </label>
+                <label asp-for="AmigoId" class="control-label">Amigo: </label>
                 <select asp-for="AmigoId" asp-items="@Model.AmigosDisponiveis" class="form-select">
                     <option value="">Nenhum amigo selecionado</option>
                 </select>
                 <span asp-validation-for="AmigoId" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="RevistaId" class="control-label">Caixa: </label>
+                <label asp-for="RevistaId" class="control-label">Revista: </label>
                 <select asp-for="RevistaId" asp-items="@Model.RevistasDisponiveis" class="form-select">
                     <option value="">Nenhuma revista selecionada</option>
                 </select>
