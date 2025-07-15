@@ -1,0 +1,30 @@
+﻿@model Clube_da_Leitura.WebApp.Models.EditarEmprestimoViewModel
+
+<h2>Registrar Devolução</h2>
+
+<form asp-action="RegistrarDevolucaoConfirmado" method="post">
+    <input type="hidden" asp-for="Id" />
+
+    <div class="form-group">
+        <label>Amigo</label>
+        <input type="text" class="form-control" value="@Model.NomeAmigo" readonly />
+    </div>
+
+    <div class="form-group">
+        <label>Revista</label>
+        <input type="text" class="form-control" value="@Model.TituloRevista" readonly />
+    </div>
+
+    <div class="form-group">
+        <label>Data do Empréstimo</label>
+        <input type="text" class="form-control" value="@Model.DataEmprestimo?.ToString("dd/MM/yyyy")" readonly />
+    </div>
+
+    <div class="form-group">
+        <label for="dataDevolucao">Data da Devolução</label>
+        <input type="date" name="dataDevolucao" class="form-control" required />
+    </div>
+
+    <button type="submit" class="btn btn-success">Confirmar Devolução</button>
+    <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
+</form>

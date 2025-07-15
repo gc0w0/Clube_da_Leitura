@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Clube_da_Leitura.Dominio.ModuloEmprestimo;
 using Clube_da_Leitura.ModuloAmigo;
 using Clube_da_Leitura.ModuloEmprestimo;
 using Clube_da_Leitura.ModuloRevista;
@@ -106,6 +107,57 @@ namespace Clube_da_Leitura.WebApp.Controllers
         public IActionResult DeleteConfirmado(int id)
         {
             repositorioEmprestimo.ExcluirRegistro(id);
+
+            return RedirectToAction("Index");
+        }
+
+        [HttpGet]
+        public IActionResult RegistrarDevolucao(int id)
+        {
+            var emprestimo = repositorioEmprestimo.SelecionarPorId(id);
+
+            if (emprestimo == null || emprestimo.Situacao != SituacaoEmprestimo.Aberto)
+                return NotFound();
+
+            var viewModel = new EditarEmprestimoViewModel
+            {
+                Id = emprestimo.Id,
+                AmigoId = emprestimo.Amigo?.Id ?? 0,
+                RevistaId = emprestimo.Revista?.Id ?? 0,
+                NomeAmigo = emprestimo.Amigo?.Nome ?? "Desconhecido",
+                TituloRevista = emprestimo.Revista?.Titulo ?? "Desconhecida",
+                DataEmprestimo = emprestimo.DataEmprestimo,
+                Situacao = emprestimo.Situacao
+            };
+
+            return View("RegistrarDevolucao", viewModel);
+        }
+
+        [HttpPost]
+        public IActionResult RegistrarDevolucaoConfirmado(EditarEmprestimoViewModel viewModel)
+        {
+            var emprestimo = repositorioEmprestimo.SelecionarPorId(viewModel.Id);
+
+            if (emprestimo == null)
+                return NotFound();
+
+            int revistaId = viewModel.RevistaId;
+
+            if (revistaId == 0)
+                return BadRequest("ID da revista não encontrado.");
+
+            var revistaCompleta = repositorioRevista.SelecionarPorId(revistaId);
+
+            if (revistaCompleta == null)
+                return NotFound("Revista não encontrada.");
+
+            emprestimo.DataDevolucao = viewModel.DataDevolucao;
+            emprestimo.Situacao = SituacaoEmprestimo.Fechado;
+
+            revistaCompleta.Status = Revista.StatusDisponveis.Disponivel;
+
+            repositorioRevista.EditarRegistro(revistaCompleta.Id, revistaCompleta);
+            repositorioEmprestimo.EditarRegistro(emprestimo.Id, emprestimo);
 
             return RedirectToAction("Index");
         }

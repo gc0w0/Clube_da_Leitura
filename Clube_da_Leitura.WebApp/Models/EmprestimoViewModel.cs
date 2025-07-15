@@ -65,6 +65,30 @@ namespace Clube_da_Leitura.WebApp.Models
     public class EditarEmprestimoViewModel : FormularioEmprestimoViewModel
     {
         public int Id { get; set; }
+
+        [Required(ErrorMessage = "O campo é obrigatório")]
+        public int AmigoId { get; set; }
+
+        [Required(ErrorMessage = "O campo é obrigatório")]
+        public int RevistaId { get; set; }
+
+        [Required(ErrorMessage = "O campo é obrigatório")]
+        public DateTime? DataDevolucao { get; set; }
+
+        [Required(ErrorMessage = "O campo é obrigatório")]
+        public SituacaoEmprestimo Situacao { get; set; }
+
+        public string NomeAmigo { get; set; }
+        public string TituloRevista { get; set; }
+
+        public List<SelectListItem>? AmigosDisponiveis { get; set; }
+        public List<SelectListItem>? RevistasDisponiveis { get; set; }
+
+        public EditarEmprestimoViewModel()
+        {
+            AmigosDisponiveis = new List<SelectListItem>();
+            RevistasDisponiveis = new List<SelectListItem>();
+        }
     }
 
 
