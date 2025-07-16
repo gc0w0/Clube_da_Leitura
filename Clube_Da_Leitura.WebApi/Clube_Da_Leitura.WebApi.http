@@ -1,0 +1,6 @@
+@Clube_Da_Leitura.WebApi_HostAddress = http://localhost:5157
+
+GET {{Clube_Da_Leitura.WebApi_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

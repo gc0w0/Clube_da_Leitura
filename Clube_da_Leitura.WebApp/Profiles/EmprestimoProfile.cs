@@ -12,11 +12,15 @@ namespace Clube_da_Leitura.WebApp.Profiles
             CreateMap<CadastrarEmprestimoViewModel, Emprestimo>();
 
             CreateMap<EditarEmprestimoViewModel, Emprestimo>();
+            CreateMap<Emprestimo, EditarEmprestimoViewModel>();
 
             CreateMap<Emprestimo, ExcluirEmprestimoViewModel>()
                 .ForMember(dest => dest.Multa, opt => opt.MapFrom(src => src.Multa.Select(x => x.ToString())));                
 
-            CreateMap<Emprestimo, EditarEmprestimoViewModel>();
+
+            CreateMap<Emprestimo, DevolucaoEmprestimoViewModel>();
+            CreateMap<DevolucaoEmprestimoViewModel, Emprestimo>();
+
 
         }
     }

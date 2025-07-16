@@ -34,7 +34,16 @@ public class RepositorioEmprestimoComDapper : IRepositorioEmprestimo, IDisposabl
               WHERE Id = @Id";
 
     protected  string SqlSelecionarPorId =>
-        @"SELECT * FROM TBEmprestimos WHERE Id = @Id";
+        @"SELECT 
+        E.Id, E.DataEmprestimo, E.DataDevolucao, E.DataPrevistaDevolucao, E.Situacao,
+        A.Id, A.Nome, A.NomeResponsavel, A.Telefone,
+        R.Id, R.Titulo, R.NumeroEdicao, R.AnoPublicacao, R.Status,
+        C.Id, C.Etiqueta, C.Cor, C.Dias 
+      FROM TBEmprestimos E
+      JOIN TBAmigos A ON A.Id = E.AmigoId
+      JOIN TBRevistas R ON R.Id = E.RevistaId
+      JOIN TBCaixas C ON C.Id = R.CaixaId 
+      WHERE E.Id = @Id";
 
     protected  string SqlExcluir =>
         @"DELETE FROM TBEmprestimos WHERE Id = @Id";
@@ -138,7 +147,20 @@ public class RepositorioEmprestimoComDapper : IRepositorioEmprestimo, IDisposabl
 
     public Emprestimo SelecionarPorId(int id)
     {
-        return this.dbConnection.QueryFirst<Emprestimo>(SqlSelecionarPorId, new { Id = id });
+        var emprestimo = dbConnection.Query<Emprestimo, Amigo, Revista, Caixa, Emprestimo>(
+    SqlSelecionarPorId,
+    (e, a, r, c) =>
+    {
+        e.Amigo = a;
+        e.Revista = r;
+        e.Revista.Caixa = c;
+        return e;
+    },
+    new { id },
+    splitOn: "Id,Id,Id"
+).FirstOrDefault();
+
+        return emprestimo;
     }
 
     public bool ExcluirRegistro(int id)

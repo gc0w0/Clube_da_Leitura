@@ -1,8 +1,10 @@
 ﻿using AutoMapper;
+using Clube_da_Leitura.Dominio.ModuloEmprestimo;
 using Clube_da_Leitura.ModuloAmigo;
 using Clube_da_Leitura.ModuloEmprestimo;
 using Clube_da_Leitura.ModuloRevista;
 using Clube_da_Leitura.WebApp.Models;
+using Clube_Da_Leitura.Application;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Data.SqlClient;
@@ -14,13 +16,15 @@ namespace Clube_da_Leitura.WebApp.Controllers
         private IRepositorioAmigo repositorioAmigo;
         private IRepositorioRevista repositorioRevista;
         private IMapper mapper;
+        private EmprestimoAppService emprestimoService;
 
-        public EmprestimoController(IMapper mapper, IRepositorioEmprestimo repositorioEmprestimo, IRepositorioAmigo repositorioAmigo, IRepositorioRevista repositorioRevista)
+        public EmprestimoController(IMapper mapper, IRepositorioEmprestimo repositorioEmprestimo, IRepositorioAmigo repositorioAmigo, IRepositorioRevista repositorioRevista, EmprestimoAppService emprestimoService)
         {
             this.repositorioEmprestimo = repositorioEmprestimo;
             this.repositorioAmigo = repositorioAmigo;
             this.repositorioRevista = repositorioRevista;
             this.mapper = mapper;
+            this.emprestimoService = emprestimoService;
         }
 
         [HttpGet]
@@ -110,5 +114,33 @@ namespace Clube_da_Leitura.WebApp.Controllers
             return RedirectToAction("Index");
         }
 
+
+        [HttpGet]
+        public IActionResult RegistrarDevolucao(int id)
+        {
+            var emprestimo = repositorioEmprestimo.SelecionarPorId(id);
+
+            var viewModel = new DevolucaoEmprestimoViewModel
+            {
+                Id = emprestimo.Id,
+                AmigoId = emprestimo.Amigo.Id,
+                RevistaId = emprestimo.Revista.Id,
+                DataEmprestimo = emprestimo.DataEmprestimo,
+                Situacao = emprestimo.Situacao,
+            };
+
+            return Json(viewModel);
+        }
+
+        [HttpPost]
+        public IActionResult RegistrarDevolucaoConfirmado(int id, DevolucaoEmprestimoViewModel viewModel)
+        {
+            if (!ModelState.IsValid)
+                return View("RegistrarDevolucao", viewModel);
+
+            emprestimoService.RegistrarDevolucao(viewModel.DataDevolucao.Value, id);
+
+            return RedirectToAction("Index");
+        }
     }
 }

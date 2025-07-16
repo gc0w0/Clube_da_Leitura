@@ -13,13 +13,21 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Clube_da_Leitura.WebApp", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Clube_da_Leitura.Infra.Arquivos", "Clube_da_Leitura.Infra\Clube_da_Leitura.Infra.Arquivos.csproj", "{59D82961-CF57-40C3-9723-0BEA6B40C4D0}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Apresentação", "Apresentação", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1. Apresentação", "1. Apresentação", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Dominio", "Dominio", "{CF14B995-185D-4D31-B4E4-5826854AA793}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3. Dominio", "3. Dominio", "{CF14B995-185D-4D31-B4E4-5826854AA793}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infra", "Infra", "{A1948F1C-F853-4CE6-B70C-082E4571A38D}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "4. Infra", "4. Infra", "{A1948F1C-F853-4CE6-B70C-082E4571A38D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Clube_da_Leitura.Infra.Database", "Clube_da_Leitura.Infra.Database\Clube_da_Leitura.Infra.Database.csproj", "{3DBE8E76-D84D-42F9-B961-DF9DC829B1C7}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2. Aplicação", "2. Aplicação", "{05CF1337-95DB-4A91-837F-560A99E1A368}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1.1 Serviços Distribuidos", "1.1 Serviços Distribuidos", "{31F01A41-EFA0-48CD-9422-1D7476BD38C8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Clube_Da_Leitura.WebApi", "Clube_Da_Leitura.WebApi\Clube_Da_Leitura.WebApi.csproj", "{87C3BA20-D134-4B48-ADDB-697D7A388250}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Clube_Da_Leitura.Application", "Clube_Da_Leitura.Application\Clube_Da_Leitura.Application.csproj", "{09261577-A62D-406F-833E-976D71A04FEC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -53,6 +61,14 @@ Global
 		{3DBE8E76-D84D-42F9-B961-DF9DC829B1C7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3DBE8E76-D84D-42F9-B961-DF9DC829B1C7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3DBE8E76-D84D-42F9-B961-DF9DC829B1C7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{87C3BA20-D134-4B48-ADDB-697D7A388250}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{87C3BA20-D134-4B48-ADDB-697D7A388250}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{87C3BA20-D134-4B48-ADDB-697D7A388250}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{87C3BA20-D134-4B48-ADDB-697D7A388250}.Release|Any CPU.Build.0 = Release|Any CPU
+		{09261577-A62D-406F-833E-976D71A04FEC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{09261577-A62D-406F-833E-976D71A04FEC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{09261577-A62D-406F-833E-976D71A04FEC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{09261577-A62D-406F-833E-976D71A04FEC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -64,6 +80,8 @@ Global
 		{002E31CC-D973-4651-8A22-9B89240B5EC6} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 		{59D82961-CF57-40C3-9723-0BEA6B40C4D0} = {A1948F1C-F853-4CE6-B70C-082E4571A38D}
 		{3DBE8E76-D84D-42F9-B961-DF9DC829B1C7} = {A1948F1C-F853-4CE6-B70C-082E4571A38D}
+		{87C3BA20-D134-4B48-ADDB-697D7A388250} = {31F01A41-EFA0-48CD-9422-1D7476BD38C8}
+		{09261577-A62D-406F-833E-976D71A04FEC} = {05CF1337-95DB-4A91-837F-560A99E1A368}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C997C60C-172C-4F74-8FCB-562066CE6ECF}

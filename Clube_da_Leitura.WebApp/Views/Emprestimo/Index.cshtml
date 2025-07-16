@@ -1,4 +1,5 @@
-﻿@using Clube_da_Leitura.ModuloEmprestimo;
+﻿@using Clube_da_Leitura.Dominio.ModuloEmprestimo
+@using Clube_da_Leitura.ModuloEmprestimo;
 @using Clube_da_Leitura.ModuloAmigo;
 @using Clube_da_Leitura.ModuloRevista;
 @model List<Emprestimo>
@@ -33,11 +34,18 @@
             <td>@(emprestimo.DataDevolucao.HasValue ? emprestimo.DataDevolucao.Value.ToString("dd/MM/yyyy") : "Ainda não devolvido")</td>
             <td>@(emprestimo.DataPrevistaDevolucao.HasValue ? emprestimo.DataPrevistaDevolucao.Value.ToString("dd/MM/yyyy") : "Data não informada")</td>
             <td>@emprestimo.Situacao</td>
-            <td>
-                <a class="btn btn-primary" asp-action="Edit" asp-route-id="@emprestimo.Id"> Editar </a>
-                <a class="btn btn-warning text-light" asp-action="Details" asp-route-id="@emprestimo.Id"> Visualizar </a>
-                <a class="btn btn-danger" asp-action="Delete" asp-route-id="@emprestimo.Id"> Excluir </a>
-            </td>
+                <td style="white-space: nowrap;">
+                    <div class="d-flex align-items-center" style="gap: 0.25rem;">
+                        <a class="btn btn-sm btn-primary" asp-action="Edit" asp-route-id="@emprestimo.Id">Editar</a>
+                        <a class="btn btn-sm btn-warning text-light" asp-action="Details" asp-route-id="@emprestimo.Id">Visualizar</a>
+                        <a class="btn btn-sm btn-danger" asp-action="Delete" asp-route-id="@emprestimo.Id">Excluir</a>
+
+                        @if (emprestimo.Situacao == SituacaoEmprestimo.Aberto)
+                        {
+                            <a class="btn btn-sm btn-success" asp-action="RegistrarDevolucao" asp-route-id="@emprestimo.Id">Devolver</a>
+                        }
+                    </div>
+                </td>
         </tr>
 }
     </tbody>

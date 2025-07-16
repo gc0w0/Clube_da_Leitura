@@ -136,7 +136,6 @@ public class TelaEmprestimo : TelaBase<Emprestimo>
         bool temMultaVinculada = amigoSelecionado.Multas.Any(e => e.Id >= 1);
 
 
-
         if (temMultaVinculada)
         {
             Console.ForegroundColor = ConsoleColor.Yellow;

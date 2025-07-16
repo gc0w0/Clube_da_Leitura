@@ -3,6 +3,7 @@ using Clube_da_Leitura.Dominio.ModuloEmprestimo;
 using Clube_da_Leitura.ModuloAmigo;
 using Clube_da_Leitura.ModuloMultas;
 using Clube_da_Leitura.ModuloRevista;
+using static Clube_da_Leitura.ModuloRevista.Revista;
 
 namespace Clube_da_Leitura.ModuloEmprestimo
 {
@@ -64,6 +65,13 @@ namespace Clube_da_Leitura.ModuloEmprestimo
             string resultadoValidacao = "";
 
             return resultadoValidacao;
+        }
+
+        public void RegistrarDevolucacao(DateTime dataDevolucao)
+        {
+            DataDevolucao = DataDevolucao;
+            Situacao = SituacaoEmprestimo.Fechado;
+            Revista.Status = StatusDisponveis.Disponivel;
         }
 
         //public void RegistrarDevolucao(DateTime dataDevolucao, RepositorioMultaEmBancoDeDados repositorioMulta)

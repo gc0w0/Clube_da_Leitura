@@ -29,6 +29,7 @@ namespace Clube_da_Leitura.WebApp.Config
             services.AddTransient<IRepositorioEmprestimo, RepositorioEmprestimoComDapper>();
             services.AddTransient<IRepositorioReserva, RepositorioReservaComDapper>();
             services.AddTransient<IRepositorioRevista, RepositorioRevistaComDapper>();
+            
 
 
         }

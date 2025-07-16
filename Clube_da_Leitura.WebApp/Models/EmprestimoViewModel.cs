@@ -77,8 +77,10 @@ namespace Clube_da_Leitura.WebApp.Models
         public DateTime? DataPrevistaDevolucao { get; set; }
         public SituacaoEmprestimo Situacao { get; set; }  //Aberto / Concluido / Atrasado
         public List<string> Multa { get; set; } 
-        public Guid? AmigoId { get; set; }
-        public Guid? RevistaId { get; set; }
+        public int AmigoId { get; set; }
+        public int RevistaId { get; set; }
+        public List<SelectListItem>? AmigosDisponiveis { get; set; }
+        public List<SelectListItem>? RevistasDisponiveis { get; set; }
     }
 
     public class ExcluirEmprestimoViewModel : VisualizacaoEmprestimoViewModel
@@ -100,5 +102,12 @@ namespace Clube_da_Leitura.WebApp.Models
         public string Situacao { get; set; }
     }
 
-    
+    public class DevolucaoEmprestimoViewModel : FormularioEmprestimoViewModel
+    {
+        public int Id { get; set; }
+
+        [Required(ErrorMessage = "A data de devolução é obrigatória.")]
+        public DateTime? DataDevolucao { get; set; }
+
+    }
 }
